@@ -1,0 +1,12 @@
+[workspace]
+resolver = "2"
+
+members = [
+    "server",
+    "core",
+    "storage",
+    "database",
+    "media",
+    "auth",
+    "common"
+]
