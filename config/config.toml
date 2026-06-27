@@ -1,0 +1,13 @@
+[server]
+host="0.0.0.0"
+port=8080
+
+[storage]
+root="/srv/luminos"
+
+[database]
+engine="sqlite"
+path="./luminos.db"
+
+[logging]
+level="info"
