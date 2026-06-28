@@ -2,8 +2,13 @@ use std::sync::Arc;
 
 mod app;
 mod config;
+mod database;
 mod handlers;
+mod models;
+mod repositories;
 mod routes;
+mod services;
+mod auth;
 mod state;
 
 #[tokio::main]
@@ -19,10 +24,17 @@ async fn main() {
     println!("==============================");
 
     // Ortak uygulama durumunu oluştur
-    let state = state::AppState {
-        settings: Arc::new(settings),
-    };
+let settings = Arc::new(settings);
 
+let db = database::connect(
+    &settings.database.path,
+)
+.await;
+
+let state = state::AppState {
+    settings,
+    db,
+};
     // Router'ı oluştur
     let app = app::create_router(state.clone());
 
