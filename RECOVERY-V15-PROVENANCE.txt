@@ -1,0 +1,7 @@
+config/mod.rs corruption fix: old=fb887d3ac6f16e59703797a3104fc9b550911a51aa1d71c786ab06daecd4f846 new=806817c31104108857b8b3dde4fd49f09c7c1e607008d325b357df4a124ab5e9 source=historical exact lines 431-439
+storage/mod.rs: EXACT historical body (Library).
+storage/engine.rs: EXACT historical body reconstructed from full dump; formatting normalized.
+storage/pool.rs: EXACT baseline + exact FIX9 Stage2C dynamic photoos_default patch; formatting normalized.
+storage/allocator.rs: EVIDENCE-BASED REIMPLEMENTATION from historical line/function contract; NOT exact-byte recovery.
+storage/disk.rs: EVIDENCE-BASED REIMPLEMENTATION from historical line/function contract; NOT exact-byte recovery.
+cloud_engine.rs: borrow fix current_line=message.clone(); EVIDENCE-BASED FINAL-COMPATIBLE FIX. Later event code borrows &message; historical spawn-error branch uses clone. NOT claimed exact line recovery.

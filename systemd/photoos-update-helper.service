@@ -1,0 +1,32 @@
+[Unit]
+Description=PhotoOS Update Privileged Helper
+After=network-online.target
+Wants=network-online.target
+Before=photoos-update-agent.service
+RequiresMountsFor=/opt/photoos /var/lib/photoos/update
+ConditionPathExists=/opt/photoos/update-agent/update_helper.py
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/photoos/update-agent
+
+ExecStart=/usr/bin/python3 /opt/photoos/update-agent/update_helper.py
+
+Environment=PYTHONUNBUFFERED=1
+RuntimeDirectory=photoos
+RuntimeDirectoryMode=0755
+Restart=on-failure
+RestartSec=3
+UMask=0027
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/opt/photoos /var/lib/photoos/update /run/photoos
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+[Install]
+WantedBy=multi-user.target

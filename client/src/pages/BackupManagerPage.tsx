@@ -1,0 +1,41 @@
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { api, apiJson } from "../api/client";
+import "./BackupManagerPage.css";
+
+type BackupStatus = { running:boolean; job_id:number|null; source:string; target:string; phase:string; progress_percent:number; transferred_bytes:number; total_bytes:number; speed_bytes_per_second:number; eta_seconds:number|null; files_transferred:number; message:string; started_at:number|null; finished_at:number|null };
+type Target = { name:string; path:string; available:boolean; kind:string };
+type TargetsResponse = { sources:Target[]; targets:Target[] };
+type HistoryEntry = { id:number; source:string; target:string; status:string; transferred_bytes:number; total_bytes:number; files_transferred:number; started_at:number; finished_at:number|null; message:string };
+type HistoryResponse = { history: HistoryEntry[] };
+
+const initialStatus: BackupStatus = { running:false,job_id:null,source:"",target:"",phase:"idle",progress_percent:0,transferred_bytes:0,total_bytes:0,speed_bytes_per_second:0,eta_seconds:null,files_transferred:0,message:"Yedekleme beklemede.",started_at:null,finished_at:null };
+function bytes(n:number){if(!n)return "0 B";const u=["B","KB","MB","GB","TB"];let i=0,v=n;while(v>=1024&&i<u.length-1){v/=1024;i++;}return `${v.toLocaleString("tr-TR",{maximumFractionDigits:2})} ${u[i]}`}
+function duration(s:number|null){if(s===null)return "-";const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),x=Math.floor(s%60);return h?`${h} sa ${m} dk`:m?`${m} dk ${x} sn`:`${x} sn`}
+function date(ts:number|null){return ts?new Date(ts*1000).toLocaleString("tr-TR"):"-"}
+function statusLabel(s:string){return ({completed:"Tamamlandı",failed:"Başarısız",stopped:"Durduruldu",interrupted:"Kesildi",running:"Çalışıyor"} as Record<string,string>)[s]||s}
+
+function photoosDiskRoot(path:string){const prefix="/srv/photoos/disks/";if(!path.startsWith(prefix))return "";const disk=path.slice(prefix.length).split("/")[0];return disk?`${prefix}${disk}`:""}
+function samePhotoosDisk(a:string,b:string){const left=photoosDiskRoot(a),right=photoosDiskRoot(b);return Boolean(left&&right&&left===right)}
+function firstSafeTarget(source:string,items:Target[]){return items.find(x=>x.available&&!samePhotoosDisk(source,x.path))?.path||""}
+
+export default function BackupManagerPage(){
+ const [status,setStatus]=useState<BackupStatus>(initialStatus); const [targets,setTargets]=useState<TargetsResponse>({sources:[],targets:[]}); const [history,setHistory]=useState<HistoryEntry[]>([]);
+ const [source,setSource]=useState(""); const [target,setTarget]=useState(""); const [deleteExtra,setDeleteExtra]=useState(false); const [busy,setBusy]=useState(false); const [error,setError]=useState("");
+ const load=useCallback(async()=>{try{const [nextStatus,nextTargets,nextHistory]=await Promise.all([apiJson<BackupStatus>("/api/v1/backups/status"),apiJson<TargetsResponse>("/api/v1/backups/targets"),apiJson<HistoryResponse>("/api/v1/backups/history")]);setStatus(nextStatus);setTargets(nextTargets);const defaultSource=nextTargets.sources.find(x=>x.available)?.path||"";setSource(currentSource=>{const selectedSource=currentSource||defaultSource;setTarget(currentTarget=>currentTarget&&!samePhotoosDisk(selectedSource,currentTarget)?currentTarget:firstSafeTarget(selectedSource,nextTargets.targets));return selectedSource});setHistory(nextHistory.history||[]);setError("");}catch(e){setError(e instanceof Error?e.message:"Backup Manager yüklenemedi.")}},[]);
+ useEffect(()=>{void load();const id=setInterval(()=>void load(),status.running?1500:5000);return()=>clearInterval(id)},[load,status.running]);
+ const changeSource=(nextSource:string)=>{setSource(nextSource);setTarget(current=>current&&!samePhotoosDisk(nextSource,current)?current:firstSafeTarget(nextSource,targets.targets))};
+ const canStart=Boolean(source&&target&&source!==target&&!samePhotoosDisk(source,target)&&!status.running&&!busy);
+ const start=async()=>{setBusy(true);try{const r=await api("/api/v1/backups/start",{method:"POST",body:JSON.stringify({source,target,delete_extraneous:deleteExtra})});const d=await r.json();if(!r.ok)throw new Error(d.message||"Başlatılamadı");await load()}catch(e){setError(e instanceof Error?e.message:"Başlatılamadı")}finally{setBusy(false)}};
+ const stop=async()=>{setBusy(true);try{const r=await api("/api/v1/backups/stop",{method:"POST"});const d=await r.json();if(!r.ok)throw new Error(d.message||"Durdurulamadı");await load()}catch(e){setError(e instanceof Error?e.message:"Durdurulamadı")}finally{setBusy(false)}};
+ const progress=Math.max(0,Math.min(100,status.progress_percent||0));
+ const currentTitle=useMemo(()=>status.running?"Yedekleme devam ediyor":status.phase==="completed"?"Son yedekleme tamamlandı":"Yedekleme hazır",[status]);
+ return <div className="backup-page">
+  <div className="backup-head"><div><span className="eyebrow">PHOTOOS DATA PROTECTION</span><h2>Backup Manager</h2><p>Diskler arasında güvenli, izlenebilir rsync yedekleri oluşturun.</p></div><div className={`backup-state ${status.running?"running":"ready"}`}><i/>{status.running?"Çalışıyor":"Hazır"}</div></div>
+  {error&&<div className="backup-error">⚠ {error}</div>}
+  <section className="backup-grid">
+   <article className="backup-card setup"><h3>Yeni Yedekleme</h3><label>Kaynak disk<select value={source} onChange={e=>changeSource(e.target.value)} disabled={status.running}>{targets.sources.map(x=><option key={x.path} value={x.path} disabled={!x.available}>{x.name} · {x.path}{!x.available?" (bağlı değil)":""}</option>)}</select></label><label>Hedef klasör<select value={target} onChange={e=>setTarget(e.target.value)} disabled={status.running}>{targets.targets.map(x=><option key={x.path} value={x.path} disabled={!x.available||samePhotoosDisk(source,x.path)}>{x.name} · {x.path}{!x.available?" (bağlı değil)":""}</option>)}</select></label><label className="check"><input type="checkbox" checked={deleteExtra} onChange={e=>setDeleteExtra(e.target.checked)} disabled={status.running}/><span>Hedefte kaynakta olmayan dosyaları sil (ayna modu)</span></label><div className="actions"><button className="primary" onClick={start} disabled={!canStart}>{busy?"İşleniyor…":"▶ Yedeklemeyi Başlat"}</button><button className="danger" onClick={stop} disabled={!status.running||busy}>■ Durdur</button></div><small className="warning">Kaynak ve hedef yolları yalnızca /srv/photoos/disks altında kabul edilir.</small></article>
+   <article className="backup-card progress"><div className="card-title"><div><span>CANLI DURUM</span><h3>{currentTitle}</h3></div><b>{progress.toFixed(1)}%</b></div><div className="progress-track"><i style={{width:`${progress}%`}}/></div><div className="metric-grid"><div><span>Aktarılan</span><strong>{bytes(status.transferred_bytes)}</strong></div><div><span>Tahmini toplam</span><strong>{bytes(status.total_bytes)}</strong></div><div><span>Hız</span><strong>{bytes(status.speed_bytes_per_second)}/s</strong></div><div><span>Kalan süre</span><strong>{duration(status.eta_seconds)}</strong></div><div><span>Dosya</span><strong>{status.files_transferred.toLocaleString("tr-TR")}</strong></div><div><span>Başlangıç</span><strong>{date(status.started_at)}</strong></div></div><div className="status-message">{status.message}</div>{status.source&&<div className="path-flow"><code>{status.source}</code><span>→</span><code>{status.target}</code></div>}</article>
+  </section>
+  <section className="backup-card history"><div className="history-head"><div><span className="eyebrow">SON 50 İŞLEM</span><h3>Yedekleme Geçmişi</h3></div><button onClick={()=>void load()}>↻ Yenile</button></div>{history.length===0?<div className="empty">Henüz yedekleme kaydı yok.</div>:<div className="history-table"><div className="history-row header"><span>Durum</span><span>Kaynak → Hedef</span><span>Aktarılan</span><span>Dosya</span><span>Başlangıç</span></div>{history.map(x=><div className="history-row" key={x.id}><span><b className={`badge ${x.status}`}>{statusLabel(x.status)}</b></span><span className="paths"><code>{x.source}</code><small>→ {x.target}</small><em>{x.message}</em></span><span>{bytes(x.transferred_bytes)}</span><span>{x.files_transferred.toLocaleString("tr-TR")}</span><span>{date(x.started_at)}</span></div>)}</div>}</section>
+ </div>
+}

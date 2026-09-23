@@ -1,0 +1,7 @@
+PHASE2B2_LOGS=PASS
+branch=phase2b-logs
+base_head=f7d1f594237dcbeaf33af81837265123018ab2ea
+live_release=/opt/photoos/releases/1.2.1-storage-usbtest-20260909-015410
+live_server_sha256=03de1250f4700f516273159db7b6b2afdd30023d9d6c442cd22380f95bc63a5c
+live_deploy_performed=false
+journal_readability=PASS

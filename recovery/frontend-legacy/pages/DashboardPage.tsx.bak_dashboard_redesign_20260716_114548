@@ -1,0 +1,1182 @@
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+    CartesianGrid,
+    Legend,
+    Line,
+    LineChart,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis,
+} from "recharts";
+
+import { api } from "../api/client";
+
+type StorageInfo = {
+    total_bytes: number;
+    used_bytes: number;
+    free_bytes: number;
+    usage_percent: number;
+};
+
+type MediaByUser = {
+    username: string;
+    count: number;
+};
+
+type SourceStats = {
+    camera: number;
+    whatsapp_received: number;
+    whatsapp_sent: number;
+    screenshot: number;
+    download: number;
+    telegram: number;
+    other: number;
+};
+
+type UploadPeriods = {
+    today: number;
+    this_week: number;
+    this_month: number;
+    this_year: number;
+};
+
+type DashboardStats = {
+    user_count: number;
+    total_media_count: number;
+    photo_count: number;
+    video_count: number;
+    source_stats: SourceStats;
+    upload_periods: UploadPeriods;
+    media_by_user: MediaByUser[];
+    version: string;
+};
+
+type MemoryMetrics = {
+    total_bytes: number;
+    used_bytes: number;
+    available_bytes: number;
+    usage_percent: number;
+};
+
+type NetworkInterfaceMetrics = {
+    interface: string;
+    received_bytes: number;
+    transmitted_bytes: number;
+};
+
+type DiskMetrics = {
+    name: string;
+    model: string;
+    size_bytes: number;
+    fs_type: string;
+    label: string;
+    mountpoint: string;
+    mounted: boolean;
+    used_bytes: number;
+    free_bytes: number;
+    usage_percent: number;
+};
+
+type SystemMetrics = {
+    hostname: string;
+    operating_system: string;
+    kernel_version: string;
+    architecture: string;
+    cpu_model: string;
+    cpu_cores: number;
+    cpu_usage_percent: number;
+    memory: MemoryMetrics;
+    uptime_seconds: number;
+    load_average_1m: number;
+    load_average_5m: number;
+    load_average_15m: number;
+    network: NetworkInterfaceMetrics[];
+    disks: DiskMetrics[];
+};
+
+type SystemHistoryPoint = {
+    time: string;
+    cpu: number;
+    ram: number;
+    download: number;
+    upload: number;
+};
+
+type NetworkSnapshot = Record<
+    string,
+    {
+        receivedBytes: number;
+        transmittedBytes: number;
+        timestamp: number;
+    }
+>;
+
+function formatBytes(bytes: number) {
+    if (!Number.isFinite(bytes) || bytes <= 0) {
+        return "0 B";
+    }
+
+    const kb = bytes / 1024;
+    const mb = kb / 1024;
+    const gb = mb / 1024;
+    const tb = gb / 1024;
+
+    if (tb >= 1) {
+        return `${tb.toLocaleString("tr-TR", {
+            maximumFractionDigits: 2,
+        })} TB`;
+    }
+
+    if (gb >= 1) {
+        return `${gb.toLocaleString("tr-TR", {
+            maximumFractionDigits: 2,
+        })} GB`;
+    }
+
+    if (mb >= 1) {
+        return `${mb.toLocaleString("tr-TR", {
+            maximumFractionDigits: 2,
+        })} MB`;
+    }
+
+    return `${kb.toLocaleString("tr-TR", {
+        maximumFractionDigits: 2,
+    })} KB`;
+}
+
+function formatRate(bytesPerSecond: number) {
+    if (!Number.isFinite(bytesPerSecond) || bytesPerSecond <= 0) {
+        return "0 KB/s";
+    }
+
+    const kb = bytesPerSecond / 1024;
+    const mb = kb / 1024;
+
+    if (mb >= 1) {
+        return `${mb.toLocaleString("tr-TR", {
+            maximumFractionDigits: 2,
+        })} MB/s`;
+    }
+
+    return `${kb.toLocaleString("tr-TR", {
+        maximumFractionDigits: 1,
+    })} KB/s`;
+}
+
+function formatUptime(seconds: number) {
+    if (!Number.isFinite(seconds) || seconds <= 0) {
+        return "0 dakika";
+    }
+
+    const days = Math.floor(seconds / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+
+    const parts: string[] = [];
+
+    if (days > 0) {
+        parts.push(`${days} gün`);
+    }
+
+    if (hours > 0) {
+        parts.push(`${hours} saat`);
+    }
+
+    parts.push(`${minutes} dakika`);
+
+    return parts.join(" ");
+}
+
+export default function DashboardPage() {
+    const navigate = useNavigate();
+
+    const [stats, setStats] =
+        useState<DashboardStats | null>(null);
+
+    const [storage, setStorage] =
+        useState<StorageInfo | null>(null);
+
+    const [systemMetrics, setSystemMetrics] =
+        useState<SystemMetrics | null>(null);
+
+    const [systemHistory, setSystemHistory] =
+        useState<SystemHistoryPoint[]>([]);
+
+    const [downloadRate, setDownloadRate] =
+        useState(0);
+
+    const [uploadRate, setUploadRate] =
+        useState(0);
+
+    const [lastUpdated, setLastUpdated] =
+        useState("");
+
+    const [error, setError] =
+        useState("");
+
+    const networkSnapshotRef =
+        useRef<NetworkSnapshot>({});
+
+    async function loadDashboard() {
+        try {
+            const timestamp = Date.now();
+
+            const [statsRes, storageRes] =
+                await Promise.all([
+                    api(
+                        `/api/v1/dashboard/stats?ts=${timestamp}`
+                    ),
+                    api(
+                        `/api/v1/storage?ts=${timestamp}`
+                    ),
+                ]);
+
+            if (!statsRes.ok) {
+                throw new Error(
+                    `Stats alınamadı: ${statsRes.status}`
+                );
+            }
+
+            if (!storageRes.ok) {
+                throw new Error(
+                    `Storage alınamadı: ${storageRes.status}`
+                );
+            }
+
+            const statsData =
+                await statsRes.json();
+
+            const storageData =
+                await storageRes.json();
+
+            setStats(statsData);
+            setStorage(storageData);
+        } catch (err) {
+            console.error(
+                "Dashboard verileri alınamadı:",
+                err
+            );
+
+            setError(
+                "Dashboard verileri alınamadı."
+            );
+        }
+    }
+
+    async function loadSystemMetrics() {
+        try {
+            const timestamp = Date.now();
+
+            const response = await api(
+                `/api/v1/dashboard/system-metrics?ts=${timestamp}`
+            );
+
+            if (!response.ok) {
+                throw new Error(
+                    `Sistem metrikleri alınamadı: ${response.status}`
+                );
+            }
+
+            const metrics: SystemMetrics =
+                await response.json();
+
+            const now = Date.now();
+
+            let totalDownloadRate = 0;
+            let totalUploadRate = 0;
+
+            const nextSnapshot: NetworkSnapshot = {};
+
+            for (const network of metrics.network) {
+                const previous =
+                    networkSnapshotRef.current[
+                        network.interface
+                    ];
+
+                nextSnapshot[network.interface] = {
+                    receivedBytes:
+                        network.received_bytes,
+                    transmittedBytes:
+                        network.transmitted_bytes,
+                    timestamp: now,
+                };
+
+                if (!previous) {
+                    continue;
+                }
+
+                const elapsedSeconds =
+                    (now - previous.timestamp) / 1000;
+
+                if (elapsedSeconds <= 0) {
+                    continue;
+                }
+
+                const receivedDelta = Math.max(
+                    0,
+                    network.received_bytes -
+                        previous.receivedBytes
+                );
+
+                const transmittedDelta = Math.max(
+                    0,
+                    network.transmitted_bytes -
+                        previous.transmittedBytes
+                );
+
+                totalDownloadRate +=
+                    receivedDelta / elapsedSeconds;
+
+                totalUploadRate +=
+                    transmittedDelta / elapsedSeconds;
+            }
+
+            networkSnapshotRef.current =
+                nextSnapshot;
+
+            setDownloadRate(totalDownloadRate);
+            setUploadRate(totalUploadRate);
+            setSystemMetrics(metrics);
+
+            const point: SystemHistoryPoint = {
+                time: new Date().toLocaleTimeString(
+                    "tr-TR",
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                    }
+                ),
+                cpu: Number(
+                    metrics.cpu_usage_percent.toFixed(1)
+                ),
+                ram: Number(
+                    metrics.memory.usage_percent.toFixed(1)
+                ),
+                download: Number(
+                    (totalDownloadRate / 1024).toFixed(1)
+                ),
+                upload: Number(
+                    (totalUploadRate / 1024).toFixed(1)
+                ),
+            };
+
+            setSystemHistory((current) => {
+                const next = [...current, point];
+
+                return next.slice(-30);
+            });
+
+            setLastUpdated(
+                new Date().toLocaleTimeString(
+                    "tr-TR"
+                )
+            );
+
+            setError("");
+        } catch (err) {
+            console.error(
+                "Sistem metrikleri alınamadı:",
+                err
+            );
+
+            setError(
+                "Sistem metrikleri alınamadı."
+            );
+        }
+    }
+
+    useEffect(() => {
+        loadDashboard();
+        loadSystemMetrics();
+
+        const dashboardTimer =
+            window.setInterval(
+                loadDashboard,
+                10000
+            );
+
+        const systemTimer =
+            window.setInterval(
+                loadSystemMetrics,
+                2000
+            );
+
+        return () => {
+            window.clearInterval(
+                dashboardTimer
+            );
+
+            window.clearInterval(
+                systemTimer
+            );
+        };
+    }, []);
+
+    const sourceStats = stats?.source_stats;
+
+    const activeNetworkInterfaces = useMemo(
+        () =>
+            systemMetrics?.network.filter(
+                (item) =>
+                    item.received_bytes > 0 ||
+                    item.transmitted_bytes > 0
+            ) ?? [],
+        [systemMetrics]
+    );
+
+    return (
+        <>
+            <div className="page-title">
+                <h1>Dashboard</h1>
+
+                <p>
+                    PhotoOS Yönetim Paneli · v
+                    {stats?.version ?? "1.0.0"}
+                </p>
+
+                {lastUpdated && (
+                    <p>
+                        Son güncelleme: {lastUpdated}
+                    </p>
+                )}
+
+                {error && (
+                    <p style={{ color: "#ef4444" }}>
+                        {error}
+                    </p>
+                )}
+            </div>
+
+            <div className="stats-grid">
+                <StatCard
+                    title="Kullanıcılar"
+                    value={stats?.user_count ?? 0}
+                    icon="👥"
+                />
+
+                <StatCard
+                    title="Toplam Medya"
+                    value={
+                        stats?.total_media_count ?? 0
+                    }
+                    icon="🗂️"
+                    onClick={() =>
+                        navigate("/photos")
+                    }
+                />
+
+                <StatCard
+                    title="Fotoğraflar"
+                    value={stats?.photo_count ?? 0}
+                    icon="📷"
+                />
+
+                <StatCard
+                    title="Videolar"
+                    value={stats?.video_count ?? 0}
+                    icon="🎥"
+                />
+
+                <StatCard
+                    title="Depolama"
+                    value={
+                        storage
+                            ? formatBytes(
+                                  storage.used_bytes
+                              )
+                            : "0 B"
+                    }
+                    icon="💾"
+                    subtitle={
+                        storage
+                            ? `%${Number(
+                                  storage.usage_percent ?? 0
+                              ).toLocaleString(
+                                  "tr-TR",
+                                  {
+                                      maximumFractionDigits: 2,
+                                  }
+                              )} kullanılıyor`
+                            : undefined
+                    }
+                />
+            </div>
+
+            <section className="panel">
+                <div className="panel-header">
+                    <div>
+                        <h2>Canlı Sistem Durumu</h2>
+                        <p>
+                            CPU, RAM ve ağ trafiği
+                        </p>
+                    </div>
+                </div>
+
+                <div className="live-metrics-grid">
+                    <LiveMetricCard
+                        title="CPU Kullanımı"
+                        icon="⚙"
+                        value={`%${(
+                            systemMetrics
+                                ?.cpu_usage_percent ?? 0
+                        ).toLocaleString("tr-TR", {
+                            maximumFractionDigits: 1,
+                        })}`}
+                        progress={
+                            systemMetrics
+                                ?.cpu_usage_percent ?? 0
+                        }
+                        subtitle={
+                            systemMetrics
+                                ? `${systemMetrics.cpu_cores} mantıksal çekirdek`
+                                : "-"
+                        }
+                    />
+
+                    <LiveMetricCard
+                        title="RAM Kullanımı"
+                        icon="▦"
+                        value={`%${(
+                            systemMetrics
+                                ?.memory
+                                .usage_percent ?? 0
+                        ).toLocaleString("tr-TR", {
+                            maximumFractionDigits: 1,
+                        })}`}
+                        progress={
+                            systemMetrics
+                                ?.memory
+                                .usage_percent ?? 0
+                        }
+                        subtitle={
+                            systemMetrics
+                                ? `${formatBytes(
+                                      systemMetrics.memory.used_bytes
+                                  )} / ${formatBytes(
+                                      systemMetrics.memory.total_bytes
+                                  )}`
+                                : "-"
+                        }
+                    />
+
+                    <LiveMetricCard
+                        title="Ağ İndirme"
+                        icon="↓"
+                        value={formatRate(downloadRate)}
+                        progress={Math.min(
+                            100,
+                            downloadRate / 1024 / 10
+                        )}
+                        subtitle="Anlık indirme hızı"
+                        sparkline="download"
+                    />
+
+                    <LiveMetricCard
+                        title="Ağ Yükleme"
+                        icon="↑"
+                        value={formatRate(uploadRate)}
+                        progress={Math.min(
+                            100,
+                            uploadRate / 1024 / 10
+                        )}
+                        subtitle="Anlık yükleme hızı"
+                        sparkline="upload"
+                    />
+
+                    <LiveMetricCard
+                        title="Çalışma Süresi"
+                        icon="◷"
+                        value={formatUptime(
+                            systemMetrics
+                                ?.uptime_seconds ?? 0
+                        )}
+                        progress={100}
+                        subtitle="Sunucu kesintisiz çalışma"
+                        compact
+                    />
+                </div>
+
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns:
+                            "repeat(auto-fit, minmax(320px, 1fr))",
+                        gap: "20px",
+                        marginTop: "20px",
+                    }}
+                >
+                    <div className="dashboard-chart-card">
+                        <h3>CPU ve RAM</h3>
+
+                        <div
+                            style={{
+                                width: "100%",
+                                height: "280px",
+                            }}
+                        >
+                            <ResponsiveContainer>
+                                <LineChart
+                                    data={systemHistory}
+                                >
+                                    <CartesianGrid
+                                        strokeDasharray="3 3"
+                                    />
+                                    <XAxis
+                                        dataKey="time"
+                                        minTickGap={24}
+                                    />
+                                    <YAxis
+                                        domain={[0, 100]}
+                                        unit="%"
+                                    />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Line
+                                        type="monotone"
+                                        dataKey="cpu"
+                                        name="CPU"
+                                        stroke="#3b82f6"
+                                        dot={false}
+                                        isAnimationActive={false}
+                                    />
+                                    <Line
+                                        type="monotone"
+                                        dataKey="ram"
+                                        name="RAM"
+                                        stroke="#22c55e"
+                                        dot={false}
+                                        isAnimationActive={false}
+                                    />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
+
+                    <div className="dashboard-chart-card">
+                        <h3>Ağ Trafiği</h3>
+
+                        <div
+                            style={{
+                                width: "100%",
+                                height: "280px",
+                            }}
+                        >
+                            <ResponsiveContainer>
+                                <LineChart
+                                    data={systemHistory}
+                                >
+                                    <CartesianGrid
+                                        strokeDasharray="3 3"
+                                    />
+                                    <XAxis
+                                        dataKey="time"
+                                        minTickGap={24}
+                                    />
+                                    <YAxis
+                                        unit=" KB/s"
+                                    />
+                                    <Tooltip />
+                                    <Legend />
+                                    <Line
+                                        type="monotone"
+                                        dataKey="download"
+                                        name="İndirme"
+                                        stroke="#8b5cf6"
+                                        dot={false}
+                                        isAnimationActive={false}
+                                    />
+                                    <Line
+                                        type="monotone"
+                                        dataKey="upload"
+                                        name="Yükleme"
+                                        stroke="#f59e0b"
+                                        dot={false}
+                                        isAnimationActive={false}
+                                    />
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="panel disk-panel">
+                <div className="panel-header">
+                    <div>
+                        <h2>Diskler</h2>
+                        <p>
+                            Fiziksel diskler ve kullanım durumları
+                        </p>
+                    </div>
+
+                    <div className="disk-total-badge">
+                        {systemMetrics?.disks.length ?? 0} disk
+                    </div>
+                </div>
+
+                <div className="disk-grid">
+                    {(systemMetrics?.disks ?? []).map(
+                        (disk) => {
+                            const usage = Math.min(
+                                100,
+                                Math.max(
+                                    0,
+                                    Number(
+                                        disk.usage_percent ?? 0
+                                    )
+                                )
+                            );
+
+                            return (
+                                <article
+                                    className="disk-card"
+                                    key={disk.name}
+                                >
+                                    <div className="disk-card-header">
+                                        <div>
+                                            <span className="disk-name">
+                                                Disk {disk.name}
+                                            </span>
+
+                                            <strong>
+                                                {formatBytes(
+                                                    disk.size_bytes
+                                                )}
+                                            </strong>
+                                        </div>
+
+                                        <span
+                                            className={
+                                                disk.mounted
+                                                    ? "disk-status mounted"
+                                                    : "disk-status unmounted"
+                                            }
+                                        >
+                                            {disk.mounted
+                                                ? "Bağlı"
+                                                : "Bağlı değil"}
+                                        </span>
+                                    </div>
+
+                                    <div className="disk-card-body">
+                                        <div
+                                            className="disk-ring"
+                                            style={{
+                                                background:
+                                                    `conic-gradient(` +
+                                                    `#ef233c ${usage}%, ` +
+                                                    `#242424 ${usage}% 100%)`,
+                                            }}
+                                        >
+                                            <div className="disk-ring-inner">
+                                                <strong>
+                                                    %
+                                                    {usage.toLocaleString(
+                                                        "tr-TR",
+                                                        {
+                                                            maximumFractionDigits: 1,
+                                                        }
+                                                    )}
+                                                </strong>
+
+                                                <span>
+                                                    Kullanılıyor
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div className="disk-details">
+                                            <div>
+                                                <span>Model</span>
+                                                <strong>
+                                                    {disk.model}
+                                                </strong>
+                                            </div>
+
+                                            <div>
+                                                <span>Dosya sistemi</span>
+                                                <strong>
+                                                    {disk.fs_type}
+                                                </strong>
+                                            </div>
+
+                                            <div>
+                                                <span>Etiket</span>
+                                                <strong>
+                                                    {disk.label || "-"}
+                                                </strong>
+                                            </div>
+
+                                            <div>
+                                                <span>Bağlantı</span>
+                                                <strong>
+                                                    {disk.mountpoint || "-"}
+                                                </strong>
+                                            </div>
+
+                                            <div>
+                                                <span>Kullanılan</span>
+                                                <strong>
+                                                    {disk.mounted
+                                                        ? formatBytes(
+                                                              disk.used_bytes
+                                                          )
+                                                        : "-"}
+                                                </strong>
+                                            </div>
+
+                                            <div>
+                                                <span>Boş alan</span>
+                                                <strong>
+                                                    {disk.mounted
+                                                        ? formatBytes(
+                                                              disk.free_bytes
+                                                          )
+                                                        : "-"}
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="disk-progress">
+                                        <div
+                                            style={{
+                                                width: `${usage}%`,
+                                            }}
+                                        />
+                                    </div>
+                                </article>
+                            );
+                        }
+                    )}
+
+                    {!systemMetrics?.disks.length && (
+                        <div className="disk-empty">
+                            Disk bilgisi alınamadı.
+                        </div>
+                    )}
+                </div>
+            </section>
+
+            <section className="panel">
+                <div className="panel-header">
+                    <div>
+                        <h2>Cihaz Bilgileri</h2>
+                        <p>
+                            PhotoOS sunucu donanımı ve
+                            işletim sistemi
+                        </p>
+                    </div>
+                </div>
+
+                <div className="device-info-grid">
+                    <InfoItem
+                        label="Cihaz adı"
+                        value={
+                            systemMetrics?.hostname ??
+                            "-"
+                        }
+                    />
+
+                    <InfoItem
+                        label="İşletim sistemi"
+                        value={
+                            systemMetrics
+                                ?.operating_system ??
+                            "-"
+                        }
+                    />
+
+                    <InfoItem
+                        label="İşlemci"
+                        value={
+                            systemMetrics?.cpu_model ??
+                            "-"
+                        }
+                    />
+
+                    <InfoItem
+                        label="Mimari"
+                        value={
+                            systemMetrics?.architecture ??
+                            "-"
+                        }
+                    />
+
+                    <InfoItem
+                        label="Kernel"
+                        value={
+                            systemMetrics
+                                ?.kernel_version ??
+                            "-"
+                        }
+                    />
+
+                    <InfoItem
+                        label="Load average"
+                        value={
+                            systemMetrics
+                                ? [
+                                      systemMetrics
+                                          .load_average_1m,
+                                      systemMetrics
+                                          .load_average_5m,
+                                      systemMetrics
+                                          .load_average_15m,
+                                  ]
+                                      .map((value) =>
+                                          value.toLocaleString(
+                                              "tr-TR",
+                                              {
+                                                  maximumFractionDigits: 2,
+                                              }
+                                          )
+                                      )
+                                      .join(" / ")
+                                : "-"
+                        }
+                    />
+
+                    <InfoItem
+                        label="Aktif ağ kartları"
+                        value={
+                            activeNetworkInterfaces
+                                .map(
+                                    (item) =>
+                                        item.interface
+                                )
+                                .join(", ") || "-"
+                        }
+                    />
+
+                    <InfoItem
+                        label="Toplam RAM"
+                        value={
+                            systemMetrics
+                                ? formatBytes(
+                                      systemMetrics
+                                          .memory
+                                          .total_bytes
+                                  )
+                                : "-"
+                        }
+                    />
+                </div>
+            </section>
+
+            <section className="panel">
+                <div className="panel-header">
+                    <div>
+                        <h2>Medya Kaynakları</h2>
+                        <p>
+                            Telefonlardan gelen medya
+                            dağılımı
+                        </p>
+                    </div>
+                </div>
+
+                <div className="stats-grid">
+                    <StatCard
+                        title="Kamera"
+                        value={
+                            sourceStats?.camera ?? 0
+                        }
+                        icon="📷"
+                    />
+
+                    <StatCard
+                        title="WhatsApp Gelen"
+                        value={
+                            sourceStats
+                                ?.whatsapp_received ?? 0
+                        }
+                        icon="💬"
+                    />
+
+                    <StatCard
+                        title="WhatsApp Gönderilen"
+                        value={
+                            sourceStats
+                                ?.whatsapp_sent ?? 0
+                        }
+                        icon="📤"
+                    />
+
+                    <StatCard
+                        title="Ekran Görüntüleri"
+                        value={
+                            sourceStats
+                                ?.screenshot ?? 0
+                        }
+                        icon="📱"
+                    />
+
+                    <StatCard
+                        title="İndirilenler"
+                        value={
+                            sourceStats?.download ?? 0
+                        }
+                        icon="📥"
+                    />
+
+                    <StatCard
+                        title="Telegram"
+                        value={
+                            sourceStats?.telegram ?? 0
+                        }
+                        icon="✈️"
+                    />
+
+                    <StatCard
+                        title="Diğer"
+                        value={
+                            sourceStats?.other ?? 0
+                        }
+                        icon="🖼️"
+                    />
+                </div>
+            </section>
+        </>
+    );
+}
+
+
+function LiveMetricCard({
+    title,
+    icon,
+    value,
+    progress,
+    subtitle,
+    compact = false,
+    sparkline,
+}: {
+    title: string;
+    icon: string;
+    value: string;
+    progress: number;
+    subtitle: string;
+    compact?: boolean;
+    sparkline?: "download" | "upload";
+}) {
+    const safeProgress = Math.min(
+        100,
+        Math.max(0, Number(progress) || 0)
+    );
+
+    return (
+        <article className="live-metric-card">
+            <div className="live-metric-title">
+                <span className="live-metric-icon">
+                    {icon}
+                </span>
+
+                <h3>{title}</h3>
+            </div>
+
+            <div
+                className="live-metric-ring"
+                style={{
+                    background:
+                        `conic-gradient(` +
+                        `#ef233c ${safeProgress}%, ` +
+                        `#262626 ${safeProgress}% 100%)`,
+                }}
+            >
+                <div className="live-metric-ring-inner">
+                    <strong
+                        className={
+                            compact
+                                ? "compact-value"
+                                : undefined
+                        }
+                    >
+                        {value}
+                    </strong>
+                </div>
+            </div>
+
+            {sparkline && (
+                <div className="metric-sparkline">
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                </div>
+            )}
+
+            <p className="live-metric-subtitle">
+                {subtitle}
+            </p>
+        </article>
+    );
+}
+
+function StatCard({
+    title,
+    value,
+    icon,
+    subtitle,
+    onClick,
+}: {
+    title: string;
+    value: string | number;
+    icon: string;
+    subtitle?: string;
+    onClick?: () => void;
+}) {
+    return (
+        <div
+            className="stat-card"
+            onClick={onClick}
+            style={{
+                cursor: onClick
+                    ? "pointer"
+                    : "default",
+            }}
+        >
+            <div className="stat-card-icon">
+                {icon}
+            </div>
+
+            <div>
+                <p className="stat-card-title">
+                    {title}
+                </p>
+
+                <strong className="stat-card-value">
+                    {value}
+                </strong>
+
+                {subtitle && (
+                    <p className="stat-card-subtitle">
+                        {subtitle}
+                    </p>
+                )}
+            </div>
+        </div>
+    );
+}
+
+function InfoItem({
+    label,
+    value,
+}: {
+    label: string;
+    value: string;
+}) {
+    return (
+        <div className="device-info-item">
+            <span>{label}</span>
+            <strong>{value}</strong>
+        </div>
+    );
+}

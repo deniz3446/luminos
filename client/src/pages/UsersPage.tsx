@@ -1,68 +1,82 @@
-import { useEffect, useState } from "react";
-import { createUser, getUsers } from "../api/users";
-
-type User = {
-    id: number;
-    username: string;
-    created_at: string;
-};
+import { useCallback, useEffect, useState } from "react";
+import {
+    createUser,
+    getUsers,
+    type UserSummary,
+} from "../api/users";
 
 function isValidEmail(email: string) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+function formatUserDate(raw: string) {
+    if (!raw) return "-";
+    const fixed = raw.includes("T") ? raw : raw.replace(" ", "T");
+    const date = new Date(fixed);
+    if (Number.isNaN(date.getTime())) return raw;
+    return date.toLocaleString("tr-TR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+    });
+}
+
 export default function UsersPage() {
-    const [users, setUsers] = useState<User[]>([]);
+    const [users, setUsers] = useState<UserSummary[]>([]);
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(true);
 
     const formValid =
         username.trim().length >= 3 &&
         isValidEmail(email) &&
         password.length >= 8;
 
-    async function loadUsers() {
-        const data = await getUsers();
-        setUsers(data);
-    }
+    const loadUsers = useCallback(async () => {
+        try {
+            setLoading(true);
+            setUsers(await getUsers());
+        } catch (error) {
+            console.error("Kullanıcılar alınamadı:", error);
+            setMessage("Kullanıcı listesi alınamadı.");
+        } finally {
+            setLoading(false);
+        }
+    }, []);
 
     useEffect(() => {
-        loadUsers();
-    }, []);
+        const timer = window.setTimeout(() => void loadUsers(), 0);
+        return () => window.clearTimeout(timer);
+    }, [loadUsers]);
 
     async function handleCreateUser() {
         setMessage("");
-
-        if (username.trim().length < 3) {
-            setMessage("Kullanıcı adı en az 3 karakter olmalı.");
+        if (!formValid) {
+            setMessage("Bilgileri kontrol et.");
             return;
         }
 
-        if (!isValidEmail(email)) {
-            setMessage("Geçerli bir e-posta adresi gir.");
-            return;
-        }
-
-        if (password.length < 8) {
-            setMessage("Şifre en az 8 karakter olmalı.");
-            return;
-        }
-
-        const result = await createUser({
-            username: username.trim(),
-            email: email.trim(),
-            password,
-        });
-
-        setMessage(result.message);
-
-        if (result.success) {
-            setUsername("");
-            setEmail("");
-            setPassword("");
-            await loadUsers();
+        try {
+            const result = await createUser({
+                username: username.trim(),
+                email: email.trim(),
+                password,
+            });
+            setMessage(result.message);
+            if (result.success) {
+                setUsername("");
+                setEmail("");
+                setPassword("");
+                await loadUsers();
+            }
+        } catch (error) {
+            setMessage(
+                error instanceof Error ? error.message : "Kullanıcı oluşturulamadı.",
+            );
         }
     }
 
@@ -77,7 +91,7 @@ export default function UsersPage() {
                 <div className="panel-header">
                     <div>
                         <h2>Yeni Kullanıcı</h2>
-                        <p>Geçerli e-posta ve en az 8 karakter şifre zorunlu.</p>
+                        <p>Yeni hesaplar standart kullanıcı rolüyle oluşturulur.</p>
                     </div>
                 </div>
 
@@ -85,39 +99,30 @@ export default function UsersPage() {
                     <input
                         placeholder="Kullanıcı adı"
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={(event) => setUsername(event.target.value)}
                     />
-
                     <input
                         placeholder="E-posta"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(event) => setEmail(event.target.value)}
                     />
-
                     <input
                         placeholder="Şifre (en az 8 karakter)"
                         type="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(event) => setPassword(event.target.value)}
                     />
-
                     <button
                         className="primary-btn"
-                        onClick={handleCreateUser}
+                        onClick={() => void handleCreateUser()}
                         disabled={!formValid}
-                        style={{
-                            opacity: formValid ? 1 : 0.45,
-                            cursor: formValid ? "pointer" : "not-allowed",
-                        }}
                     >
                         Kullanıcı Oluştur
                     </button>
                 </div>
 
                 {message && (
-                    <p style={{ padding: "0 28px 24px", color: "#ef4444" }}>
-                        {message}
-                    </p>
+                    <p style={{ padding: "0 28px 24px" }}>{message}</p>
                 )}
             </section>
 
@@ -129,25 +134,28 @@ export default function UsersPage() {
                     </div>
                 </div>
 
-                <table className="data-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Kullanıcı</th>
-                            <th>Oluşturulma</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {users.map((user) => (
-                            <tr key={user.id}>
-                                <td>{user.id}</td>
-                                <td>{user.username}</td>
-                                <td>{user.created_at}</td>
+                {loading ? (
+                    <p style={{ padding: "0 28px 24px" }}>Yükleniyor...</p>
+                ) : (
+                    <table className="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Kullanıcı</th>
+                                <th>Oluşturulma</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {users.map((user) => (
+                                <tr key={user.id}>
+                                    <td>{user.id}</td>
+                                    <td>{user.username}</td>
+                                    <td>{formatUserDate(user.created_at)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
             </section>
         </>
     );

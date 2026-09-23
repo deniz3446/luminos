@@ -1,0 +1,764 @@
+   Compiling unicode-ident v1.0.24
+   Compiling libc v0.2.189
+   Compiling proc-macro2 v1.0.107
+   Compiling quote v1.0.47
+   Compiling syn v2.0.119
+   Compiling syn v3.0.5
+    Checking cfg-if v1.0.4
+   Compiling jobserver v0.1.35
+   Compiling cc v1.4.5
+   Compiling synstructure v0.13.2
+    Checking serde_core v1.0.229
+   Compiling zerofrom-derive v0.1.7
+   Compiling yoke-derive v0.8.2
+   Compiling zerovec-derive v0.11.6
+   Compiling displaydoc v0.2.7
+   Compiling serde_derive v1.0.229
+    Checking memchr v2.8.3
+    Checking log v0.4.34
+    Checking smallvec v1.16.1
+    Checking scopeguard v1.2.0
+    Checking pin-project-lite v0.2.17
+    Checking stable_deref_trait v1.2.1
+    Checking futures-core v0.3.34
+    Checking itoa v1.0.18
+    Checking bytes v1.12.1
+    Checking lock_api v0.4.14
+    Checking typenum v1.20.1
+    Checking generic-array v0.14.7
+   Compiling tracing-attributes v0.1.31
+   Compiling thiserror-impl v2.0.20
+    Checking once_cell v1.21.4
+    Checking serde v1.0.229
+    Checking num-traits v0.2.19
+    Checking parking_lot_core v0.9.12
+    Checking futures-sink v0.3.34
+    Checking parking_lot v0.12.5
+    Checking zerofrom v0.1.8
+    Checking errno v0.3.14
+   Compiling yoke v0.8.3
+    Checking signal-hook-registry v1.4.8
+    Checking crypto-common v0.1.7
+    Checking mio v1.2.3
+    Checking socket2 v0.6.5
+   Compiling tokio-macros v2.7.2
+    Checking subtle v2.6.1
+    Checking tracing-core v0.1.36
+    Checking slab v0.4.12
+    Checking tokio v1.53.1
+    Checking zerovec v0.11.8
+    Checking block-buffer v0.10.4
+    Checking digest v0.10.7
+    Checking crossbeam-utils v0.8.23
+    Checking tracing v0.1.44
+   Compiling getrandom v0.2.17
+    Checking thiserror v2.0.20
+    Checking http v1.5.0
+   Compiling zerocopy-derive v0.8.57
+    Checking futures-task v0.3.34
+    Checking futures-io v0.3.34
+    Checking equivalent v1.0.2
+    Checking futures-util v0.3.34
+    Checking zerocopy v0.8.57
+    Checking bitflags v2.13.2
+   Compiling tinystr v0.8.4
+    Checking cpufeatures v0.2.17
+    Checking percent-encoding v2.3.2
+   Compiling litemap v0.8.3
+    Checking writeable v0.6.4
+    Checking hashbrown v0.17.1
+    Checking indexmap v2.14.2
+   Compiling icu_locale_core v2.3.0
+   Compiling potential_utf v0.1.6
+    Checking zerotrie v0.2.5
+   Compiling zeroize_derive v1.5.0
+    Checking simd-adler32 v0.3.10
+    Checking utf8_iter v1.0.4
+    Checking zeroize v1.9.0
+   Compiling icu_collections v2.3.0
+   Compiling icu_provider v2.3.1
+    Checking either v1.18.0
+   Compiling ring v0.17.14
+    Checking base64 v0.22.1
+   Compiling rustls-pki-types v1.15.1
+    Checking httparse v1.10.1
+    Checking crossbeam-epoch v0.9.21
+    Checking form_urlencoded v1.2.2
+    Checking http-body v1.1.0
+    Checking zmij v1.0.23
+    Checking num-integer v0.1.47
+   Compiling openssl-sys v0.9.117
+    Checking icu_properties_data v2.3.0
+    Checking icu_normalizer_data v2.3.0
+   Compiling icu_normalizer v2.3.0
+   Compiling icu_properties v2.3.0
+    Checking num-bigint v0.4.8
+    Checking serde_json v1.0.151
+    Checking crossbeam-deque v0.8.8
+    Checking getrandom v0.3.4
+   Compiling multiversion-macros v0.9.0
+    Checking ppv-lite86 v0.2.21
+    Checking tokio-util v0.7.19
+   Compiling libsqlite3-sys v0.30.1
+    Checking futures-channel v0.3.34
+   Compiling equator-macro v0.4.2
+    Checking adler2 v2.0.1
+    Checking tower-service v0.3.3
+   Compiling untrusted v0.9.0
+    Checking equator v0.4.2
+    Checking multiversion v0.9.0
+    Checking rayon-core v1.13.0
+    Checking idna_adapter v1.2.2
+    Checking fnv v1.0.7
+   Compiling foldhash v0.1.5
+    Checking try-lock v0.2.5
+    Checking core_detect v1.0.0
+    Checking simdutf8 v0.1.5
+    Checking mime v0.3.17
+    Checking httpdate v1.0.3
+   Compiling allocator-api2 v0.2.21
+    Checking atomic-waker v1.1.2
+    Checking h2 v0.4.19
+   Compiling hashbrown v0.15.5
+    Checking encoding_rs v0.8.41
+    Checking want v0.3.1
+   Compiling idna v1.1.0
+   Compiling rustls-webpki v0.103.15
+    Checking aligned-vec v0.6.4
+    Checking crc32fast v1.5.1
+    Checking rand_core v0.9.5
+   Compiling rustls v0.23.44
+    Checking http-body-util v0.1.5
+   Compiling webpki-roots v1.0.9
+    Checking spin v0.9.9
+    Checking sync_wrapper v1.0.2
+   Compiling zstd-sys v2.1.0+zstd.1.5.7
+    Checking tower-layer v0.3.3
+   Compiling crc-catalog v2.5.0
+   Compiling ucd-trie v0.1.7
+    Checking arrayvec v0.7.8
+    Checking foreign-types-shared v0.1.1
+   Compiling parking v2.2.1
+    Checking ryu v1.0.23
+   Compiling openssl v0.10.81
+    Checking serde_urlencoded v0.7.1
+   Compiling event-listener v5.4.2
+   Compiling sha2 v0.10.9
+    Checking foreign-types v0.3.2
+    Checking crc v3.4.0
+   Compiling pest v2.9.1
+   Compiling tokio-stream v0.1.19
+   Compiling webpki-roots v0.26.11
+    Checking rand_chacha v0.9.0
+    Checking v_frame v0.3.9
+   Compiling crossbeam-queue v0.3.14
+    Checking url v2.5.8
+   Compiling const-random-macro v0.1.16
+   Compiling futures-intrusive v0.5.0
+    Checking hyper v1.11.1
+    Checking anyhow v1.0.104
+   Compiling hashlink v0.10.0
+    Checking rayon v1.12.0
+    Checking miniz_oxide v0.9.1
+    Checking num-rational v0.4.2
+    Checking sha1 v0.10.7
+    Checking as-slice v0.2.1
+   Compiling openssl-macros v0.1.1
+    Checking bytemuck v1.25.2
+   Compiling num-conv v0.2.2
+    Checking ipnet v2.12.2
+   Compiling unicase v2.9.0
+   Compiling time-core v0.1.9
+   Compiling time-macros v0.2.32
+   Compiling mime_guess v2.0.5
+   Compiling native-tls v0.2.18
+    Checking hyper-util v0.1.20
+   Compiling sqlx-core v0.8.6
+    Checking aligned v0.4.3
+   Compiling flume v0.11.1
+    Checking flate2 v1.1.10
+   Compiling atoi v2.0.0
+    Checking const-random v0.1.18
+    Checking rand v0.9.5
+   Compiling pest_meta v2.9.1
+    Checking typeid v1.0.3
+    Checking tower v0.5.3
+   Compiling futures-executor v0.3.34
+    Checking rand_core v0.6.4
+    Checking nom v8.0.0
+    Checking no_std_io2 v0.9.4
+   Compiling bzip2-sys v0.1.13+1.0.8
+   Compiling lzma-sys v0.1.20
+   Compiling arg_enum_proc_macro v0.3.4
+   Compiling profiling-procmacros v1.0.18
+    Checking powerfmt v0.2.0
+    Checking deranged v0.5.8
+    Checking foldhash v0.2.0
+    Checking openssl-probe v0.2.1
+    Checking quick-error v2.0.1
+    Checking y4m v0.8.0
+    Checking data-encoding v2.11.1
+    Checking av-scenechange v0.14.1
+    Checking tungstenite v0.29.0
+    Checking av1-grain v0.2.5
+    Checking time v0.3.55
+   Compiling zstd-safe v7.3.0
+    Checking hashbrown v0.16.1
+    Checking profiling v1.0.18
+    Checking bitstream-io v4.10.0
+   Compiling sqlx-sqlite v0.8.6
+   Compiling pest_generator v2.9.1
+    Checking dlv-list v0.5.2
+    Checking libm v0.2.16
+    Checking num-complex v0.4.6
+    Checking maybe-rayon v0.1.1
+    Checking miniz_oxide v0.8.9
+    Checking itertools v0.14.0
+    Checking half v2.7.1
+    Checking raw-cpuid v11.6.0
+    Checking inout v0.1.4
+   Compiling num-derive v0.4.2
+   Compiling simd_helpers v0.1.0
+    Checking zune-core v0.5.3
+    Checking imgref v1.12.3
+    Checking hashbrown v0.14.5
+    Checking new_debug_unreachable v1.0.6
+    Checking pulp-wasm-simd-flag v0.1.1
+    Checking regex-syntax v0.8.11
+    Checking winnow v1.0.4
+    Checking weezl v0.1.12
+    Checking reborrow v0.5.5
+   Compiling sqlx-macros-core v0.8.6
+    Checking toml_parser v1.1.3+spec-1.1.0
+    Checking pulp v0.22.3
+    Checking regex-automata v0.4.18
+    Checking ordered-multimap v0.7.3
+    Checking rav1e v0.8.1
+    Checking loop9 v0.1.5
+    Checking zune-jpeg v0.5.15
+    Checking cipher v0.4.4
+   Compiling pest_derive v2.9.1
+    Checking multer v3.1.0
+    Checking hashlink v0.11.1
+    Checking tokio-native-tls v0.3.1
+    Checking erased-serde v0.4.10
+    Checking tokio-tungstenite v0.29.0
+    Checking avif-serialize v0.8.9
+    Checking axum-core v0.5.6
+    Checking zune-inflate v0.2.54
+    Checking fdeflate v0.3.7
+    Checking hmac v0.12.1
+    Checking serde_path_to_error v0.1.20
+    Checking serde_spanned v1.1.1
+    Checking toml_datetime v1.1.1+spec-1.1.0
+    Checking http-range-header v0.4.2
+    Checking rgb v0.8.53
+    Checking lazy_static v1.5.0
+    Checking base64ct v1.8.3
+    Checking fax v0.2.7
+    Checking arraydeque v0.5.1
+    Checking unicode-segmentation v1.13.3
+    Checking byteorder-lite v0.1.0
+    Checking byteorder v1.5.0
+    Checking matchit v0.8.4
+    Checking color_quant v1.1.0
+    Checking lebe v0.5.3
+    Checking bumpalo v3.20.3
+    Checking pxfm v0.1.30
+    Checking bit_field v0.10.3
+    Checking exr v1.74.2
+    Checking moxcms v0.8.1
+    Checking zopfli v0.8.3
+    Checking axum v0.8.9
+    Checking gif v0.14.2
+    Checking lzma-rs v0.3.0
+    Checking convert_case v0.6.0
+    Checking image-webp v0.2.4
+    Checking yaml-rust2 v0.11.1
+    Checking tiff v0.11.3
+    Checking password-hash v0.5.0
+    Checking ravif v0.13.0
+    Checking sharded-slab v0.1.7
+    Checking ron v0.12.2
+    Checking toml v1.1.6+spec-1.1.0
+    Checking tower-http v0.6.11
+    Checking pbkdf2 v0.12.2
+    Checking png v0.18.1
+    Checking serde-untagged v0.1.9
+    Checking hyper-tls v0.6.0
+    Checking bzip2 v0.5.2
+    Checking xz2 v0.1.7
+    Checking json5 v0.4.1
+    Checking zstd v0.13.3
+    Checking aes v0.8.4
+    Checking matchers v0.2.0
+    Checking rust-ini v0.21.3
+   Compiling sqlx-macros v0.8.6
+    Checking getrandom v0.4.3
+    Checking simple_asn1 v0.6.4
+    Checking rand_chacha v0.3.1
+    Checking qoi v0.4.1
+    Checking pem v3.0.6
+    Checking blake2 v0.10.6
+    Checking tracing-log v0.2.0
+    Checking thread_local v1.1.10
+   Compiling async-trait v0.1.92
+    Checking iana-time-zone v0.1.65
+    Checking nu-ansi-term v0.50.3
+    Checking deflate64 v0.1.12
+    Checking mutate_once v0.1.2
+    Checking constant_time_eq v0.3.1
+    Checking fastrand v2.5.0
+    Checking pathdiff v0.2.3
+    Checking axum-extra v0.10.3
+    Checking config v0.15.25
+    Checking zip v2.4.2
+    Checking kamadak-exif v0.6.1
+    Checking tracing-subscriber v0.3.23
+    Checking chrono v0.4.45
+    Checking sqlx v0.8.6
+    Checking argon2 v0.5.3
+    Checking jsonwebtoken v9.3.1
+    Checking image v0.25.10
+    Checking rand v0.8.8
+    Checking uuid v1.26.1
+    Checking reqwest v0.12.28
+    Checking core v0.1.0 (/home/photoos/PhotoOS-worktrees/phase2-backend-security/core)
+    Checking common v0.1.0 (/home/photoos/PhotoOS-worktrees/phase2-backend-security/common)
+    Checking media v0.1.0 (/home/photoos/PhotoOS-worktrees/phase2-backend-security/media)
+    Checking auth v0.1.0 (/home/photoos/PhotoOS-worktrees/phase2-backend-security/auth)
+    Checking database v0.1.0 (/home/photoos/PhotoOS-worktrees/phase2-backend-security/database)
+    Checking server v0.1.0 (/home/photoos/PhotoOS-worktrees/phase2-backend-security/server)
+warning: unused import: `Claims`
+ --> server/src/auth/mod.rs:8:5
+  |
+8 |     Claims,
+  |     ^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `ConnectOptions`
+ --> server/src/database/mod.rs:6:5
+  |
+6 |     ConnectOptions,
+  |     ^^^^^^^^^^^^^^
+
+warning: unused imports: `delete` and `put`
+ --> server/src/routes/automation.rs:3:15
+  |
+3 |     routing::{delete, get, post, put},
+  |               ^^^^^^             ^^^
+
+warning: unused import: `put`
+ --> server/src/routes/cloud_sync.rs:3:20
+  |
+3 |     routing::{get, put},
+  |                    ^^^
+
+warning: unused import: `delete`
+ --> server/src/routes/docker.rs:3:15
+  |
+3 |     routing::{delete, get, post},
+  |               ^^^^^^
+
+warning: unused imports: `delete`, `post`, and `put`
+ --> server/src/routes/cloud_accounts.rs:3:15
+  |
+3 |     routing::{delete, get, post, put},
+  |               ^^^^^^       ^^^^  ^^^
+
+warning: unused imports: `AllocationStrategy` and `DiskAllocator`
+ --> server/src/storage/mod.rs:6:21
+  |
+6 | pub use allocator::{AllocationStrategy, DiskAllocator};
+  |                     ^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^
+
+warning: unused imports: `DiskStatus` and `StorageDisk`
+ --> server/src/storage/mod.rs:8:16
+  |
+8 | pub use disk::{DiskStatus, StorageDisk};
+  |                ^^^^^^^^^^  ^^^^^^^^^^^
+
+warning: unused imports: `MediaKind`, `StorageError`, and `StorageTarget`
+  --> server/src/storage/mod.rs:10:18
+   |
+10 | pub use engine::{MediaKind, StorageEngine, StorageError, StorageTarget};
+   |                  ^^^^^^^^^                 ^^^^^^^^^^^^  ^^^^^^^^^^^^^
+
+warning: unused imports: `PoolStatus` and `StoragePool`
+  --> server/src/storage/mod.rs:12:16
+   |
+12 | pub use pool::{PoolStatus, StoragePool};
+   |                ^^^^^^^^^^  ^^^^^^^^^^^
+
+warning: function `mirror_source_path` is never used
+   --> server/src/config/mod.rs:355:8
+    |
+355 | pub fn mirror_source_path() -> &'static str {
+    |        ^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `mirror_target_root_path` is never used
+   --> server/src/config/mod.rs:361:8
+    |
+361 | pub fn mirror_target_root_path() -> &'static str {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `mirror_target_path` is never used
+   --> server/src/config/mod.rs:373:8
+    |
+373 | pub fn mirror_target_path() -> &'static str {
+    |        ^^^^^^^^^^^^^^^^^^
+
+warning: function `internal_api_base_url` is never used
+   --> server/src/config/mod.rs:386:8
+    |
+386 | pub fn internal_api_base_url() -> String {
+    |        ^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `CpuSnapshot` is never constructed
+ --> server/src/handlers/system_metrics.rs:7:8
+  |
+7 | struct CpuSnapshot {
+  |        ^^^^^^^^^^^
+
+warning: struct `MemoryMetrics` is never constructed
+  --> server/src/handlers/system_metrics.rs:13:12
+   |
+13 | pub struct MemoryMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `NetworkInterfaceMetrics` is never constructed
+  --> server/src/handlers/system_metrics.rs:21:12
+   |
+21 | pub struct NetworkInterfaceMetrics {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `DiskMetrics` is never constructed
+  --> server/src/handlers/system_metrics.rs:28:12
+   |
+28 | pub struct DiskMetrics {
+   |            ^^^^^^^^^^^
+
+warning: struct `SystemMetrics` is never constructed
+  --> server/src/handlers/system_metrics.rs:42:12
+   |
+42 | pub struct SystemMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: function `read_cpu_snapshot` is never used
+  --> server/src/handlers/system_metrics.rs:63:4
+   |
+63 | fn read_cpu_snapshot() -> Option<CpuSnapshot> {
+   |    ^^^^^^^^^^^^^^^^^
+
+warning: function `cpu_usage_percent` is never used
+   --> server/src/handlers/system_metrics.rs:103:10
+    |
+103 | async fn cpu_usage_percent() -> f64 {
+    |          ^^^^^^^^^^^^^^^^^
+
+warning: function `read_memory_metrics` is never used
+   --> server/src/handlers/system_metrics.rs:126:4
+    |
+126 | fn read_memory_metrics() -> MemoryMetrics {
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_network_metrics` is never used
+   --> server/src/handlers/system_metrics.rs:168:4
+    |
+168 | fn read_network_metrics() -> Vec<NetworkInterfaceMetrics> {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_uptime_seconds` is never used
+   --> server/src/handlers/system_metrics.rs:202:4
+    |
+202 | fn read_uptime_seconds() -> u64 {
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_load_average` is never used
+   --> server/src/handlers/system_metrics.rs:215:4
+    |
+215 | fn read_load_average() -> (f64, f64, f64) {
+    |    ^^^^^^^^^^^^^^^^^
+
+warning: function `read_hostname` is never used
+   --> server/src/handlers/system_metrics.rs:230:4
+    |
+230 | fn read_hostname() -> String {
+    |    ^^^^^^^^^^^^^
+
+warning: function `read_os_name` is never used
+   --> server/src/handlers/system_metrics.rs:237:4
+    |
+237 | fn read_os_name() -> String {
+    |    ^^^^^^^^^^^^
+
+warning: function `read_kernel_version` is never used
+   --> server/src/handlers/system_metrics.rs:249:4
+    |
+249 | fn read_kernel_version() -> String {
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_cpu_model` is never used
+   --> server/src/handlers/system_metrics.rs:256:4
+    |
+256 | fn read_cpu_model() -> String {
+    |    ^^^^^^^^^^^^^^
+
+warning: function `read_cpu_cores` is never used
+   --> server/src/handlers/system_metrics.rs:273:4
+    |
+273 | fn read_cpu_cores() -> usize {
+    |    ^^^^^^^^^^^^^^
+
+warning: function `json_string` is never used
+   --> server/src/handlers/system_metrics.rs:284:4
+    |
+284 | fn json_string(value: Option<&serde_json::Value>) -> String {
+    |    ^^^^^^^^^^^
+
+warning: function `json_u64` is never used
+   --> server/src/handlers/system_metrics.rs:292:4
+    |
+292 | fn json_u64(value: Option<&serde_json::Value>) -> u64 {
+    |    ^^^^^^^^
+
+warning: function `child_value` is never used
+   --> server/src/handlers/system_metrics.rs:302:4
+    |
+302 | fn child_value(device: &serde_json::Value, key: &str) -> String {
+    |    ^^^^^^^^^^^
+
+warning: function `read_mount_usage` is never used
+   --> server/src/handlers/system_metrics.rs:324:10
+    |
+324 | async fn read_mount_usage(mountpoint: &str) -> (u64, u64, f64) {
+    |          ^^^^^^^^^^^^^^^^
+
+warning: function `read_disks` is never used
+   --> server/src/handlers/system_metrics.rs:367:10
+    |
+367 | async fn read_disks() -> Vec<DiskMetrics> {
+    |          ^^^^^^^^^^
+
+warning: function `system_metrics` is never used
+   --> server/src/handlers/system_metrics.rs:440:14
+    |
+440 | pub async fn system_metrics() -> Json<SystemMetrics> {
+    |              ^^^^^^^^^^^^^^
+
+warning: struct `HistoryQuery` is never constructed
+  --> server/src/handlers/storage_history.rs:14:12
+   |
+14 | pub struct HistoryQuery {
+   |            ^^^^^^^^^^^^
+
+warning: struct `TemperatureHistoryPoint` is never constructed
+  --> server/src/handlers/storage_history.rs:19:12
+   |
+19 | pub struct TemperatureHistoryPoint {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `IoHistoryPoint` is never constructed
+  --> server/src/handlers/storage_history.rs:25:12
+   |
+25 | pub struct IoHistoryPoint {
+   |            ^^^^^^^^^^^^^^
+
+warning: struct `DeviceHistory` is never constructed
+  --> server/src/handlers/storage_history.rs:35:12
+   |
+35 | pub struct DeviceHistory {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `StorageHistoryResponse` is never constructed
+  --> server/src/handlers/storage_history.rs:42:12
+   |
+42 | pub struct StorageHistoryResponse {
+   |            ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `StorageAlert` is never constructed
+  --> server/src/handlers/storage_history.rs:50:12
+   |
+50 | pub struct StorageAlert {
+   |            ^^^^^^^^^^^^
+
+warning: struct `StorageAlertsResponse` is never constructed
+  --> server/src/handlers/storage_history.rs:62:12
+   |
+62 | pub struct StorageAlertsResponse {
+   |            ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `range_seconds` is never used
+   --> server/src/handlers/storage_history.rs:256:4
+    |
+256 | fn range_seconds(range: &str) -> i64 {
+    |    ^^^^^^^^^^^^^
+
+warning: function `get_storage_history` is never used
+   --> server/src/handlers/storage_history.rs:260:14
+    |
+260 | pub async fn get_storage_history(State(state): State<AppState>, Query(query): Query<HistoryQuery>) -> Json<StorageHistoryResponse> {
+    |              ^^^^^^^^^^^^^^^^^^^
+
+warning: function `get_storage_alerts` is never used
+   --> server/src/handlers/storage_history.rs:288:14
+    |
+288 | pub async fn get_storage_alerts(State(state): State<AppState>) -> Json<StorageAlertsResponse> {
+    |              ^^^^^^^^^^^^^^^^^^
+
+warning: struct `Media` is never constructed
+ --> server/src/models/media.rs:5:12
+  |
+5 | pub struct Media {
+  |            ^^^^^
+
+warning: field `storage` is never read
+  --> server/src/state.rs:11:9
+   |
+ 8 | pub struct AppState {
+   |            -------- field in this struct
+...
+11 |     pub storage: Arc<StorageEngine>,
+   |         ^^^^^^^
+   |
+   = note: `AppState` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: variant `LowestUsage` is never constructed
+ --> server/src/storage/allocator.rs:6:5
+  |
+4 | pub enum AllocationStrategy {
+  |          ------------------ variant in this enum
+5 |     MostFreeSpace,
+6 |     LowestUsage,
+  |     ^^^^^^^^^^^
+  |
+  = note: `AllocationStrategy` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `strategy` is never read
+  --> server/src/storage/allocator.rs:11:5
+   |
+10 | pub struct DiskAllocator {
+   |            ------------- field in this struct
+11 |     strategy: AllocationStrategy,
+   |     ^^^^^^^^
+   |
+   = note: `DiskAllocator` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: associated items `new` and `choose` are never used
+  --> server/src/storage/allocator.rs:23:12
+   |
+22 | impl DiskAllocator {
+   | ------------------ associated items in this implementation
+23 |     pub fn new(strategy: AllocationStrategy) -> Self {
+   |            ^^^
+...
+27 |     pub fn choose<'a>(
+   |            ^^^^^^
+
+warning: methods `with_reserve_bytes` and `disabled` are never used
+  --> server/src/storage/disk.rs:44:12
+   |
+29 | impl StorageDisk {
+   | ---------------- methods in this implementation
+...
+44 |     pub fn with_reserve_bytes(mut self, reserve_bytes: u64) -> Self {
+   |            ^^^^^^^^^^^^^^^^^^
+...
+49 |     pub fn disabled(mut self) -> Self {
+   |            ^^^^^^^^
+
+warning: enum `MediaKind` is never used
+  --> server/src/storage/engine.rs:11:10
+   |
+11 | pub enum MediaKind {
+   |          ^^^^^^^^^
+
+warning: method `directory_name` is never used
+  --> server/src/storage/engine.rs:21:12
+   |
+20 | impl MediaKind {
+   | -------------- method in this implementation
+21 |     pub fn directory_name(self) -> &'static str {
+   |            ^^^^^^^^^^^^^^
+
+warning: struct `StorageTarget` is never constructed
+  --> server/src/storage/engine.rs:34:12
+   |
+34 | pub struct StorageTarget {
+   |            ^^^^^^^^^^^^^
+
+warning: variants `NoWritableDisk` and `InvalidFilename` are never constructed
+  --> server/src/storage/engine.rs:48:5
+   |
+47 | pub enum StorageError {
+   |          ------------ variants in this enum
+48 |     NoWritableDisk { required_bytes: u64 },
+   |     ^^^^^^^^^^^^^^
+49 |
+50 |     InvalidFilename,
+   |     ^^^^^^^^^^^^^^^
+   |
+   = note: `StorageError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: associated items `new`, `status`, and `allocate` are never used
+   --> server/src/storage/engine.rs:88:12
+    |
+ 87 | impl StorageEngine {
+    | ------------------ associated items in this implementation
+ 88 |     pub fn new(pool: StoragePool) -> Self {
+    |            ^^^
+...
+103 |     pub async fn status(&self) -> PoolStatus {
+    |                  ^^^^^^
+...
+107 |     pub async fn allocate(
+    |                  ^^^^^^^^
+
+warning: function `validate_filename` is never used
+   --> server/src/storage/engine.rs:125:4
+    |
+125 | fn validate_filename(filename: &str) -> Result<(), StorageError> {
+    |    ^^^^^^^^^^^^^^^^^
+
+warning: function `create_target` is never used
+   --> server/src/storage/engine.rs:137:4
+    |
+137 | fn create_target(disk: &DiskStatus, media_kind: MediaKind, filename: &str) -> StorageTarget {
+    |    ^^^^^^^^^^^^^
+
+warning: fields `name` and `allocator` are never read
+  --> server/src/storage/pool.rs:11:9
+   |
+10 | pub struct StoragePool {
+   |            ----------- fields in this struct
+11 |     pub name: String,
+   |         ^^^^
+12 |     pub disks: Vec<StorageDisk>,
+13 |     allocator: DiskAllocator,
+   |     ^^^^^^^^^
+   |
+   = note: `StoragePool` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: struct `PoolStatus` is never constructed
+  --> server/src/storage/pool.rs:17:12
+   |
+17 | pub struct PoolStatus {
+   |            ^^^^^^^^^^
+
+warning: methods `status` and `choose_disk` are never used
+  --> server/src/storage/pool.rs:62:18
+   |
+30 | impl StoragePool {
+   | ---------------- methods in this implementation
+...
+62 |     pub async fn status(&self) -> PoolStatus {
+   |                  ^^^^^^
+...
+81 |     pub async fn choose_disk(&self, required_bytes: u64) -> Option<DiskStatus> {
+   |                  ^^^^^^^^^^^
+
+warning: `server` (bin "server") generated 62 warnings (run `cargo fix --bin "server" -p server` to apply 10 suggestions)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4m 07s

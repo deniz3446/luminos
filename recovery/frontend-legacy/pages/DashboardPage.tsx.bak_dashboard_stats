@@ -1,0 +1,296 @@
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { api } from "../api/client";
+
+type User = {
+    id: number;
+    username: string;
+    created_at: string;
+};
+
+type StorageInfo = {
+    total_bytes: number;
+    used_bytes: number;
+    free_bytes: number;
+};
+
+type Photo = {
+    id: number;
+    filename: string;
+    original_name: string;
+    url: string;
+    size_bytes: number;
+    mime_type: string;
+    uploaded_at: string;
+    taken_at?: string | null;
+    user_id: number;
+    owner_username: string;
+};
+
+type PhotoCountResponse = {
+    count: number;
+};
+
+function isVideo(item: Photo) {
+    return item.mime_type?.startsWith("video/");
+}
+
+function formatBytesToGB(bytes: number) {
+    return Math.round(bytes / 1024 / 1024 / 1024);
+}
+
+export default function DashboardPage() {
+    const navigate = useNavigate();
+
+    const [users, setUsers] = useState<User[]>([]);
+    const [photos, setPhotos] = useState<Photo[]>([]);
+    const [storage, setStorage] = useState<StorageInfo | null>(null);
+    const [totalMediaCount, setTotalMediaCount] = useState(0);
+    const [lastUpdated, setLastUpdated] = useState("");
+    const [autoScanStatus, setAutoScanStatus] = useState("");
+
+    async function loadDashboard() {
+        try {
+            const ts = Date.now();
+
+            const [usersRes, photosRes, storageRes, photoCountRes] = await Promise.all([
+                api(`/api/v1/users?ts=${ts}`),
+                api(`/api/v1/photos?limit=10&offset=0&ts=${ts}`),
+                api(`/api/v1/storage?ts=${ts}`),
+                api(`/api/v1/photos/count?ts=${ts}`),
+            ]);
+
+            const usersData = await usersRes.json();
+            const photosData = await photosRes.json();
+            const storageData = await storageRes.json();
+            const photoCountData: PhotoCountResponse = await photoCountRes.json();
+
+            setUsers(Array.isArray(usersData) ? usersData : []);
+            setPhotos(Array.isArray(photosData) ? photosData : []);
+            setStorage(storageData ?? null);
+            setTotalMediaCount(
+                typeof photoCountData?.count === "number" ? photoCountData.count : 0
+            );
+            setLastUpdated(new Date().toLocaleTimeString("tr-TR"));
+        } catch (err) {
+            console.error("Dashboard verileri alınamadı:", err);
+        }
+    }
+
+    async function runAutoScan() {
+        try {
+            setAutoScanStatus("Yeni medya kontrol ediliyor...");
+
+            await api("/api/v1/system/rescan-media?limit=100&offset=0", {
+                method: "POST",
+            });
+
+            setAutoScanStatus("Yeni medya kontrolü tamamlandı.");
+            await loadDashboard();
+        } catch (err) {
+            console.error("Otomatik medya kontrolü hatası:", err);
+            setAutoScanStatus("Yeni medya kontrolü yapılamadı.");
+        }
+    }
+
+    useEffect(() => {
+        loadDashboard();
+        runAutoScan();
+
+        const timer = setInterval(async () => {
+            await runAutoScan();
+        }, 30000);
+
+        return () => clearInterval(timer);
+    }, []);
+
+    const photoCount = useMemo(
+        () => photos.filter((p) => !isVideo(p)).length,
+        [photos]
+    );
+
+    const videoCount = useMemo(
+        () => photos.filter((p) => isVideo(p)).length,
+        [photos]
+    );
+
+    const recentMedia = useMemo(() => {
+        return [...photos]
+            .sort((a, b) => {
+                const aTime = new Date(a.uploaded_at.replace(" ", "T")).getTime();
+                const bTime = new Date(b.uploaded_at.replace(" ", "T")).getTime();
+                return bTime - aTime;
+            })
+            .slice(0, 10);
+    }, [photos]);
+
+    const mediaByUser = useMemo(() => {
+        const map = new Map<string, number>();
+
+        for (const item of photos) {
+            const owner = item.owner_username || "Bilinmeyen";
+            map.set(owner, (map.get(owner) ?? 0) + 1);
+        }
+
+        return Array.from(map.entries())
+            .map(([username, count]) => ({ username, count }))
+            .sort((a, b) => b.count - a.count);
+    }, [photos]);
+
+    return (
+        <>
+            <div className="page-title">
+                <h1>Dashboard</h1>
+                <p>PhotoOS Yönetim Paneli</p>
+                {lastUpdated && <p>Son güncelleme: {lastUpdated}</p>}
+                {autoScanStatus && <p>{autoScanStatus}</p>}
+            </div>
+
+            <div className="stats-grid">
+                <StatCard title="Kullanıcılar" value={users.length} icon="👥" />
+                <StatCard title="Toplam Medya" value={totalMediaCount} icon="🗂️" />
+                <StatCard title="Son 10 içindeki Fotoğraflar" value={photoCount} icon="📷" />
+                <StatCard title="Son 10 içindeki Videolar" value={videoCount} icon="🎥" />
+                <StatCard
+                    title="Kullanılan GB"
+                    value={storage ? formatBytesToGB(storage.used_bytes) : 0}
+                    icon="💾"
+                />
+            </div>
+
+            <section className="panel" style={{ marginBottom: 24 }}>
+                <div className="panel-header">
+                    <div>
+                        <h2>Kullanıcılar</h2>
+                        <p>Sistemde kayıtlı kullanıcılar</p>
+                    </div>
+
+                    <button className="primary-btn" onClick={() => navigate("/users")}>
+                        Yeni Kullanıcı
+                    </button>
+                </div>
+
+                <table className="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Kullanıcı</th>
+                            <th>Oluşturulma</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {users.map((user) => (
+                            <tr key={user.id}>
+                                <td>{user.id}</td>
+                                <td>{user.username}</td>
+                                <td>{user.created_at}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </section>
+
+            <section className="panel" style={{ marginBottom: 24 }}>
+                <div className="panel-header">
+                    <div>
+                        <h2>Son Yüklenen Medyalar</h2>
+                        <p>En son eklenen 10 kayıt</p>
+                    </div>
+
+                    <button className="primary-btn" onClick={() => navigate("/photos")}>
+                        Fotoğraflara Git
+                    </button>
+                </div>
+
+                <table className="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Dosya</th>
+                            <th>Sahip</th>
+                            <th>Tür</th>
+                            <th>Yüklenme</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {recentMedia.map((item) => (
+                            <tr key={item.id}>
+                                <td>{item.id}</td>
+                                <td>{item.original_name || item.filename}</td>
+                                <td>{item.owner_username}</td>
+                                <td>{isVideo(item) ? "Video" : "Fotoğraf"}</td>
+                                <td>{item.uploaded_at}</td>
+                            </tr>
+                        ))}
+
+                        {recentMedia.length === 0 && (
+                            <tr>
+                                <td colSpan={5} style={{ textAlign: "center", padding: 20 }}>
+                                    Henüz medya yok
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </section>
+
+            <section className="panel">
+                <div className="panel-header">
+                    <div>
+                        <h2>Kullanıcı Başına Medya</h2>
+                        <p>Son 10 kayıt içindeki dağılım</p>
+                    </div>
+                </div>
+
+                <table className="data-table">
+                    <thead>
+                        <tr>
+                            <th>Kullanıcı</th>
+                            <th>Medya Sayısı</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {mediaByUser.map((row) => (
+                            <tr key={row.username}>
+                                <td>{row.username}</td>
+                                <td>{row.count}</td>
+                            </tr>
+                        ))}
+
+                        {mediaByUser.length === 0 && (
+                            <tr>
+                                <td colSpan={2} style={{ textAlign: "center", padding: 20 }}>
+                                    Veri yok
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </section>
+        </>
+    );
+}
+
+function StatCard({
+    title,
+    value,
+    icon,
+}: {
+    title: string;
+    value: number;
+    icon: string;
+}) {
+    return (
+        <div className="stat-card">
+            <div className="stat-icon">{icon}</div>
+
+            <div className="stat-content">
+                <h3>{title}</h3>
+                <strong>{value}</strong>
+            </div>
+        </div>
+    );
+}

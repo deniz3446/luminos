@@ -1,0 +1,34 @@
+[Unit]
+Description=PhotoOS Update Agent
+After=network-online.target photoos.service
+After=photoos-update-helper.service
+Wants=network-online.target
+Wants=photoos-update-helper.service
+RequiresMountsFor=/opt/photoos /var/lib/photoos/update /etc/photoos
+ConditionPathExists=/opt/photoos/update-agent/update_agent.py
+ConditionPathExists=/etc/photoos/update-agent.env
+
+[Service]
+Type=simple
+User=photoos
+Group=photoos
+WorkingDirectory=/var/lib/photoos/update
+
+ExecStart=/usr/bin/python3 /opt/photoos/update-agent/update_agent.py
+
+Environment=PYTHONUNBUFFERED=1
+Environment=PHOTOOS_UPDATE_TOKEN_FILE=/etc/photoos/update-agent.env
+
+Restart=on-failure
+RestartSec=3
+UMask=0027
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/photoos/update
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+[Install]
+WantedBy=multi-user.target

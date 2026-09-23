@@ -1,0 +1,1300 @@
+import { useEffect, useMemo, useState } from "react";
+
+type Photo = {
+    id: number;
+    filename: string;
+    original_name: string;
+    url: string;
+    size_bytes: number;
+    mime_type: string;
+    uploaded_at: string;
+    taken_at?: string | null;
+    user_id: number;
+    owner_username: string;
+};
+
+const API_URL = "http://192.168.1.41:8080";
+
+function isVideo(photo: Photo) {
+    return photo.mime_type.startsWith("video/");
+}
+
+function parsePhotoDate(raw?: string | null) {
+    if (!raw) return null;
+
+    const fixed = raw.replace(" ", "T");
+    const d = new Date(fixed);
+
+    return Number.isNaN(d.getTime()) ? null : d;
+}
+function getDate(photo: Photo) {
+    return parsePhotoDate(photo.taken_at) || parsePhotoDate(photo.uploaded_at);
+}
+
+function monthName(month: number) {
+    return new Date(2026, month, 1).toLocaleDateString("tr-TR", {
+        month: "long",
+    });
+}
+
+export default function PhotosPage() {
+
+    const [viewerOpen, setViewerOpen] = useState(false);
+    const [viewerIndex, setViewerIndex] = useState<number | null>(null);
+    const [viewerZoom, setViewerZoom] = useState(1);
+
+
+    const [photos, setPhotos] = useState<Photo[]>([]);
+    const [selected, setSelected] = useState<Photo | null>(null);
+    const [ownerFilter, setOwnerFilter] = useState("all");
+    const [selectedYear, setSelectedYear] = useState<string>("");
+    const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
+    const [selectedFiles, setSelectedFiles] = useState<string[]>([]);
+    const [downloadingZip, setDownloadingZip] = useState(false);
+    const [selectionMode, setSelectionMode] = useState(false);
+
+    function loadPhotos() {
+        fetch(`${API_URL}/api/v1/photos`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => setPhotos(Array.isArray(data) ? data : []))
+            .catch((err) => console.error("Fotoğraflar alınamadı:", err));
+    }
+
+    useEffect(() => {
+        loadPhotos();
+    }, []);
+
+
+    const owners = useMemo(() => {
+        return Array.from(
+            new Set(photos.map((p) => p.owner_username).filter(Boolean))
+        ).sort((a, b) => a.localeCompare(b, "tr"));
+    }, [photos]);
+
+    const filtered = useMemo(() => {
+        return ownerFilter === "all"
+            ? photos
+            : photos.filter((p) => p.owner_username === ownerFilter);
+    }, [photos, ownerFilter]);
+
+    const years = useMemo(() => {
+        const map: Record<string, Photo[]> = {};
+
+        for (const photo of filtered) {
+            const d = getDate(photo);
+            const year = d ? String(d.getFullYear()) : "Bilinmeyen";
+            map[year] ??= [];
+            map[year].push(photo);
+        }
+
+        return Object.entries(map)
+            .map(([year, items]) => ({ year, items }))
+            .sort((a, b) => Number(b.year) - Number(a.year));
+    }, [filtered]);
+
+    useEffect(() => {
+        if (!selectedYear && years.length > 0) {
+            setSelectedYear(years[0].year);
+        }
+    }, [years, selectedYear]);
+
+    const selectedYearPhotos = useMemo(() => {
+        return years.find((y) => y.year === selectedYear)?.items ?? [];
+    }, [years, selectedYear]);
+
+    const months = useMemo(() => {
+        const map: Record<number, Photo[]> = {};
+
+        for (const photo of selectedYearPhotos) {
+            const d = getDate(photo);
+            if (!d) continue;
+
+            const month = d.getMonth();
+            map[month] ??= [];
+            map[month].push(photo);
+        }
+
+        return Object.entries(map)
+            .map(([month, items]) => ({
+                month: Number(month),
+                name: monthName(Number(month)),
+                items,
+            }))
+            .sort((a, b) => b.month - a.month);
+    }, [selectedYearPhotos]);
+
+    useEffect(() => {
+        if (months.length > 0) {
+            setSelectedMonth((old) =>
+                old !== null && months.some((m) => m.month === old)
+                    ? old
+                    : months[0].month
+            );
+        }
+    }, [months]);
+
+    const selectedMonthPhotos = useMemo(() => {
+        return months.find((m) => m.month === selectedMonth)?.items ?? [];
+    }, [months, selectedMonth]);
+
+    const visiblePhotos = useMemo(() => {
+        return selectedMonthPhotos
+            .slice()
+            .sort((a, b) => {
+                
+
+    const selectedPhoto =
+        viewerIndex !== null && viewerIndex >= 0 && viewerIndex < photos.length
+            ? photos[viewerIndex]
+            : null;
+
+    const viewerButtonStyle: React.CSSProperties = {
+        background: "#ffffff",
+        color: "#111",
+        border: "none",
+        borderRadius: 8,
+        padding: "8px 12px",
+        cursor: "pointer",
+        fontWeight: 600,
+    };
+
+    function openViewer(index: number) {
+        setViewerIndex(index);
+        setViewerZoom(1);
+        setViewerOpen(true);
+    }
+
+    function closeViewer() {
+        setViewerOpen(false);
+        setViewerIndex(null);
+        setViewerZoom(1);
+    }
+
+    function zoomIn() {
+        setViewerZoom((z) => Math.min(z + 0.25, 5));
+    }
+
+    function zoomOut() {
+        setViewerZoom((z) => Math.max(z - 0.25, 0.5));
+    }
+
+    function resetZoom() {
+        setViewerZoom(1);
+    }
+
+    function showPrevPhoto() {
+        if (viewerIndex === null || photos.length === 0) return;
+        setViewerIndex(viewerIndex === 0 ? photos.length - 1 : viewerIndex - 1);
+        setViewerZoom(1);
+    }
+
+    function showNextPhoto() {
+        if (viewerIndex === null || photos.length === 0) return;
+        setViewerIndex(viewerIndex === photos.length - 1 ? 0 : viewerIndex + 1);
+        setViewerZoom(1);
+    }
+
+    useEffect(() => {
+        if (!viewerOpen) return;
+
+        function onKeyDown(e: KeyboardEvent) {
+            if (e.key === "Escape") closeViewer();
+            if (e.key === "ArrowLeft") showPrevPhoto();
+            if (e.key === "ArrowRight") showNextPhoto();
+            if (e.key === "+" || e.key === "=") zoomIn();
+            if (e.key === "-") zoomOut();
+        }
+
+        window.addEventListener("keydown", onKeyDown);
+        return () => window.removeEventListener("keydown", onKeyDown);
+    }, [viewerOpen, viewerIndex, photos.length]);
+
+return (getDate(b)?.getTime() ?? 0) - (getDate(a)?.getTime() ?? 0);
+            });
+    }, [selectedMonthPhotos]);
+
+    function selectedIndex() {
+        if (!selected) return -1;
+        return visiblePhotos.findIndex((p) => p.filename === selected.filename);
+    }
+
+    function goToNextPhoto() {
+        if (!selected || visiblePhotos.length === 0) return;
+
+        const index = selectedIndex();
+        if (index === -1) return;
+
+        const nextIndex = (index + 1) % visiblePhotos.length;
+        setSelected(visiblePhotos[nextIndex]);
+    }
+
+    function goToPrevPhoto() {
+        if (!selected || visiblePhotos.length === 0) return;
+
+        const index = selectedIndex();
+        if (index === -1) return;
+
+        const prevIndex =
+            index === 0 ? visiblePhotos.length - 1 : index - 1;
+
+        setSelected(visiblePhotos[prevIndex]);
+    }
+
+    function formatPhotoDate(photo: Photo) {
+        const d = getDate(photo);
+        if (!d) return "Tarih bilinmiyor";
+
+        return d.toLocaleString("tr-TR", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    }
+
+    useEffect(() => {
+        function onKeyDown(e: KeyboardEvent) {
+            if (!selected) return;
+
+            if (e.key === "Escape") {
+                e.preventDefault();
+                setSelected(null);
+            }
+
+            if (e.key === "ArrowRight") {
+                e.preventDefault();
+                goToNextPhoto();
+            }
+
+            if (e.key === "ArrowLeft") {
+                e.preventDefault();
+                goToPrevPhoto();
+            }
+        }
+
+        window.addEventListener("keydown", onKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", onKeyDown);
+        };
+    }, [selected, visiblePhotos]);
+
+    function toggleSelectionMode() {
+        setSelectionMode((prev) => {
+            if (prev) {
+                setSelectedFiles([]);
+            }
+            return !prev;
+        });
+    }
+
+    function togglePhotoSelection(filename: string) {
+        setSelectedFiles((prev) =>
+            prev.includes(filename)
+                ? prev.filter((f) => f !== filename)
+                : [...prev, filename]
+        );
+    }
+
+    function selectAllVisiblePhotos() {
+        const allVisible = visiblePhotos.map((p) => p.filename);
+
+        setSelectedFiles((prev) => {
+            const set = new Set(prev);
+            for (const filename of allVisible) {
+                set.add(filename);
+            }
+            return Array.from(set);
+        });
+    }
+
+    function clearVisiblePhotos() {
+        const visibleSet = new Set(visiblePhotos.map((p) => p.filename));
+        setSelectedFiles((prev) => prev.filter((f) => !visibleSet.has(f)));
+    }
+
+    function selectWholeYear() {
+        const allYear = selectedYearPhotos.map((p) => p.filename);
+
+        setSelectedFiles((prev) => {
+            const set = new Set(prev);
+            for (const filename of allYear) {
+                set.add(filename);
+            }
+            return Array.from(set);
+        });
+    }
+
+    function clearWholeYear() {
+        const yearSet = new Set(selectedYearPhotos.map((p) => p.filename));
+        setSelectedFiles((prev) => prev.filter((f) => !yearSet.has(f)));
+    }
+
+    function clearAllSelections() {
+        setSelectedFiles([]);
+    }
+
+    function selectWholeMonth() {
+        const allMonth = selectedMonthPhotos.map((p) => p.filename);
+
+        setSelectedFiles((prev) => {
+            const set = new Set(prev);
+            for (const filename of allMonth) {
+                set.add(filename);
+            }
+            return Array.from(set);
+        });
+    }
+
+    function clearWholeMonth() {
+        const monthSet = new Set(selectedMonthPhotos.map((p) => p.filename));
+        setSelectedFiles((prev) => prev.filter((f) => !monthSet.has(f)));
+    }
+
+    async function downloadSelectedZip() {
+        if (selectedFiles.length === 0) {
+            alert("Önce indirilecek fotoğraf/video seç.");
+            return;
+        }
+
+        try {
+            setDownloadingZip(true);
+
+            const res = await fetch(`${API_URL}/api/v1/photos/download-zip`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+                body: JSON.stringify({
+                    filenames: selectedFiles,
+                }),
+            });
+
+            if (!res.ok) {
+                throw new Error("ZIP indirilemedi");
+            }
+
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "photoos-download.zip";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            window.URL.revokeObjectURL(url);
+        } catch (err) {
+            console.error(err);
+            alert("ZIP indirme başarısız oldu.");
+        } finally {
+            setDownloadingZip(false);
+        }
+    }
+
+    async function deletePhoto(photo: Photo) {
+        if (!confirm("Bu dosya silinsin mi?")) return;
+
+        const res = await fetch(`${API_URL}/api/v1/photos/file/${photo.filename}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+
+        if (res.ok) {
+            setSelected(null);
+            setSelectedFiles((prev) => prev.filter((f) => f !== photo.filename));
+            loadPhotos();
+        } else {
+            alert("Silme başarısız");
+        }
+    }
+
+    const visibleSelectedCount = visiblePhotos.filter((p) =>
+        selectedFiles.includes(p.filename)
+    ).length;
+
+    const monthSelectedCount = selectedMonthPhotos.filter((p) =>
+        selectedFiles.includes(p.filename)
+    ).length;
+
+    const yearSelectedCount = selectedYearPhotos.filter((p) =>
+        selectedFiles.includes(p.filename)
+    ).length;
+
+    return (
+        <div>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: 24,
+                    gap: 14,
+                    flexWrap: "wrap",
+                }}
+            >
+                <h1 style={{ margin: 0, fontSize: 32 }}>Fotoğraflar</h1>
+
+                <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+                    <button
+                        onClick={toggleSelectionMode}
+                        style={{
+                            height: 44,
+                            borderRadius: 14,
+                            border: "1px solid #ef4444",
+                            background: selectionMode ? "#991b1b" : "#180507",
+                            color: "#fff",
+                            padding: "0 16px",
+                            fontWeight: 800,
+                            cursor: "pointer",
+                        }}
+                    >
+                        {selectionMode ? "Seçim Modunu Kapat" : "Seçim Modu"}
+                    </button>
+
+                    {selectionMode && (
+                        <>
+                            <div
+                                style={{
+                                    padding: "10px 14px",
+                                    borderRadius: 14,
+                                    background: "#180507",
+                                    border: "1px solid rgba(239,68,68,0.25)",
+                                    color: "#fecaca",
+                                    fontWeight: 700,
+                                }}
+                            >
+                                Seçilen: {selectedFiles.length}
+                            </div>
+
+                            <button
+                                onClick={downloadSelectedZip}
+                                disabled={selectedFiles.length === 0 || downloadingZip}
+                                style={{
+                                    height: 44,
+                                    borderRadius: 14,
+                                    border: "1px solid #ef4444",
+                                    background:
+                                        selectedFiles.length === 0 || downloadingZip
+                                            ? "#3b0a0d"
+                                            : "#991b1b",
+                                    color: "#fff",
+                                    padding: "0 16px",
+                                    fontWeight: 800,
+                                    cursor:
+                                        selectedFiles.length === 0 || downloadingZip
+                                            ? "not-allowed"
+                                            : "pointer",
+                                }}
+                            >
+                                {downloadingZip ? "ZIP hazırlanıyor..." : "Seçilenleri ZIP indir"}
+                            </button>
+
+                            <button
+                                onClick={clearAllSelections}
+                                disabled={selectedFiles.length === 0}
+                                style={{
+                                    height: 44,
+                                    borderRadius: 14,
+                                    border: "1px solid #3f3f46",
+                                    background: selectedFiles.length === 0 ? "#111" : "#18181b",
+                                    color: "#fff",
+                                    padding: "0 16px",
+                                    fontWeight: 800,
+                                    cursor: selectedFiles.length === 0 ? "not-allowed" : "pointer",
+                                }}
+                            >
+                                Tüm seçimi temizle
+                            </button>
+                        </>
+                    )}
+
+                    <select
+                        value={ownerFilter}
+                        onChange={(e) => {
+                            setOwnerFilter(e.target.value);
+                            setSelectedFiles([]);
+                        }}
+                        style={{
+                            height: 44,
+                            borderRadius: 14,
+                            background: "#120406",
+                            color: "#fff",
+                            border: "1px solid #7f1d1d",
+                            padding: "0 16px",
+                            minWidth: 220,
+                        }}
+                    >
+                        <option value="all">Tüm kullanıcılar</option>
+                        {owners.map((owner) => (
+                            <option key={owner} value={owner}>
+                                {owner}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+
+            <div
+                style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
+                    gap: 14,
+                    marginBottom: 22,
+                }}
+            >
+                {years.map(({ year, items }) => {
+                    const cover = items[0];
+                    const active = year === selectedYear;
+
+                    return (
+                        <button
+                            key={year}
+                            onClick={() => {
+                                setSelectedYear(year);
+                                setSelectedMonth(null);
+                                
+                            }}
+                            style={{
+                                textAlign: "left",
+                                borderRadius: 18,
+                                overflow: "hidden",
+                                background: active
+                                    ? "linear-gradient(180deg, #22080b 0%, #120406 100%)"
+                                    : "linear-gradient(180deg, #141414 0%, #0b0b0b 100%)",
+                                border: active
+                                    ? "1px solid rgba(239,68,68,0.95)"
+                                    : "1px solid rgba(255,255,255,0.08)",
+                                color: "#fff",
+                                padding: 0,
+                                cursor: "pointer",
+                                boxShadow: active
+                                    ? "0 0 0 1px rgba(239,68,68,0.18), 0 16px 40px rgba(127,29,29,0.35)"
+                                    : "0 10px 24px rgba(0,0,0,0.22)",
+                            }}
+                        >
+                            <div style={{ padding: "14px 16px" }}>
+                                <div style={{ fontSize: 20, fontWeight: 900 }}>📅 {year}</div>
+                                <div style={{ color: "#fca5a5", marginTop: 4 }}>
+                                    {items.length} medya
+                                </div>
+                            </div>
+
+                            {cover && (
+                                <img
+                                    src={`${API_URL}${cover.url}`}
+                                    alt={cover.filename}
+                                    loading="lazy"
+                                    decoding="async"
+                                    style={{
+                                        width: "100%",
+                                        height: 110,
+                                        objectFit: "cover",
+                                        display: "block",
+                                        opacity: active ? 0.96 : 0.78,
+                                        filter: active ? "none" : "saturate(0.9)",
+                                    }}
+                                />
+                            )}
+                        </button>
+                    );
+                })}
+            </div>
+
+            {selectionMode && (
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        gap: 12,
+                        flexWrap: "wrap",
+                        marginBottom: 16,
+                        padding: 14,
+                        borderRadius: 18,
+                        background: "linear-gradient(145deg, #120406, #080808)",
+                        border: "1px solid rgba(239,68,68,0.22)",
+                    }}
+                >
+                    <div style={{ color: "#fecaca", fontWeight: 800 }}>
+                        Seçili yıl: {selectedYear || "-"} — {yearSelectedCount} / {selectedYearPhotos.length}
+                    </div>
+
+                    <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                        <button
+                            onClick={selectWholeYear}
+                            style={{
+                                borderRadius: 12,
+                                border: "1px solid #7f1d1d",
+                                background: "#1a0a0d",
+                                color: "#fff",
+                                padding: "10px 14px",
+                                fontWeight: 700,
+                                cursor: "pointer",
+                            }}
+                        >
+                            Yılın tümünü seç
+                        </button>
+
+                        <button
+                            onClick={clearWholeYear}
+                            style={{
+                                borderRadius: 12,
+                                border: "1px solid #3f3f46",
+                                background: "#111",
+                                color: "#fff",
+                                padding: "10px 14px",
+                                fontWeight: 700,
+                                cursor: "pointer",
+                            }}
+                        >
+                            Yıl seçimini temizle
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            <div
+                style={{
+                    border: "1px solid rgba(239,68,68,0.2)",
+                    borderRadius: 20,
+                    background: "linear-gradient(145deg, #100406, #050505)",
+                    padding: 16,
+                }}
+            >
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
+                        gap: 12,
+                        marginBottom: 14,
+                    }}
+                >
+                    {months.map((m) => (
+                        <button
+                            key={m.month}
+                            onClick={() => {
+                                setSelectedMonth(m.month);
+                                
+                            }}
+                            style={{
+                                minWidth: 150,
+                                borderRadius: 14,
+                                padding: "12px 14px",
+                                background:
+                                    selectedMonth === m.month
+                                        ? "linear-gradient(180deg, #b91c1c 0%, #7f1d1d 100%)"
+                                        : "linear-gradient(180deg, #171717 0%, #101010 100%)",
+                                color: "#fff",
+                                border:
+                                    selectedMonth === m.month
+                                        ? "1px solid rgba(239,68,68,0.95)"
+                                        : "1px solid rgba(255,255,255,0.08)",
+                                cursor: "pointer",
+                                textAlign: "left",
+                                boxShadow:
+                                    selectedMonth === m.month
+                                        ? "0 12px 28px rgba(127,29,29,0.35)"
+                                        : "0 8px 18px rgba(0,0,0,0.18)",
+                            }}
+                        >
+                            <b>{m.name}</b>
+                            <div style={{ color: "#fecaca", marginTop: 4, fontSize: 13 }}>
+                                {m.items.length} medya
+                            </div>
+                        </button>
+                    ))}
+                </div>
+
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "flex-start",
+                        gap: 12,
+                        marginBottom: 14,
+                        flexWrap: "wrap",
+                    }}
+                >
+                    <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                            <button
+                                onClick={selectWholeMonth}
+                                style={{
+                                    borderRadius: 12,
+                                    border: "1px solid #7f1d1d",
+                                    background: "#1a0a0d",
+                                    color: "#fff",
+                                    padding: "10px 14px",
+                                    fontWeight: 700,
+                                    cursor: "pointer",
+                                }}
+                            >
+                                Ayın tümünü seç ({selectedMonthPhotos.length})
+                            </button>
+
+                            <button
+                                onClick={clearWholeMonth}
+                                style={{
+                                    borderRadius: 12,
+                                    border: "1px solid #3f3f46",
+                                    background: "#111",
+                                    color: "#fff",
+                                    padding: "10px 14px",
+                                    fontWeight: 700,
+                                    cursor: "pointer",
+                                }}
+                            >
+                                Ay seçimini temizle ({monthSelectedCount})
+                            </button>
+                        </div>
+                </div>
+
+                {selectionMode && (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            marginBottom: 14,
+                            gap: 12,
+                            flexWrap: "wrap",
+                        }}
+                    >
+                        <div style={{ color: "#fecaca", fontWeight: 700 }}>
+                            Gün seçimi: {visibleSelectedCount} / {visiblePhotos.length}
+                        </div>
+
+                        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                            <button
+                                onClick={selectAllVisiblePhotos}
+                                style={{
+                                    borderRadius: 12,
+                                    border: "1px solid #7f1d1d",
+                                    background: "#1a0a0d",
+                                    color: "#fff",
+                                    padding: "10px 14px",
+                                    fontWeight: 700,
+                                    cursor: "pointer",
+                                }}
+                            >
+                                Günü seç
+                            </button>
+
+                            <button
+                                onClick={clearVisiblePhotos}
+                                style={{
+                                    borderRadius: 12,
+                                    border: "1px solid #3f3f46",
+                                    background: "#111",
+                                    color: "#fff",
+                                    padding: "10px 14px",
+                                    fontWeight: 700,
+                                    cursor: "pointer",
+                                }}
+                            >
+                                Gün seçimini temizle
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
+                        gap: 14,
+                    }}
+                >
+                    {visiblePhotos.map((photo) => {
+                        const video = isVideo(photo);
+                        const checked = selectedFiles.includes(photo.filename);
+
+                        return (
+                            <div
+                                key={photo.filename}
+                                style={{
+                                    height: 165,
+                                    borderRadius: 16,
+                                    overflow: "hidden",
+                                    background: "#080808",
+                                    border: checked
+                                        ? "2px solid #ef4444"
+                                        : "1px solid rgba(239,68,68,0.22)",
+                                    position: "relative",
+                                    boxShadow: checked
+                                        ? "0 0 0 2px rgba(239,68,68,0.15)"
+                                        : "none",
+                                }}
+                            >
+                                {selectionMode && (
+                                    <label
+                                        onClick={(e) => e.stopPropagation()}
+                                        style={{
+                                            position: "absolute",
+                                            top: 10,
+                                            left: 10,
+                                            zIndex: 3,
+                                            width: 28,
+                                            height: 28,
+                                            borderRadius: 999,
+                                            background: checked ? "#dc2626" : "rgba(0,0,0,0.55)",
+                                            border: "1px solid rgba(255,255,255,0.25)",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            cursor: "pointer",
+                                            boxShadow: "0 4px 12px rgba(0,0,0,0.35)",
+                                        }}
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            checked={checked}
+                                            onChange={() => togglePhotoSelection(photo.filename)}
+                                            style={{ display: "none" }}
+                                        />
+                                        <span
+                                            style={{
+                                                color: "#fff",
+                                                fontSize: 15,
+                                                fontWeight: 900,
+                                                lineHeight: 1,
+                                            }}
+                                        >
+                                            {checked ? "✓" : ""}
+                                        </span>
+                                    </label>
+                                )}
+
+                                <div
+                                    onClick={() => setSelected(photo)}
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        cursor: "pointer",
+                                        position: "relative",
+                                    }}
+                                >
+                                    {video ? (
+                                        <video
+                                            muted
+                                            preload="none"
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                objectFit: "cover",
+                                            }}
+                                        />
+                                    ) : (
+                                        <img
+                                            src={`${API_URL}/api/v1/photos/thumb/${photo.filename}`}
+                                            alt={photo.filename}
+                                            loading="lazy"
+                                            decoding="async"
+                                            style={{
+                                                width: "100%",
+                                                height: "100%",
+                                                objectFit: "cover",
+                                                display: "block",
+                                            }}
+                                        />
+                                    )}
+
+                                    {video && (
+                                        <div
+                                            style={{
+                                                position: "absolute",
+                                                inset: 0,
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                fontSize: 42,
+                                                color: "#fff",
+                                                background: "rgba(0,0,0,0.15)",
+                                            }}
+                                        >
+                                            ▶
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+
+            {selected && (
+                <div
+                    onClick={() => setSelected(null)}
+                    style={{
+                        position: "fixed",
+                        inset: 0,
+                        zIndex: 9999,
+                        background: "rgba(0,0,0,0.94)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        padding: 22,
+                    }}
+                >
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            goToPrevPhoto();
+                        }}
+                        style={{
+                            position: "fixed",
+                            left: 22,
+                            top: "50%",
+                            transform: "translateY(-50%)",
+                            width: 52,
+                            height: 52,
+                            borderRadius: 999,
+                            border: "1px solid rgba(239,68,68,0.55)",
+                            background: "rgba(24,5,7,0.88)",
+                            color: "#fff",
+                            fontSize: 28,
+                            cursor: "pointer",
+                            zIndex: 10000,
+                        }}
+                    >
+                        ‹
+                    </button>
+
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            goToNextPhoto();
+                        }}
+                        style={{
+                            position: "fixed",
+                            right: 22,
+                            top: "50%",
+                            transform: "translateY(-50%)",
+                            width: 52,
+                            height: 52,
+                            borderRadius: 999,
+                            border: "1px solid rgba(239,68,68,0.55)",
+                            background: "rgba(24,5,7,0.88)",
+                            color: "#fff",
+                            fontSize: 28,
+                            cursor: "pointer",
+                            zIndex: 10000,
+                        }}
+                    >
+                        ›
+                    </button>
+
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                            width: "min(1180px, 94vw)",
+                            maxHeight: "92vh",
+                            display: "grid",
+                            gridTemplateRows: "auto minmax(0, 1fr) auto",
+                            background: "#070707",
+                            border: "1px solid rgba(239,68,68,0.32)",
+                            borderRadius: 24,
+                            overflow: "hidden",
+                            boxShadow: "0 30px 100px rgba(0,0,0,0.75)",
+                        }}
+                    >
+                        <div
+                            style={{
+                                padding: "14px 18px",
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                gap: 14,
+                                borderBottom: "1px solid rgba(239,68,68,0.18)",
+                                background: "linear-gradient(90deg, #130406, #070707)",
+                            }}
+                        >
+                            <div style={{ minWidth: 0 }}>
+                                <div
+                                    style={{
+                                        color: "#fff",
+                                        fontWeight: 900,
+                                        whiteSpace: "nowrap",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                    }}
+                                >
+                                    {selected.original_name || selected.filename}
+                                </div>
+
+                                <div
+                                    style={{
+                                        color: "#fecaca",
+                                        fontSize: 13,
+                                        marginTop: 4,
+                                    }}
+                                >
+                                    {selected.owner_username} · {formatPhotoDate(selected)} · {selectedIndex() + 1}/{visiblePhotos.length}
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={() => setSelected(null)}
+                                style={{
+                                    width: 38,
+                                    height: 38,
+                                    borderRadius: 999,
+                                    border: "1px solid rgba(255,255,255,0.12)",
+                                    background: "#151515",
+                                    color: "#fff",
+                                    cursor: "pointer",
+                                    fontSize: 18,
+                                }}
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        <div
+                            style={{
+                                minHeight: 0,
+                                background: "#000",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                padding: 16,
+                            }}
+                        >
+                            {isVideo(selected) ? (
+                                <video
+                                    src={`${API_URL}${selected.url}`}
+                                    controls
+                                    autoPlay
+                                    style={{
+                                        maxWidth: "100%",
+                                        maxHeight: "72vh",
+                                        background: "#000",
+                                    }}
+                                />
+                            ) : (
+                                <img
+                                    src={`${API_URL}${selected.url}`}
+                                    alt={selected.filename}
+                                    style={{
+                                        maxWidth: "100%",
+                                        maxHeight: "72vh",
+                                        objectFit: "contain",
+                                    }}
+                                />
+                            )}
+                        </div>
+
+                        <div
+                            style={{
+                                padding: 14,
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                gap: 12,
+                                flexWrap: "wrap",
+                                borderTop: "1px solid rgba(239,68,68,0.18)",
+                                background: "#090909",
+                            }}
+                        >
+                            <div style={{ color: "#aaa", fontSize: 13 }}>
+                                ESC: kapat · ← / →: gezin
+                            </div>
+
+                            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                                <button
+                                    onClick={() => goToPrevPhoto()}
+                                    style={{
+                                        borderRadius: 12,
+                                        border: "1px solid #3f3f46",
+                                        background: "#111",
+                                        color: "#fff",
+                                        padding: "10px 14px",
+                                        fontWeight: 700,
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    ← Önceki
+                                </button>
+
+                                <button
+                                    onClick={() => goToNextPhoto()}
+                                    style={{
+                                        borderRadius: 12,
+                                        border: "1px solid #7f1d1d",
+                                        background: "#1a0a0d",
+                                        color: "#fff",
+                                        padding: "10px 14px",
+                                        fontWeight: 700,
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    Sonraki →
+                                </button>
+
+                                <button
+                                    onClick={() =>
+                                        window.open(`${API_URL}${selected.url}`, "_blank")
+                                    }
+                                    style={{
+                                        borderRadius: 12,
+                                        border: "1px solid #7f1d1d",
+                                        background: "#991b1b",
+                                        color: "#fff",
+                                        padding: "10px 14px",
+                                        fontWeight: 700,
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    Yeni Sekmede Aç
+                                </button>
+
+                                <button
+                                    onClick={() => deletePhoto(selected)}
+                                    style={{
+                                        borderRadius: 12,
+                                        border: "1px solid #991b1b",
+                                        background: "#450a0a",
+                                        color: "#fff",
+                                        padding: "10px 14px",
+                                        fontWeight: 700,
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    Sil
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {viewerOpen && selectedPhoto && (
+                <div
+                    onClick={closeViewer}
+                    style={{
+                        position: "fixed",
+                        inset: 0,
+                        background: "rgba(0,0,0,0.92)",
+                        zIndex: 9999,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                >
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                        }}
+                    >
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                padding: "12px 16px",
+                                color: "#fff",
+                                background: "rgba(0,0,0,0.35)",
+                                zIndex: 2,
+                            }}
+                        >
+                            <div>
+                                {selectedPhoto.original_name || selectedPhoto.filename}
+                            </div>
+
+                            <div style={{ display: "flex", gap: 8 }}>
+                                <button type="button" onClick={zoomOut} style={viewerButtonStyle}>-</button>
+                                <button type="button" onClick={resetZoom} style={viewerButtonStyle}>%100</button>
+                                <button type="button" onClick={zoomIn} style={viewerButtonStyle}>+</button>
+                                <button type="button" onClick={closeViewer} style={viewerButtonStyle}>Kapat</button>
+                            </div>
+                        </div>
+
+                        {photos.length > 1 && (
+                            <button
+                                type="button"
+                                onClick={showPrevPhoto}
+                                style={{
+                                    ...viewerButtonStyle,
+                                    position: "absolute",
+                                    left: 16,
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    zIndex: 3,
+                                    fontSize: 28,
+                                }}
+                            >
+                                ‹
+                            </button>
+                        )}
+
+                        {photos.length > 1 && (
+                            <button
+                                type="button"
+                                onClick={showNextPhoto}
+                                style={{
+                                    ...viewerButtonStyle,
+                                    position: "absolute",
+                                    right: 16,
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    zIndex: 3,
+                                    fontSize: 28,
+                                }}
+                            >
+                                ›
+                            </button>
+                        )}
+
+                        <div
+                            onWheel={(e) => {
+                                e.preventDefault();
+                                if (e.deltaY < 0) {
+                                    setViewerZoom((z) => Math.min(z + 0.2, 5));
+                                } else {
+                                    setViewerZoom((z) => Math.max(z - 0.2, 0.5));
+                                }
+                            }}
+                            style={{
+                                flex: 1,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                overflow: "auto",
+                                padding: 24,
+                            }}
+                        >
+                            <img
+                                src={`${API_URL}${selectedPhoto.url}`}
+                                alt={selectedPhoto.original_name || selectedPhoto.filename}
+                                style={{
+                                    maxWidth: "95%",
+                                    maxHeight: "85vh",
+                                    objectFit: "contain",
+                                    transform: `scale(${viewerZoom})`,
+                                    transformOrigin: "center center",
+                                    transition: "transform 0.12s ease",
+                                    userSelect: "none",
+                                }}
+                                draggable={false}
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
+
+        </div>
+    );
+}

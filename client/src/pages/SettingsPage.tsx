@@ -1,0 +1,3 @@
+import { Link } from "react-router-dom";import { FeaturePage } from "../components/FeatureShell";
+const links=[["/settings/preferences","Kurulum Tercihleri","Sunucu adı, saat dilimi, dil ve bildirim tercihleri"],["/system","Update Center","Paketler, sürümler ve rollback"],["/users","Kullanıcılar","PhotoOS kullanıcı hesapları"],["/storage","Depolama","Diskler ve storage rolleri"],["/notifications","Bildirimler","Uyarı ve kritik olaylar"]] as const;
+export default function SettingsPage(){return <FeaturePage title="Ayarlar" subtitle="PhotoOS yönetim ayarları"><div className="settings-links">{links.map(([to,title,text])=><Link className="settings-link" to={to} key={to}><strong>{title}</strong><small>{text}</small></Link>)}</div></FeaturePage>}

@@ -1,0 +1,65 @@
+    Checking server v0.1.0 (/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server)
+server/src/auth/mod.rs:7:5: warning: unused import: `Claims`
+server/src/database/mod.rs:6:5: warning: unused import: `ConnectOptions`
+server/src/routes/automation.rs:3:15: warning: unused imports: `delete` and `put`
+server/src/routes/cloud_sync.rs:3:20: warning: unused import: `put`
+server/src/routes/docker.rs:3:15: warning: unused import: `delete`
+server/src/routes/cloud_accounts.rs:3:15: warning: unused imports: `delete`, `post`, and `put`
+server/src/storage/mod.rs:6:21: warning: unused imports: `AllocationStrategy` and `DiskAllocator`
+server/src/storage/mod.rs:8:16: warning: unused imports: `DiskStatus` and `StorageDisk`
+server/src/storage/mod.rs:10:18: warning: unused imports: `MediaKind`, `StorageError`, and `StorageTarget`
+server/src/storage/mod.rs:12:16: warning: unused imports: `PoolStatus` and `StoragePool`
+server/src/config/mod.rs:355:8: warning: function `mirror_source_path` is never used
+server/src/config/mod.rs:361:8: warning: function `mirror_target_root_path` is never used
+server/src/config/mod.rs:373:8: warning: function `mirror_target_path` is never used
+server/src/config/mod.rs:386:8: warning: function `internal_api_base_url` is never used
+server/src/handlers/system_metrics.rs:7:8: warning: struct `CpuSnapshot` is never constructed
+server/src/handlers/system_metrics.rs:13:12: warning: struct `MemoryMetrics` is never constructed
+server/src/handlers/system_metrics.rs:21:12: warning: struct `NetworkInterfaceMetrics` is never constructed
+server/src/handlers/system_metrics.rs:28:12: warning: struct `DiskMetrics` is never constructed
+server/src/handlers/system_metrics.rs:42:12: warning: struct `SystemMetrics` is never constructed
+server/src/handlers/system_metrics.rs:63:4: warning: function `read_cpu_snapshot` is never used
+server/src/handlers/system_metrics.rs:103:10: warning: function `cpu_usage_percent` is never used
+server/src/handlers/system_metrics.rs:126:4: warning: function `read_memory_metrics` is never used
+server/src/handlers/system_metrics.rs:168:4: warning: function `read_network_metrics` is never used
+server/src/handlers/system_metrics.rs:202:4: warning: function `read_uptime_seconds` is never used
+server/src/handlers/system_metrics.rs:215:4: warning: function `read_load_average` is never used
+server/src/handlers/system_metrics.rs:230:4: warning: function `read_hostname` is never used
+server/src/handlers/system_metrics.rs:237:4: warning: function `read_os_name` is never used
+server/src/handlers/system_metrics.rs:249:4: warning: function `read_kernel_version` is never used
+server/src/handlers/system_metrics.rs:256:4: warning: function `read_cpu_model` is never used
+server/src/handlers/system_metrics.rs:273:4: warning: function `read_cpu_cores` is never used
+server/src/handlers/system_metrics.rs:284:4: warning: function `json_string` is never used
+server/src/handlers/system_metrics.rs:292:4: warning: function `json_u64` is never used
+server/src/handlers/system_metrics.rs:302:4: warning: function `child_value` is never used
+server/src/handlers/system_metrics.rs:324:10: warning: function `read_mount_usage` is never used
+server/src/handlers/system_metrics.rs:367:10: warning: function `read_disks` is never used
+server/src/handlers/system_metrics.rs:440:14: warning: function `system_metrics` is never used
+server/src/handlers/storage_history.rs:14:12: warning: struct `HistoryQuery` is never constructed
+server/src/handlers/storage_history.rs:19:12: warning: struct `TemperatureHistoryPoint` is never constructed
+server/src/handlers/storage_history.rs:25:12: warning: struct `IoHistoryPoint` is never constructed
+server/src/handlers/storage_history.rs:35:12: warning: struct `DeviceHistory` is never constructed
+server/src/handlers/storage_history.rs:42:12: warning: struct `StorageHistoryResponse` is never constructed
+server/src/handlers/storage_history.rs:50:12: warning: struct `StorageAlert` is never constructed
+server/src/handlers/storage_history.rs:62:12: warning: struct `StorageAlertsResponse` is never constructed
+server/src/handlers/storage_history.rs:256:4: warning: function `range_seconds` is never used
+server/src/handlers/storage_history.rs:260:14: warning: function `get_storage_history` is never used
+server/src/handlers/storage_history.rs:288:14: warning: function `get_storage_alerts` is never used
+server/src/models/media.rs:5:12: warning: struct `Media` is never constructed
+server/src/state.rs:11:9: warning: field `storage` is never read
+server/src/storage/allocator.rs:6:5: warning: variant `LowestUsage` is never constructed
+server/src/storage/allocator.rs:11:5: warning: field `strategy` is never read
+server/src/storage/allocator.rs:23:12: warning: associated items `new` and `choose` are never used
+server/src/storage/disk.rs:44:12: warning: methods `with_reserve_bytes` and `disabled` are never used
+server/src/storage/engine.rs:11:10: warning: enum `MediaKind` is never used
+server/src/storage/engine.rs:21:12: warning: method `directory_name` is never used
+server/src/storage/engine.rs:34:12: warning: struct `StorageTarget` is never constructed
+server/src/storage/engine.rs:48:5: warning: variants `NoWritableDisk` and `InvalidFilename` are never constructed
+server/src/storage/engine.rs:88:12: warning: associated items `new`, `status`, and `allocate` are never used
+server/src/storage/engine.rs:125:4: warning: function `validate_filename` is never used
+server/src/storage/engine.rs:137:4: warning: function `create_target` is never used
+server/src/storage/pool.rs:11:9: warning: fields `name` and `allocator` are never read
+server/src/storage/pool.rs:17:12: warning: struct `PoolStatus` is never constructed
+server/src/storage/pool.rs:62:18: warning: methods `status` and `choose_disk` are never used
+warning: `server` (bin "server") generated 62 warnings (run `cargo fix --bin "server" -p server` to apply 10 suggestions)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.76s

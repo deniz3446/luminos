@@ -1,0 +1,24 @@
+[Unit]
+Description=PhotoOS Setup Storage Provisioner
+After=network.target photoos.service photoos-storage-helper.service
+Requires=photoos-storage-helper.service
+
+[Service]
+Type=simple
+User=photoos
+Group=photoos
+
+ExecStart=/usr/bin/python3 /usr/local/lib/photoos/photoos-setup-provisioner.py
+
+Restart=on-failure
+RestartSec=2
+
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+[Install]
+WantedBy=multi-user.target

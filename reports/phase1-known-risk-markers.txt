@@ -1,0 +1,12 @@
+server/src/auth/jwt.rs:14:const SECRET: &[u8] = b"photoos-super-secret-key";
+server/src/handlers/backups.rs:385:fn pc_backup_recovery_unavailable(action: &str) -> (StatusCode, Json<ApiMessage>) {
+server/src/handlers/backups.rs:392:pub async fn get_pc_backup_library() -> (StatusCode, Json<ApiMessage>) { pc_backup_recovery_unavailable("library") }
+server/src/handlers/backups.rs:393:pub async fn create_pc_pairing() -> (StatusCode, Json<ApiMessage>) { pc_backup_recovery_unavailable("create_pairing") }
+server/src/handlers/backups.rs:394:pub async fn pair_pc_device() -> (StatusCode, Json<ApiMessage>) { pc_backup_recovery_unavailable("pair") }
+server/src/handlers/backups.rs:395:pub async fn pc_device_heartbeat() -> (StatusCode, Json<ApiMessage>) { pc_backup_recovery_unavailable("heartbeat") }
+server/src/handlers/backups.rs:396:pub async fn upload_pc_file() -> (StatusCode, Json<ApiMessage>) { pc_backup_recovery_unavailable("upload_file") }
+server/src/handlers/backups.rs:397:pub async fn upload_pc_chunk() -> (StatusCode, Json<ApiMessage>) { pc_backup_recovery_unavailable("upload_chunk") }
+server/src/handlers/backups.rs:398:pub async fn browse_pc_backup() -> (StatusCode, Json<ApiMessage>) { pc_backup_recovery_unavailable("browse") }
+server/src/handlers/logs.rs:31:    Json(json!({"ok": true, "status": "recovery_incomplete"}))
+server/src/handlers/mobile.rs:9:            "error": "recovery_incomplete",
+server/src/handlers/cloud_accounts.rs:9:            "error": "recovery_incomplete",

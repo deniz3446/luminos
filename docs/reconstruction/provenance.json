@@ -1,0 +1,2686 @@
+[
+  {
+    "origins": [],
+    "path": ".gitignore",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "692d6029f647301f741d082b4897500228fcecd0356f7565874480b7c28d1e5f"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/Cargo.lock"
+    ],
+    "path": "Cargo.lock",
+    "provenance_type": "recovered-exact",
+    "sha256": "0237a0356b16c05ad1ee4b22965c5df0c1a1b010430e430c7c5f36df182cae98"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/Cargo.toml"
+    ],
+    "path": "Cargo.toml",
+    "provenance_type": "recovered-exact",
+    "sha256": "26b799fa8a09d10547ecc1777ab32f33f4c5e9b2a585bff0aafc52cb5514fea9"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/storage/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/storage/mod.rs"
+    ],
+    "path": "LICENSE",
+    "provenance_type": "recovered-exact",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/fdf728db45c4e0ab61b1ee0ad57acf0a2abc8bff505e4927d20a633b863f9fd1/photoos-installer-kit/README.md",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/README.md",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/README.md"
+    ],
+    "path": "README.md",
+    "provenance_type": "recovered-exact",
+    "sha256": "b0d2647be07f5befbc4eada52be4b1b142e790c5c7ff477cb18e7d256641dfd0"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/RECOVERY-V15-PROVENANCE.txt"
+    ],
+    "path": "RECOVERY-V15-PROVENANCE.txt",
+    "provenance_type": "recovered-exact",
+    "sha256": "cf221a8c7c04ab0a0179e1a15f3f1e61b9204124441092e4c2f7267931a3547d"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/ROADMAP.md",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/ROADMAP.md",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/ROADMAP.md"
+    ],
+    "path": "ROADMAP.md",
+    "provenance_type": "recovered-exact",
+    "sha256": "9b026d23c84166f76f0a822c4c8d01d4d570a90408186d689d8cf69c0c185134"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/auth/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/auth/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/auth/Cargo.toml"
+    ],
+    "path": "auth/Cargo.toml",
+    "provenance_type": "recovered-exact",
+    "sha256": "e92832044f020e6100b02abc780744385f32ad2cd5a000692fb4433bb3eb5728"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/storage/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/storage/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/storage/src/lib.rs"
+    ],
+    "path": "auth/src/lib.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "c04c976b49d9540ebad87db788a0887ce2806ffef3f1ea64736bb845e6c7568b"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/cargo-check-latest.txt"
+    ],
+    "path": "cargo-check-latest.txt",
+    "provenance_type": "recovered-exact",
+    "sha256": "63a9d556c76996bf451696a45c3d7f41cd875208e343ff3cdc5c90acf3d2dc0b"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/cargo-check-lld.txt"
+    ],
+    "path": "cargo-check-lld.txt",
+    "provenance_type": "recovered-exact",
+    "sha256": "d2c5965bcaf692550cdea8783bc61d905f955426a8fd89da08ff9727192138c2"
+  },
+  {
+    "origins": [],
+    "path": "client/.gitignore",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "fe718e7babb14f3cbad2d97f08889b9ce5215ed3fe0e43b2b8cfbfb3b9b844e8"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/409dbbcaa2a2766f87aacda8ae391a0098b59b2c72d75758252b405997052ba3/client/AutomationPage.css",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/AutomationPage.css",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/AutomationPage.css"
+    ],
+    "path": "client/AutomationPage.css",
+    "provenance_type": "recovered-exact",
+    "sha256": "a90cb4b65298027e0d55e661137cea92b703b69d013d44a0df88dac8e42a1640"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/409dbbcaa2a2766f87aacda8ae391a0098b59b2c72d75758252b405997052ba3/client/AutomationPage.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/AutomationPage.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/AutomationPage.tsx"
+    ],
+    "path": "client/AutomationPage.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "c36d055e6a842b3eaae5fe4c9d7721c6056a5cb7a87713942c18bb75af66e5c4"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/README.md",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/README.md",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/README.md"
+    ],
+    "path": "client/README.md",
+    "provenance_type": "recovered-exact",
+    "sha256": "185925eeb85bf7a9f17ecd111ec3d1bba3a37df4acfa40a3e8b6cdefc76b918f"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/409dbbcaa2a2766f87aacda8ae391a0098b59b2c72d75758252b405997052ba3/client/api.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/api.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/api.ts"
+    ],
+    "path": "client/api.ts",
+    "provenance_type": "recovered-exact",
+    "sha256": "05376ee799cc3abb5914d36e644f030bd69f048f27bd071d0bff5bc6f11114c2"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/409dbbcaa2a2766f87aacda8ae391a0098b59b2c72d75758252b405997052ba3/client/components/RuleCard.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/components/RuleCard.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/components/RuleCard.tsx"
+    ],
+    "path": "client/components/RuleCard.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "c8a31d3292e5b19b73dcbf0e8bd1ea482e03b6217c519beddffcfd827fb6fcef"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/409dbbcaa2a2766f87aacda8ae391a0098b59b2c72d75758252b405997052ba3/client/components/RuleEditor.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/components/RuleEditor.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/components/RuleEditor.tsx"
+    ],
+    "path": "client/components/RuleEditor.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "2ba8b9c66a902ce0266b027b90f1046aa4d46854039c3e89bf46bfa8569e2547"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/409dbbcaa2a2766f87aacda8ae391a0098b59b2c72d75758252b405997052ba3/client/components/RunHistory.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/components/RunHistory.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/components/RunHistory.tsx"
+    ],
+    "path": "client/components/RunHistory.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "61cc6be78f1e3523650eb370bcb1e6bd4be7d684a6bf82dd5fc7a3cb5e2360d0"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/eslint.config.js",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/eslint.config.js",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/eslint.config.js"
+    ],
+    "path": "client/eslint.config.js",
+    "provenance_type": "recovered-exact",
+    "sha256": "cf80a7510234dcd5ae594b30b44682b8b45ba13c0fcb5bf8928bea143802aa1c"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/index.html",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/index.html",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/index.html"
+    ],
+    "path": "client/index.html",
+    "provenance_type": "recovered-exact",
+    "sha256": "631e8a1b12c7e98777bb4571b0e224bfe24c9f6098d502c2f82cb57d0bce08b7"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/package-lock.json",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/package-lock.json",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/package-lock.json"
+    ],
+    "path": "client/package-lock.json",
+    "provenance_type": "recovered-exact",
+    "sha256": "4110d66dd5a64610120d91c4dd360a55d98329e5c855d7ba46ca700b00284655"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/package.json",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/package.json",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/package.json"
+    ],
+    "path": "client/package.json",
+    "provenance_type": "recovered-exact",
+    "sha256": "fec4aa8a3f857f613f1cbb6f29a542e486a4bf350f02c5e3d557dc4798e6130b"
+  },
+  {
+    "origins": [],
+    "path": "client/public/favicon.svg",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "61bc9a161de58248288e6905425d7180f0624c2865007b97d763fdac12043a66"
+  },
+  {
+    "origins": [],
+    "path": "client/public/icons.svg",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "b45fa506195cfcdef406ba9f0c77b36ddc1a7c224040926ec70abc2fdea7b93a"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/App.css",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/App.css",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/App.css"
+    ],
+    "path": "client/src/App.css",
+    "provenance_type": "recovered-exact",
+    "sha256": "6e25a776d3e8102da5bacb3cb99f4a5fc662a2e01e6143140671a556d28c3d5c"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/App.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/App.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/App.tsx"
+    ],
+    "path": "client/src/App.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "483a37d22e63ad76384a817fff480b9cf5a488815c2253c48e1947bd6a4a79a4"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/255d862c629d6586df9b1fbb01b155493e9db02fc3d687a0cab9b4183094f68e/client/src/api/client.ts",
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/api/client.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/api/client.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/api/client.ts"
+    ],
+    "path": "client/src/api/client.ts",
+    "provenance_type": "recovered-exact",
+    "sha256": "5aa36ba51218a116d5410793ef7933ed80bb2902494a69cea98574c5c2cd0ae9"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/storage/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/storage/mod.rs"
+    ],
+    "path": "client/src/api/photos.ts",
+    "provenance_type": "recovered-exact",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/client/src/api/storage.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/api/storage.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/api/storage.ts"
+    ],
+    "path": "client/src/api/storage.ts",
+    "provenance_type": "recovered-exact",
+    "sha256": "ead774c83a852adc0c556954bd1af00bd202f313c70701f0f2770e0ca022896b"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/api/users.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/api/users.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/api/users.ts"
+    ],
+    "path": "client/src/api/users.ts",
+    "provenance_type": "recovered-exact",
+    "sha256": "6f776bffc19c70c39722b533142467fca8d1a61c852179092a0d5de030b373ad"
+  },
+  {
+    "origins": [],
+    "path": "client/src/assets/hero.png",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "881ffbcaafc212e49addad08846a5b82761355fa20624253af3477ba33262c5c"
+  },
+  {
+    "origins": [],
+    "path": "client/src/assets/react.svg",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "35ef61ed53b323ae94a16a8ec659b3d0af3880698791133f23b084085ab1c2e5"
+  },
+  {
+    "origins": [],
+    "path": "client/src/assets/vite.svg",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "5be21acd42eb7b896e517f4e0f0f11eb5c5d9e54fbbcebe9453f033008fcca6f"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/storage/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/storage/mod.rs"
+    ],
+    "path": "client/src/components/PhotoGrid.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/storage/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/storage/mod.rs"
+    ],
+    "path": "client/src/components/UploadZone.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/index.css",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/index.css",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/index.css"
+    ],
+    "path": "client/src/index.css",
+    "provenance_type": "recovered-exact",
+    "sha256": "ee8a9584ea9e0a3a1bf4333af41a1b720703b8c6e8fd6d4e6621e8d3e4178112"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/layouts/DashboardLayout.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/layouts/DashboardLayout.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/layouts/DashboardLayout.tsx"
+    ],
+    "path": "client/src/layouts/DashboardLayout.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "2c260fcab2b2384179748a68eb1304deb2179e2d8ee676aa456c603d5e348f44"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/main.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/main.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/main.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/main.tsx"
+    ],
+    "path": "client/src/main.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "6e9e5807fcbd48b75a96db5cbef36c996262196be42e6d4760dc86babbe61ad2"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/pages/AlbumDetailPage.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/AlbumDetailPage.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/AlbumDetailPage.tsx"
+    ],
+    "path": "client/src/pages/AlbumDetailPage.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "bfe84f0afd4e1670673c4de1daa5558a275da677a317cf20a9399641b8f78899"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/AlbumDetailPage.tsx.bak_visible_limit_20260709_213501",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "940eddedf18c59554daf615de60968176972f50bc33ad25003f9d81737ab45ff"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/pages/AlbumsPage.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/AlbumsPage.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/AlbumsPage.tsx"
+    ],
+    "path": "client/src/pages/AlbumsPage.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "905d7da8c891e4e334612536c3f69da419cadd64d7f4ca3def816f123f1e9947"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/dfaba67089e25b7a609562f1b740fd63e8ae63215e173ef5e7049be599a0f730/client/src/pages/BackupManagerPage.css",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/BackupManagerPage.css",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/BackupManagerPage.css"
+    ],
+    "path": "client/src/pages/BackupManagerPage.css",
+    "provenance_type": "recovered-exact",
+    "sha256": "8e91350938473f89b1243ff08deab0e9e670b53d657f2f7982b62dbeff0d74e4"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/dfaba67089e25b7a609562f1b740fd63e8ae63215e173ef5e7049be599a0f730/client/src/pages/BackupManagerPage.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/BackupManagerPage.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/BackupManagerPage.tsx"
+    ],
+    "path": "client/src/pages/BackupManagerPage.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "8841b248762c1762d7d6e27537485bdb0148407e13b7073e57d409fa18622364"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/pages/ControlPage.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/ControlPage.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/ControlPage.tsx"
+    ],
+    "path": "client/src/pages/ControlPage.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "3d415872ad294d4f1a0ed0dbba81c421da11d22e35e1e4a9e3e3d8d146837e6e"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/ControlPage.tsx.bak_blink_version_20260709_210454",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "cc5babc6cb665d8952c9997021d0e11896d6ac46aee97836e29ad2e9fb173bef"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/ControlPage.tsx.bak_v2_stats_20260709_205122",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "030aba7f0f149a14a40dfd15142a1f4be3e4b56f48c2dfd5287b515c944475c9"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/pages/DashboardPage.css",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/DashboardPage.css",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/DashboardPage.css"
+    ],
+    "path": "client/src/pages/DashboardPage.css",
+    "provenance_type": "recovered-exact",
+    "sha256": "f704e987f969a767aeed9621293f0bf59ee500c6eee412108099acd988a73c2a"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/pages/DashboardPage.css",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/DashboardPage.css",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/DashboardPage.css"
+    ],
+    "path": "client/src/pages/DashboardPage.css.bak_devices_20260717_013253",
+    "provenance_type": "recovered-exact",
+    "sha256": "f704e987f969a767aeed9621293f0bf59ee500c6eee412108099acd988a73c2a"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/pages/DashboardPage.css",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/DashboardPage.css",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/DashboardPage.css"
+    ],
+    "path": "client/src/pages/DashboardPage.css.bak_devices_20260717_013305",
+    "provenance_type": "recovered-exact",
+    "sha256": "f704e987f969a767aeed9621293f0bf59ee500c6eee412108099acd988a73c2a"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/pages/DashboardPage.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/DashboardPage.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/DashboardPage.tsx"
+    ],
+    "path": "client/src/pages/DashboardPage.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "5c1913f3de1a18aab88532fa3cf6e98ea4c33a319db72cf360b10a61bebf44c9"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/DashboardPage.tsx.bak_before_round_metrics_20260716_024844",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "046d87d562c40f3338b24716e8ffb0c68c61f6e556a0c9a929ba300114b793c4"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/DashboardPage.tsx.bak_dashboard_redesign_20260716_114548",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "61e2c8f6ba55bee69d7c4829f87c4d82af74093330e54fd87867eddc79ee0f1e"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/DashboardPage.tsx.bak_dashboard_stats",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "b039ce0b7ea94867c5673911660810efa3d35134e60742c390ebf21a591013c2"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/pages/DashboardPage.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/DashboardPage.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/DashboardPage.tsx"
+    ],
+    "path": "client/src/pages/DashboardPage.tsx.bak_devices_20260717_013253",
+    "provenance_type": "recovered-exact",
+    "sha256": "5c1913f3de1a18aab88532fa3cf6e98ea4c33a319db72cf360b10a61bebf44c9"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/pages/DashboardPage.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/DashboardPage.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/DashboardPage.tsx"
+    ],
+    "path": "client/src/pages/DashboardPage.tsx.bak_devices_20260717_013305",
+    "provenance_type": "recovered-exact",
+    "sha256": "5c1913f3de1a18aab88532fa3cf6e98ea4c33a319db72cf360b10a61bebf44c9"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/DashboardPage.tsx.bak_remove_debug",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "8427fc25bd3316cc346cfc14f5c8cbdea5a7587270a32319891eedce6a7d120d"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/DashboardPage.tsx.bak_system_metrics_20260716_023402",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "a9bf81e340f23f90705562e899d183d18334d84b29d8d65de393917016a13d34"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/pages/LoginPage.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/LoginPage.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/LoginPage.tsx"
+    ],
+    "path": "client/src/pages/LoginPage.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "c320cd027dc16e92ff925a3340ed4eebeef3c697e325cdc89a4f51e464d08b88"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/pages/PhotosPage.bozuk.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/PhotosPage.bozuk.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/PhotosPage.bozuk.tsx"
+    ],
+    "path": "client/src/pages/PhotosPage.bozuk.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "fc2ad85ec29e2da364d56a27f730d13958b1168c301965d5d8055ea8437ae013"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/pages/PhotosPage.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/PhotosPage.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/PhotosPage.tsx"
+    ],
+    "path": "client/src/pages/PhotosPage.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "43dc0223af53f724a1748cdea827c5e1ff72b5faea75e8a1ee6c947f975dbc10"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_clean_v1_20260709_151252",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "a2cf0bc8bb4651fa42079f52fbd7e4ffa174a112387d933052e25350c3394d3f"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_no_zoom",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "0b42836ca61ae5e10808d2a912a5c9f8179135fc4c0ed80f9c08607bffe3fedd"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_v2_zip_20260709_152724",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "be062677c54b3342390c4c0c051e842dff185e6eeb1caa6df04c45cc437b190f"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_v3_bulk_select_20260709_195601",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "b1067f6ffe1ac0a0b03dbaa1fa5af00232410fe15d788503f91c51330d56b104"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_v4_album_20260709_200525",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "148fb744c6b19fbd7a2195884ee9a99253eb55266f30077a5e3d066013167b22"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_zoom",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "0b42836ca61ae5e10808d2a912a5c9f8179135fc4c0ed80f9c08607bffe3fedd"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_zoom_center_fix",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "aaad7b5590a9ed5930c94b9e941688afd2a1275c0c35f46b84b07e34cce8354e"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_zoom_clean",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "0b42836ca61ae5e10808d2a912a5c9f8179135fc4c0ed80f9c08607bffe3fedd"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_zoom_drag",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "b54b21e64f7e4ed3a25fdf39a310d3c7c55a1c117a6fa6327e93d068e26a1479"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_zoom_drag_fix",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "8efd22f050a8abbcaf359d608d84b358dbdade6d2f39e9f58fbc1dd11ba52015"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_zoom_fix",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "0b42836ca61ae5e10808d2a912a5c9f8179135fc4c0ed80f9c08607bffe3fedd"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_zoom_fix3",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "b3f59d72c9dd5919144b41026c9267fb60b97adcf24e0c0a4c8411b4e1f4c953"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_zoom_mouse_final",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "8efd22f050a8abbcaf359d608d84b358dbdade6d2f39e9f58fbc1dd11ba52015"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_zoom_real_fix",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "0b42836ca61ae5e10808d2a912a5c9f8179135fc4c0ed80f9c08607bffe3fedd"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_zoom_repair2",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "043752c55b8ba5263fe0927fdcaf36ff249ae7ff12878fd1cb5831b30eb2e1b8"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bak_zoom_simple",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "dbd066a5b493c76935ef815410fed0659c27d995480e91e30e781db8d4c793f2"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/PhotosPage.tsx.bozuk-yedek",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "ee7c0ac1c269cc8e01527a3f4bda3ce5b9308b540b157159443cdbc80a34890d"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/194a7947fe04c51924c10614ac8fc22ad1629efab735ba6686f44050bc40693c/client/src/pages/RaidManagerPage.css",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/RaidManagerPage.css",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/RaidManagerPage.css"
+    ],
+    "path": "client/src/pages/RaidManagerPage.css",
+    "provenance_type": "recovered-exact",
+    "sha256": "107227aea5eba732e72f2101aa5b475e64928c91e41af91e65479b57cbd0ffac"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/194a7947fe04c51924c10614ac8fc22ad1629efab735ba6686f44050bc40693c/client/src/pages/RaidManagerPage.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/RaidManagerPage.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/RaidManagerPage.tsx"
+    ],
+    "path": "client/src/pages/RaidManagerPage.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "e0cbfd4678a579fad5211fb2fb794fa8c4f1389448a676c55815d80edfcb05ed"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/client/src/pages/StoragePage.css",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/StoragePage.css",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/StoragePage.css"
+    ],
+    "path": "client/src/pages/StoragePage.css",
+    "provenance_type": "recovered-exact",
+    "sha256": "407b7043bde5404473ee45e8020899eb456e7f06a51473966798895d8612b0b2"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/255d862c629d6586df9b1fbb01b155493e9db02fc3d687a0cab9b4183094f68e/client/src/pages/StoragePage.css"
+    ],
+    "path": "client/src/pages/StoragePage.css.backup-20260718-013312",
+    "provenance_type": "recovered-exact",
+    "sha256": "4736cb02d01d8331f8e067b016546b39fb576247972649cb7d2a9b12855a6bae"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/client/src/pages/StoragePage.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/StoragePage.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/StoragePage.tsx"
+    ],
+    "path": "client/src/pages/StoragePage.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "94cf2f396d78c417d9bd215c836d97b24f657808142082b6ad8f43e8004eb2ba"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/StoragePage.tsx.backup-20260718-013312",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "4e1f92d47e4fb64bab1c3bf4bc8129c9c674952cec1f4d0dd6559a74e98ca2af"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/e5c6b1a10d5b42d8e12b207e05512a1c79c997cb6897da11c53bd108e4a4cad7/client/src/pages/StoragePage.tsx"
+    ],
+    "path": "client/src/pages/StoragePage.tsx.backup-tsfix-20260718-025750",
+    "provenance_type": "recovered-exact",
+    "sha256": "8029e8736238e83373613a95f8c524121da72ac76717ce9e28d34f275998746b"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/StoragePage.tsx.backup-tsfix-20260718-025921",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "b5454a4dac31110a21d581ea52df6263c5cb7469a64627d2672a10b26ef42c8f"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/StoragePage.tsx.backup-v3-buildfix-20260718-031355",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "14f000ee708a101a739bc2c664595960ad0eb8dcbda41622503857ab94126bb4"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/StoragePage.tsx.backup-v3-buildfix-20260718-031446",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "655a9dad29eabcf7dba2e9b45661445e8ca6b3088bf17c1ba99bf79412543259"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/StoragePage.tsx.backup-v3-finalfix-20260718-031129",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "90311c600055e0529ce56e1724296c09b91c7c71dcdab5e45d12643d90eafe8a"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/StoragePage.tsx.backup-v3-helperfix-20260718-030353",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "b5454a4dac31110a21d581ea52df6263c5cb7469a64627d2672a10b26ef42c8f"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/StoragePage.tsx.backup-v3-temperaturefix-20260718-031648",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "655a9dad29eabcf7dba2e9b45661445e8ca6b3088bf17c1ba99bf79412543259"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/StoragePage.tsx.backup-v3-typefix-20260718-031859",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "db3d948321029b1caa3c9b22a61489f87262b12c64f4a01ab0b4529f377038f2"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/StoragePage.tsx.bak_storage_manager_20260717_134028",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "727a9599868ac7ee3d73bfd2049f8003de9df694ffd8557a1509a65d218a9b84"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/client/src/pages/StorageTelemetryPanel.css",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/StorageTelemetryPanel.css",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/StorageTelemetryPanel.css"
+    ],
+    "path": "client/src/pages/StorageTelemetryPanel.css",
+    "provenance_type": "recovered-exact",
+    "sha256": "1bb2de04dedc0b209b4df9a5db58945ee961c284cb5bafe31fcb92aebd611b10"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/client/src/pages/StorageTelemetryPanel.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/StorageTelemetryPanel.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/StorageTelemetryPanel.tsx"
+    ],
+    "path": "client/src/pages/StorageTelemetryPanel.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "31157580f8ab848cfa1119d67a7ce5b4c60181e45aad6472223f13033146be3a"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/pages/SystemUpdatesPage.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/SystemUpdatesPage.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/SystemUpdatesPage.tsx"
+    ],
+    "path": "client/src/pages/SystemUpdatesPage.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "2e216ee50dfbae3d938d4a61b508822a0da32e3d071df0f8a552bd02ab02acfd"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/pages/UsersPage.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/pages/UsersPage.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/pages/UsersPage.tsx"
+    ],
+    "path": "client/src/pages/UsersPage.tsx",
+    "provenance_type": "recovered-exact",
+    "sha256": "e8fe72cd6e5637b05772bc8b48dca3bc1564ff5b706766b5f39dff659a3cf52f"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/UsersPage.tsx.bak_datefmt_20260709_223202",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "32808bfe1426b9770fc710c76b51a1ed52624e1bee14246749e0d34c447d1ce0"
+  },
+  {
+    "origins": [],
+    "path": "client/src/pages/UsersPage.tsx.bak_email_20260709_222310",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "8dcffd5fb6a7ccdc733df6c2b0e1ea70fd99c33606b104496469e8cc97142119"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/storage/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/storage/mod.rs"
+    ],
+    "path": "client/src/types/photo.ts",
+    "provenance_type": "recovered-exact",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/tsconfig.app.json",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/tsconfig.app.json",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/tsconfig.app.json"
+    ],
+    "path": "client/tsconfig.app.json",
+    "provenance_type": "recovered-exact",
+    "sha256": "b1eac9ba6cd1c01d59ebca159805e052c798d9d4ab904680b79ce3e306ea0bbd"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/tsconfig.json",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/tsconfig.json",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/tsconfig.json"
+    ],
+    "path": "client/tsconfig.json",
+    "provenance_type": "recovered-exact",
+    "sha256": "770b4140bbb581e2dfd9ea9946ffc9c75a1d86ba7d2db5f77c83e37cbdf9d808"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/tsconfig.node.json",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/tsconfig.node.json",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/tsconfig.node.json"
+    ],
+    "path": "client/tsconfig.node.json",
+    "provenance_type": "recovered-exact",
+    "sha256": "d366cc0827139db39c61815f22491bbfda56c654354a42ad7795143d314e45e8"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/409dbbcaa2a2766f87aacda8ae391a0098b59b2c72d75758252b405997052ba3/client/types.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/types.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/types.ts"
+    ],
+    "path": "client/types.ts",
+    "provenance_type": "recovered-exact",
+    "sha256": "02dccbca53a30cade8681fd18b88378f9709efac38aa1f2803f9f879292e5305"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/409dbbcaa2a2766f87aacda8ae391a0098b59b2c72d75758252b405997052ba3/client/utils.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/utils.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/utils.ts"
+    ],
+    "path": "client/utils.ts",
+    "provenance_type": "recovered-exact",
+    "sha256": "47362fd117c4d6f02391ce3871a9dc001586677bd9bc77cac51977cae38b3190"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/vite.config.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/vite.config.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/vite.config.ts"
+    ],
+    "path": "client/vite.config.ts",
+    "provenance_type": "recovered-exact",
+    "sha256": "4d36db3522a7b2dd10e0936e1004373c7ee65f10f7cd7920cd76410459c15a45"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/common/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/common/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/common/Cargo.toml"
+    ],
+    "path": "common/Cargo.toml",
+    "provenance_type": "recovered-exact",
+    "sha256": "6ba02f414ae694beab70851c5f44f11a58ea4888562a8517ce912093f1b8734a"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/storage/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/storage/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/storage/src/lib.rs"
+    ],
+    "path": "common/src/lib.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "c04c976b49d9540ebad87db788a0887ce2806ffef3f1ea64736bb845e6c7568b"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/config/config.toml",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/config/config.toml",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/config/config.toml"
+    ],
+    "path": "config/config.toml",
+    "provenance_type": "recovered-exact",
+    "sha256": "09b3205b3f2c323aae76d314d3b44bb7415f6137d10253e79a43b25dadb8b54d"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/core/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/core/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/core/Cargo.toml"
+    ],
+    "path": "core/Cargo.toml",
+    "provenance_type": "recovered-exact",
+    "sha256": "51c11d743248ef5cba18d8a19d1be013639ffa73dde8c1f8602dddbff756cf3b"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/storage/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/storage/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/storage/src/lib.rs"
+    ],
+    "path": "core/src/lib.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "c04c976b49d9540ebad87db788a0887ce2806ffef3f1ea64736bb845e6c7568b"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/database/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/database/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/database/Cargo.toml"
+    ],
+    "path": "database/Cargo.toml",
+    "provenance_type": "recovered-exact",
+    "sha256": "9c3c7087be58199e80031e063c1977803901fac97b10bd94170085f534aa5555"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/storage/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/storage/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/storage/src/lib.rs"
+    ],
+    "path": "database/src/lib.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "c04c976b49d9540ebad87db788a0887ce2806ffef3f1ea64736bb845e6c7568b"
+  },
+  {
+    "origins": [],
+    "path": "docs/reconstruction/evidence-correction.md",
+    "provenance_type": "reconstruction-metadata",
+    "sha256": "fc4665e82e005c9d1afb3701e0d740b4cf3ed504f0baace3612cd0cb9e162cf4"
+  },
+  {
+    "origins": [],
+    "path": "docs/reconstruction/source-selection.md",
+    "provenance_type": "reconstruction-metadata",
+    "sha256": "9ed6a4e512ed5b4e00752db20f943d53e13fcc28964690ea2e3ec16ff40b2343"
+  },
+  {
+    "origins": [],
+    "path": "docs/superpowers/plans/2026-09-12-photoos-phase1-implementation-plan.md",
+    "provenance_type": "approved-design-plan",
+    "sha256": "e5e6a25c23d1c3263323e7b0f30ca0862436a748cbf02527f059a0f253d38008"
+  },
+  {
+    "origins": [],
+    "path": "docs/superpowers/specs/2026-09-12-photoos-final-source-design.md",
+    "provenance_type": "approved-design-plan",
+    "sha256": "da79d8d3b38c57aa6c938f9d4fdd87bac72316d1d17e07f97dd7dce31a46e82f"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/dfaba67089e25b7a609562f1b740fd63e8ae63215e173ef5e7049be599a0f730/install-backup-manager.sh",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/install-backup-manager.sh",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/install-backup-manager.sh"
+    ],
+    "path": "install-backup-manager.sh",
+    "provenance_type": "recovered-exact",
+    "sha256": "eeb8fd2e8f75088eb943872f1e3ee0315e758584df930ab1b8d831d4ebcb4a0f"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/194a7947fe04c51924c10614ac8fc22ad1629efab735ba6686f44050bc40693c/install-raid-manager-v1.sh",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/install-raid-manager-v1.sh",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/install-raid-manager-v1.sh"
+    ],
+    "path": "install-raid-manager-v1.sh",
+    "provenance_type": "recovered-exact",
+    "sha256": "f8249b4142ef61785339d03d87b9534f05f4214c2d7a3346b749e7df95df26c8"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/07d1fa1b8ab59930443bc2a487ced27c009566ad970aaaa5288f0f21abf77b86/install-storage-dashboard.sh",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/install-storage-dashboard.sh",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/install-storage-dashboard.sh"
+    ],
+    "path": "install-storage-dashboard.sh",
+    "provenance_type": "recovered-exact",
+    "sha256": "533c05b620556aeed4bf525a8bd16257063df96dcf75f21ba9c16fdd7710069f"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/c15e05f7830ae3fdad5c6b0d7d3dd70359f3cb8ff1678af0f64ce328262725f1/install-storage-history.sh",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/install-storage-history.sh",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/install-storage-history.sh"
+    ],
+    "path": "install-storage-history.sh",
+    "provenance_type": "recovered-exact",
+    "sha256": "9cd96d04ce0d7c7482ca47c921874534ef723bbaba15587ba3e8b97932f3f5c0"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/bd20fd5c94c66b5e96f7a08dc19e032412f79f85ac96d448ee65eca3b8c5aa06/install-storage-ui-v2.sh",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/install-storage-ui-v2.sh",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/install-storage-ui-v2.sh"
+    ],
+    "path": "install-storage-ui-v2.sh",
+    "provenance_type": "recovered-exact",
+    "sha256": "1b99213ad0ffdac6c0ab97c832a3f4faf3edaf057e0b7f3af16f42cee5bcf7cb"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/e5c6b1a10d5b42d8e12b207e05512a1c79c997cb6897da11c53bd108e4a4cad7/install-storage-ui-v3.sh",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/install-storage-ui-v3.sh",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/install-storage-ui-v3.sh"
+    ],
+    "path": "install-storage-ui-v3.sh",
+    "provenance_type": "recovered-exact",
+    "sha256": "23ae25f6404daf13d967e54fe2efd1ab7a071b73a0c877a3896837af87105370"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/fdf728db45c4e0ab61b1ee0ad57acf0a2abc8bff505e4927d20a633b863f9fd1/photoos-installer-kit/installer/build-installer.sh",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/installer/build-installer.sh",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/installer/build-installer.sh"
+    ],
+    "path": "installer/build-installer.sh",
+    "provenance_type": "recovered-exact",
+    "sha256": "1e2945f67812e73e10db3a603f517f875d12ac235c42e787af08647d77a8f7bb"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/fdf728db45c4e0ab61b1ee0ad57acf0a2abc8bff505e4927d20a633b863f9fd1/photoos-installer-kit/installer/detect_system.sh",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/installer/detect_system.sh",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/installer/detect_system.sh"
+    ],
+    "path": "installer/detect_system.sh",
+    "provenance_type": "recovered-exact",
+    "sha256": "41809bb3ec5f2281c41e4bb7ab527d95ebfdad3153b95040d3a5c62f1a261acd"
+  },
+  {
+    "origins": [],
+    "path": "installer/install-to-disk.sh",
+    "provenance_type": "live-runtime-import",
+    "sha256": "1f9a60c7d2587f0ec0262e56aa79c65d4174cb16fe6330080d52c62c215c8a85"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/fdf728db45c4e0ab61b1ee0ad57acf0a2abc8bff505e4927d20a633b863f9fd1/photoos-installer-kit/installer/install.sh",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/installer/install.sh",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/installer/install.sh"
+    ],
+    "path": "installer/install.sh",
+    "provenance_type": "recovered-exact",
+    "sha256": "78ce616e2a4aecb1816677fd5fea9c1eff72601f47bf87cb4b2fb298402f005b"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/fdf728db45c4e0ab61b1ee0ad57acf0a2abc8bff505e4927d20a633b863f9fd1/photoos-installer-kit/installer/lib.sh",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/installer/lib.sh",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/installer/lib.sh"
+    ],
+    "path": "installer/lib.sh",
+    "provenance_type": "recovered-exact",
+    "sha256": "6aa00c53e349cfb986ddffaa6aecce3fd4be5e4953c6726dbbfb96d3629964ad"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/media/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/media/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/media/Cargo.toml"
+    ],
+    "path": "media/Cargo.toml",
+    "provenance_type": "recovered-exact",
+    "sha256": "517d94bf3317cf56871f158e0a1ae87d853fd17b9a519c878f2468ca759de0d5"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/storage/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/storage/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/storage/src/lib.rs"
+    ],
+    "path": "media/src/lib.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "c04c976b49d9540ebad87db788a0887ce2806ffef3f1ea64736bb845e6c7568b"
+  },
+  {
+    "origins": [],
+    "path": "nginx/photoos-gateway",
+    "provenance_type": "live-runtime-import",
+    "sha256": "0d1ff5c60480e425db9384852fbfe250006bbe96c9e5064197750a35a83f5ffa"
+  },
+  {
+    "origins": [],
+    "path": "scripts/photoos-disk-health.sh",
+    "provenance_type": "live-runtime-import",
+    "sha256": "9666f505af4433018c70ac5c19c78fafc92601a627e22fa2ae47ff185821e67d"
+  },
+  {
+    "origins": [],
+    "path": "scripts/photoos-notification-aggregator.sh",
+    "provenance_type": "live-runtime-import",
+    "sha256": "c678978c6d170b0dec03c9f771743252bb3693be6b8148c233ea6b7ac71dbd68"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/409dbbcaa2a2766f87aacda8ae391a0098b59b2c72d75758252b405997052ba3/server/Cargo.toml",
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/server/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/Cargo.toml"
+    ],
+    "path": "server/Cargo.toml",
+    "provenance_type": "recovered-exact",
+    "sha256": "beaba12844467cddbbca6b7495f5a5093d00a58d80cd027788f5cf0ae79ca9a5"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/409dbbcaa2a2766f87aacda8ae391a0098b59b2c72d75758252b405997052ba3/server/automation.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/automation.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/automation.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/automation.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/automation.rs"
+    ],
+    "path": "server/automation.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "39c3183877cfeb7832ab99941582540b57538d64aa623eb2095506b9f2231a69"
+  },
+  {
+    "origins": [],
+    "path": "server/migrations/0001_init.sql",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "2690d7d2b8c0be29fdbc63e24aec4e2a4bc2c8e265df1c0b9850b3773333b848"
+  },
+  {
+    "origins": [],
+    "path": "server/migrations/0002_media.sql",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "b966572ee2fb01371db5da35865adbd9ef3c6640340a7b1affa6109f8b133705"
+  },
+  {
+    "origins": [],
+    "path": "server/migrations/0003_photos.sql",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "c13dde17c2c4cb2438998c5c8fc50168bb1d4f5b9921c8ea2f9afeab5d88c29c"
+  },
+  {
+    "origins": [],
+    "path": "server/migrations/20260704_000001_create_albums.sql",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "4dbe99990d0db8a92eb3bd12ac6b8b82a9799f69dd6a24d64d592d28758c0c29"
+  },
+  {
+    "origins": [],
+    "path": "server/migrations/20260723021550_cloud_engine_core.sql",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "35b26ef4124ec7595dbc5a2efdc2419bbce58b29536e6a3f79cfa81b80ccc370"
+  },
+  {
+    "origins": [],
+    "path": "server/migrations/20260723021551_add_users_role.sql",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "dcb34aca32a012ad04aac71d0968052ec806aaa4056de63c0d941ec78f5a106f"
+  },
+  {
+    "origins": [],
+    "path": "server/migrations/20260729000100_setup_preferences.sql",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "e1491feafad54da191ef83bb686fa4096dc2c2d6bd6ba40b63494ecd0c54266d"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/server/src/app.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/app.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/app.rs"
+    ],
+    "path": "server/src/app.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "c21eab09313768d77ef6daa665a09c46ad727bf6118de431a160e62b52540c5a"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/auth/jwt.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/auth/jwt.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/auth/jwt.rs"
+    ],
+    "path": "server/src/auth/jwt.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "d6b7fca80dcdedc8dc645b1d1db251b2b9b024f0c6bb6ffa75c83d9e290a8508"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/auth/middleware.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/auth/middleware.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/auth/middleware.rs"
+    ],
+    "path": "server/src/auth/middleware.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "0ddefc0e4ce248aaf386b4c29328b8eb1e2139a915ebe976f7685f8eb20ebb78"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/auth/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/auth/mod.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/auth/mod.rs"
+    ],
+    "path": "server/src/auth/mod.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "5ad52e6bafd190aad8b52078b4335762a63aa09e24d21b074ea25246b854bad2"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/config/mod.rs"
+    ],
+    "path": "server/src/config/mod.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "806817c31104108857b8b3dde4fd49f09c7c1e607008d325b357df4a124ab5e9"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/config/mod.rs"
+    ],
+    "path": "server/src/config/mod.rs.before-corruption-fix",
+    "provenance_type": "recovered-exact",
+    "sha256": "fb887d3ac6f16e59703797a3104fc9b550911a51aa1d71c786ab06daecd4f846"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/database/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/database/mod.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/database/mod.rs"
+    ],
+    "path": "server/src/database/mod.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "fdd41cf6fdd68f0e57a9a6719695dfd861e710c4945b01ed802c8882ebdbf031"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/c74c4fb6cf63891fdba18de6a171cc8cf3ecac849f315f1a5b8a9fdb06bf429e/PhotoOS-recovery-addendum-v3/source/server/src/handlers/albums.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v3-20260910-011541/PhotoOS-recovery-addendum-v3/source/server/src/handlers/albums.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/albums.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/albums.rs"
+    ],
+    "path": "server/src/handlers/albums.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "88a34aa914acca9d18eefe12ebc63b5a06bdf7bb2d12f0657d32d6fd53a7575c"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/409dbbcaa2a2766f87aacda8ae391a0098b59b2c72d75758252b405997052ba3/server/automation.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/automation.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/automation.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/automation.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/automation.rs"
+    ],
+    "path": "server/src/handlers/automation.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "39c3183877cfeb7832ab99941582540b57538d64aa623eb2095506b9f2231a69"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/backups.rs"
+    ],
+    "path": "server/src/handlers/backups.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "120cc3ec2cba8c06167a8d5123cd954120bab53557586c870a671197ed7810bd"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/cloud_accounts.rs"
+    ],
+    "path": "server/src/handlers/cloud_accounts.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "8f6ac88a931743aed319f48c62aeefca430801603f7ffcf7bf7cd1aa2e5c2ad2"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/f0e8214a699138be3c3860a078d4b68a2c13e253789bfbbdf1766b7094e676d7/PhotoOS-recovery-addendum-v8-cloud-auth/source/server/src/handlers/cloud_auth.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/cloud_auth.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/cloud_auth.rs",
+      "/home/photoos/PhotoOS-recovery/v8-integrate-20260911-020554/PhotoOS-recovery-addendum-v8-cloud-auth/source/server/src/handlers/cloud_auth.rs"
+    ],
+    "path": "server/src/handlers/cloud_auth.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "fe0f50c7fa4e70fa5a6c2cbded27b50812846f981d5999083c75fda203dc3105"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/cloud_engine.rs"
+    ],
+    "path": "server/src/handlers/cloud_engine.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "f3e7043176dc89743f7cb7605ea728990db53fcfc19a8c1af8e0dc20eafb415d"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/4a786cba2858e23df28c2bdbb849b1b3febe23a441e09defbebf753d80aba497/PhotoOS-recovery-addendum-v9-cloud-engine/source/server/src/handlers/cloud_engine.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/cloud_engine.rs",
+      "/home/photoos/PhotoOS-recovery/v9-integrate-20260911-015122/PhotoOS-recovery-addendum-v9-cloud-engine/source/server/src/handlers/cloud_engine.rs"
+    ],
+    "path": "server/src/handlers/cloud_engine.rs.before-v15-borrow-fix",
+    "provenance_type": "recovered-exact",
+    "sha256": "6b0cedba0f06d93751240c1b3ef268c2c096d0157477e2ae2ee4b4d6bc08b389"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/494b8407a55044dd622499d915153d5b28c21382632518d1e041c67d28304aaa/PhotoOS-recovery-addendum-v6-safe-historical/source/server/src/handlers/cloud_sync.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v6-safe-historical-20260910-125611/PhotoOS-recovery-addendum-v6-safe-historical/source/server/src/handlers/cloud_sync.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/cloud_sync.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/cloud_sync.rs"
+    ],
+    "path": "server/src/handlers/cloud_sync.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "48dd2ab3e6439e60ba69c34e221e74f150c9c86fc920f60355f3a25a26f155fe"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/c74c4fb6cf63891fdba18de6a171cc8cf3ecac849f315f1a5b8a9fdb06bf429e/PhotoOS-recovery-addendum-v3/source/server/src/handlers/dashboard.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v3-20260910-011541/PhotoOS-recovery-addendum-v3/source/server/src/handlers/dashboard.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/dashboard.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/dashboard.rs"
+    ],
+    "path": "server/src/handlers/dashboard.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "6ae1433444fe85b4b56db75d0ccabb4e85740c7559a2e30643f92625ff2436b5"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/c74c4fb6cf63891fdba18de6a171cc8cf3ecac849f315f1a5b8a9fdb06bf429e/PhotoOS-recovery-addendum-v3/source/server/src/handlers/devices.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v3-20260910-011541/PhotoOS-recovery-addendum-v3/source/server/src/handlers/devices.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/devices.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/devices.rs"
+    ],
+    "path": "server/src/handlers/devices.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "3096c63d78039d70844f09e440350808512b22c6a69da806b4bbd8bb200bae9a"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/494b8407a55044dd622499d915153d5b28c21382632518d1e041c67d28304aaa/PhotoOS-recovery-addendum-v6-safe-historical/source/server/src/handlers/docker.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v6-safe-historical-20260910-125611/PhotoOS-recovery-addendum-v6-safe-historical/source/server/src/handlers/docker.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/docker.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/docker.rs"
+    ],
+    "path": "server/src/handlers/docker.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "2e3dcd2fe14858c8f27e50e41b92bfec2d9d5e3237de8ac4c9db1a0176bed08f"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/logs.rs"
+    ],
+    "path": "server/src/handlers/logs.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "890766504affab98808ec1330d817a8badf262d2df5afb97c5c1912d7e4df986"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/handlers/media.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/media.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/media.rs"
+    ],
+    "path": "server/src/handlers/media.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "14fbf1c903cf041468dfcf867f49e16e0075dc9ba9dec3e7c36fd9290aec8c77"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/494b8407a55044dd622499d915153d5b28c21382632518d1e041c67d28304aaa/PhotoOS-recovery-addendum-v6-safe-historical/source/server/src/handlers/mirror.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v6-safe-historical-20260910-125611/PhotoOS-recovery-addendum-v6-safe-historical/source/server/src/handlers/mirror.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/mirror.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/mirror.rs"
+    ],
+    "path": "server/src/handlers/mirror.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "d2d5b0a2d7ff1bfeda94e2af162ba9929d7e6a87d55467a00acc5883b1ebaf79"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/494b8407a55044dd622499d915153d5b28c21382632518d1e041c67d28304aaa/PhotoOS-recovery-addendum-v6-safe-historical/source/server/src/handlers/mirror_scheduler.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v6-safe-historical-20260910-125611/PhotoOS-recovery-addendum-v6-safe-historical/source/server/src/handlers/mirror_scheduler.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/mirror_scheduler.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/mirror_scheduler.rs"
+    ],
+    "path": "server/src/handlers/mirror_scheduler.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "72d56d97cf7a82f1128ded3c14d6396802e10ce601019acc5a26473f1684e9b8"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/mobile.rs"
+    ],
+    "path": "server/src/handlers/mobile.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "4fbadab826c084632f8f2e7c426c646b76dba41547c0416aaf23c66d94a89039"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/mod.rs"
+    ],
+    "path": "server/src/handlers/mod.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "971cb800e419a4c3f8f62a7cb44c0e6d70e58dd5cdb3a02e0ce349d95b937aa0"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/561594a53bf0cf76094b87ae3f80c7fdbbd61309a1c3f2e60fea0eada0baf7b8/PhotoOS-recovery-addendum-v7-safe-historical-notifications/source/server/src/handlers/notifications.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v7-safe-notifications-20260910-130809/PhotoOS-recovery-addendum-v7-safe-historical-notifications/source/server/src/handlers/notifications.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/notifications.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/notifications.rs"
+    ],
+    "path": "server/src/handlers/notifications.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "3f2180e2a2e86eefd98bbb05ba410257e8a4761c0578867571119a947b20d00c"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/performance_alerts.rs"
+    ],
+    "path": "server/src/handlers/performance_alerts.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "2e5156b9764eae097568233b75affd5070a73c0f61e7453e61fd0bbe899855e5"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/storage/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/storage/mod.rs"
+    ],
+    "path": "server/src/handlers/photo.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/c74c4fb6cf63891fdba18de6a171cc8cf3ecac849f315f1a5b8a9fdb06bf429e/PhotoOS-recovery-addendum-v3/source/server/src/handlers/photos.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v3-20260910-011541/PhotoOS-recovery-addendum-v3/source/server/src/handlers/photos.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/photos.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/photos.rs"
+    ],
+    "path": "server/src/handlers/photos.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "96c9e65b66c48d4661f427123f2fe3648a4d7c445d9eb7174f2edf917745ab8c"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/194a7947fe04c51924c10614ac8fc22ad1629efab735ba6686f44050bc40693c/server/src/handlers/raid.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/raid.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/raid.rs"
+    ],
+    "path": "server/src/handlers/raid.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "1fdd72fbca022d3ec297a73587482e7fed54799554224efb37c30114e99fce65"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/setup.rs"
+    ],
+    "path": "server/src/handlers/setup.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "6a3aa17ce4cfcdbb2b17b5e08a219f06e664cb2172b8f79d1ac9a10974eb33a6"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/storage.rs"
+    ],
+    "path": "server/src/handlers/storage.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "75ad35a1339f0cafb619bffd32ad353baf5c188713cf9954e485425ee8b45ea4"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/c15e05f7830ae3fdad5c6b0d7d3dd70359f3cb8ff1678af0f64ce328262725f1/server/src/handlers/storage_history.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/storage_history.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/storage_history.rs"
+    ],
+    "path": "server/src/handlers/storage_history.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "0b0843aac282f46288e4f2b10472abb43d39446a8e3eba8df3b8b564dcbe1eb3"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/handlers/system.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/system.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/system.rs"
+    ],
+    "path": "server/src/handlers/system.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "a1f69f773322f839a114437375660b43590ed439f1150e4a5bb03cde2abd07e1"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/c74c4fb6cf63891fdba18de6a171cc8cf3ecac849f315f1a5b8a9fdb06bf429e/PhotoOS-recovery-addendum-v3/source/server/src/handlers/system_metrics.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v3-20260910-011541/PhotoOS-recovery-addendum-v3/source/server/src/handlers/system_metrics.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/system_metrics.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/system_metrics.rs"
+    ],
+    "path": "server/src/handlers/system_metrics.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "3255724ba6751c0762a80f7525e036e1be2db97f32b56991e11bb2c4cef41416"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/4d9abe480d53289358e9b6c4e256f7698720186d57c972096e52f7f078321409/PhotoOS-recovery-addendum-v4/source/server/src/handlers/updates.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v4-20260910-011914/PhotoOS-recovery-addendum-v4/source/server/src/handlers/updates.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/updates.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/updates.rs"
+    ],
+    "path": "server/src/handlers/updates.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "f843f03e396008c5265848458fb509ee3d0515091d5f61416fd61e4d4efa2351"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/handlers/user.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/user.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/user.rs"
+    ],
+    "path": "server/src/handlers/user.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "01810a901507e3c898af1d3ab115a94ad115c150df7c30d332ed217e9e729f3f"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/server/src/main.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/main.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/main.rs"
+    ],
+    "path": "server/src/main.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "a1a09b7149f4394227fe5b27b813515fe0c209178aae985807b0fefac11e4ae8"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/middleware/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/middleware/mod.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/middleware/mod.rs"
+    ],
+    "path": "server/src/middleware/mod.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "9cb6810c75d51977bf09bf3e521f62ba9d6a20185c03ff4d8d6c851d4908ce1b"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/api_response.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/api_response.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/api_response.rs"
+    ],
+    "path": "server/src/models/api_response.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "774baf17f06fa2189781dad57748b63c4ea38bac54e7d3b43314060ca2cb5de7"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/create_user.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/create_user.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/create_user.rs"
+    ],
+    "path": "server/src/models/create_user.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "530b9cd5a9241151db99e7569aef217e35ccf611c67893bc15b996a14e6ab0ab"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/login.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/login.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/login.rs"
+    ],
+    "path": "server/src/models/login.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "df7f500050ad9777294eb1c63a0e37660ece932543bb5f9df9fce358c5c5e6d8"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/login_response.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/login_response.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/login_response.rs"
+    ],
+    "path": "server/src/models/login_response.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "f2718ccea423d4c744be4821624cbe099a0b31c91576c5163da20152b9cc976a"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/media.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/media.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/media.rs"
+    ],
+    "path": "server/src/models/media.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "b66e34cea873cc15eb03583a70c4ade5cfffa70e3ec83ead958807d53fd99dbb"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/mod.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/mod.rs"
+    ],
+    "path": "server/src/models/mod.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "d6d5026859de223a026c1a0edd7d3bc5725d9eeec89ff7aa8aeb80ba9f5eab53"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/photo.rs"
+    ],
+    "path": "server/src/models/photo.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "ed6612527692dd2a4e3d7165f28ace0527a7bbe86801a1f01ce8d8625fef8ba9"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/storage/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/storage/mod.rs"
+    ],
+    "path": "server/src/models/photo_response.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/server/src/models/storage_info.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/storage_info.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/storage_info.rs"
+    ],
+    "path": "server/src/models/storage_info.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "afc5a3abdc475149c3c963fff2eb29b6197a11799e66a681ec0104ca4d616315"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/storage/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/storage/mod.rs"
+    ],
+    "path": "server/src/models/upload_photo.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/user.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/user.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/user.rs"
+    ],
+    "path": "server/src/models/user.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "97e7d5c6bee4e4c0777ec7b1c10a99dd314e208b7fffaa5b9231b902d9ec5f0a"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/user_response.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/user_response.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/user_response.rs"
+    ],
+    "path": "server/src/models/user_response.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "c317f17f2c7334b332628da5b7840bb1bd1cff5cac24b03b94f99af4c4f4074e"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/repositories/mod.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/services/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/repositories/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/services/mod.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/repositories/mod.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/services/mod.rs"
+    ],
+    "path": "server/src/repositories/mod.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "33f3a60e8f8f518c26d49768f2eb8e328eb1cc66dd97e36505edf311e3d772ec"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/storage/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/storage/mod.rs"
+    ],
+    "path": "server/src/repositories/photo.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/repositories/user.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/repositories/user.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/repositories/user.rs"
+    ],
+    "path": "server/src/repositories/user.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "6184e9511dd6de36be7b4b27eb1a93b54382df92cdb0da75155590c2e7ff1de3"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/c74c4fb6cf63891fdba18de6a171cc8cf3ecac849f315f1a5b8a9fdb06bf429e/PhotoOS-recovery-addendum-v3/source/server/src/routes/albums.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v3-20260910-011541/PhotoOS-recovery-addendum-v3/source/server/src/routes/albums.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/albums.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/albums.rs"
+    ],
+    "path": "server/src/routes/albums.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "bc133afd94e8f8e567ca9dec28af4f071e679bf18b0b51270d7e0119948fa037"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/app.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/app.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/app.rs"
+    ],
+    "path": "server/src/routes/app.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "a03fa4964b23707c1a66b8c0178f1d9ef11441baa2dbde0e7e07b5d4dacd4572"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/server/src/routes/automation.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/automation.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/automation.rs"
+    ],
+    "path": "server/src/routes/automation.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "2962a48c62f3a21e734792ae7f69e779c0560cfcb6fe02f7eaaa5dade019e363"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/server/src/routes/backups.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/backups.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/backups.rs"
+    ],
+    "path": "server/src/routes/backups.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "b5fcda5f64a3d80d8705111cdf4b797c8f424882fed4a71d5a8c9047b6efa66d"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/cloud_accounts.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/cloud_accounts.rs"
+    ],
+    "path": "server/src/routes/cloud_accounts.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "680082dfe538ab6e8f6383b882c33631ace8972265585ab52eb4ecd1a7f889d0"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/f0e8214a699138be3c3860a078d4b68a2c13e253789bfbbdf1766b7094e676d7/PhotoOS-recovery-addendum-v8-cloud-auth/source/server/src/routes/cloud_auth.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/cloud_auth.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/cloud_auth.rs",
+      "/home/photoos/PhotoOS-recovery/v8-integrate-20260911-020554/PhotoOS-recovery-addendum-v8-cloud-auth/source/server/src/routes/cloud_auth.rs"
+    ],
+    "path": "server/src/routes/cloud_auth.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "37a21b0384a1cefe83c9a06c89a59cf60b956246f38ade982eb5bf3af87c83a8"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/494b8407a55044dd622499d915153d5b28c21382632518d1e041c67d28304aaa/PhotoOS-recovery-addendum-v6-safe-historical/source/server/src/routes/cloud_sync.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v6-safe-historical-20260910-125611/PhotoOS-recovery-addendum-v6-safe-historical/source/server/src/routes/cloud_sync.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/cloud_sync.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/cloud_sync.rs"
+    ],
+    "path": "server/src/routes/cloud_sync.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "0b333f9ecd5c52fb29079a052e406ad6f1868c00d24396e2768812f3ba4f2450"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/c74c4fb6cf63891fdba18de6a171cc8cf3ecac849f315f1a5b8a9fdb06bf429e/PhotoOS-recovery-addendum-v3/source/server/src/routes/dashboard.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v3-20260910-011541/PhotoOS-recovery-addendum-v3/source/server/src/routes/dashboard.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/dashboard.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/dashboard.rs"
+    ],
+    "path": "server/src/routes/dashboard.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "337f9799ff6973b6813820766a59c9a01b7f41364104d8f83dc7a9b97ba6475f"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/c74c4fb6cf63891fdba18de6a171cc8cf3ecac849f315f1a5b8a9fdb06bf429e/PhotoOS-recovery-addendum-v3/source/server/src/routes/devices.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v3-20260910-011541/PhotoOS-recovery-addendum-v3/source/server/src/routes/devices.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/devices.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/devices.rs"
+    ],
+    "path": "server/src/routes/devices.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "697600e8bf9810d2445fb0d9ceebe22ff11829d3d02cc3ff77097b8b08526df9"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/494b8407a55044dd622499d915153d5b28c21382632518d1e041c67d28304aaa/PhotoOS-recovery-addendum-v6-safe-historical/source/server/src/routes/docker.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v6-safe-historical-20260910-125611/PhotoOS-recovery-addendum-v6-safe-historical/source/server/src/routes/docker.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/docker.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/docker.rs"
+    ],
+    "path": "server/src/routes/docker.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "44f709b7d19fe26f2240992f3d3d8a2f1387258b3ff6d0641cb48648f2eacc46"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/health.rs"
+    ],
+    "path": "server/src/routes/health.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "b4886bcc9849bdbe1de3b6a80b6588efe3326199d29aa964cc055e680aeb2198"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/logs.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/logs.rs"
+    ],
+    "path": "server/src/routes/logs.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "30b40d635902e185c65e7cac9f7340e729c508cede78bf713304bc4fa149061f"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/media.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/media.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/media.rs"
+    ],
+    "path": "server/src/routes/media.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "1473c2cf37ed435822c899b65db254571fb90180d76029c5ceb41499ba590be2"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/server/src/routes/mirror.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/mirror.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/mirror.rs"
+    ],
+    "path": "server/src/routes/mirror.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "a87c1a5c5778e207899bbf405906f915c237f65c9756106584348cac2ff4d28b"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/mobile.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/mobile.rs"
+    ],
+    "path": "server/src/routes/mobile.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "c1bc3ab7bb6bbf5b4eb7c21c5f9644b39be1e2d3e080373103de8d8649a14998"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/mod.rs"
+    ],
+    "path": "server/src/routes/mod.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "c62d48e7028c469c58d75dc16846acd544d1f8338ff3134a8d8021c3585539ad"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/561594a53bf0cf76094b87ae3f80c7fdbbd61309a1c3f2e60fea0eada0baf7b8/PhotoOS-recovery-addendum-v7-safe-historical-notifications/source/server/src/routes/notifications.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v7-safe-notifications-20260910-130809/PhotoOS-recovery-addendum-v7-safe-historical-notifications/source/server/src/routes/notifications.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/notifications.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/notifications.rs"
+    ],
+    "path": "server/src/routes/notifications.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "2a4919ab158e365a5d68053c89dd680d2f61cc0ab085da211695e76834090828"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/storage/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/storage/mod.rs"
+    ],
+    "path": "server/src/routes/photo.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/c74c4fb6cf63891fdba18de6a171cc8cf3ecac849f315f1a5b8a9fdb06bf429e/PhotoOS-recovery-addendum-v3/source/server/src/routes/photos.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v3-20260910-011541/PhotoOS-recovery-addendum-v3/source/server/src/routes/photos.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/photos.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/photos.rs"
+    ],
+    "path": "server/src/routes/photos.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "766f0bb84f220961cb9408f024e5cf5cb0781b8352b4b156054216ec05a5ced1"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/server/src/routes/raid.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/raid.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/raid.rs"
+    ],
+    "path": "server/src/routes/raid.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "e04082508561ca711e80a59966e6cc0d0a870135792a62955174cebe03ed4d6d"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/setup.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/setup.rs"
+    ],
+    "path": "server/src/routes/setup.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "0189a6ed465e7f27572ba1d49cc7e474092a669c0ca70c70e8d4d6a5433d2bcc"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/server/src/routes/storage.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/storage.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/storage.rs"
+    ],
+    "path": "server/src/routes/storage.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "05bee7e1d590df9f3311ff5221637131d78606b0ed3d63ce41e7d0f0de28a3e4"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/system.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/system.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/system.rs"
+    ],
+    "path": "server/src/routes/system.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "775985ded3159e5e76630e31fe3117d726c486d6a4006b02f0014b9b68fc8ae5"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/c74c4fb6cf63891fdba18de6a171cc8cf3ecac849f315f1a5b8a9fdb06bf429e/PhotoOS-recovery-addendum-v3/source/server/src/routes/updates.rs",
+      "/home/photoos/PhotoOS-recovery/addendum-v3-20260910-011541/PhotoOS-recovery-addendum-v3/source/server/src/routes/updates.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/updates.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/updates.rs"
+    ],
+    "path": "server/src/routes/updates.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "24ec1723291c0e97dc12ca4ca190131be630195eb5f91a72844c7a714f6343b8"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/user.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/user.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/user.rs"
+    ],
+    "path": "server/src/routes/user.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "036e10d9ef9da08177e2c905418be59a83e05c4a67c332c191b56ca4d337834c"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/repositories/mod.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/services/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/repositories/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/services/mod.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/repositories/mod.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/services/mod.rs"
+    ],
+    "path": "server/src/services/mod.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "33f3a60e8f8f518c26d49768f2eb8e328eb1cc66dd97e36505edf311e3d772ec"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/storage/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/storage/mod.rs"
+    ],
+    "path": "server/src/services/photo.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/services/user.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/services/user.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/services/user.rs"
+    ],
+    "path": "server/src/services/user.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "f2a91fc26fff085b27f763bd4feba252760d3ffd06aad125eecd3a88d95c5e36"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/255d862c629d6586df9b1fbb01b155493e9db02fc3d687a0cab9b4183094f68e/server/src/state.rs",
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/server/src/state.rs",
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/server/src/state.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/state.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/state.rs"
+    ],
+    "path": "server/src/state.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "78f4256d36efc697056f580e7ae41eb6530184a661682ebfa9a1395a7735b21f"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/storage/allocator.rs"
+    ],
+    "path": "server/src/storage/allocator.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "d549e19490bda44de9b4aee42c6cdebbcca7c489847c38939ec2e9c7103a5faa"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/storage/disk.rs"
+    ],
+    "path": "server/src/storage/disk.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "9e95495f43c1f8b18bf6563e72e270b9ec14b16bf8ca70c68501abf7a912c7af"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/storage/engine.rs"
+    ],
+    "path": "server/src/storage/engine.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "9156a59f00d6e0365dd48470d157bf70969954ca1b023f008b81053dccd77415"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/storage/mod.rs"
+    ],
+    "path": "server/src/storage/mod.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "e6aa5cd3c7313e9284543587acf1df9e4456bca385186f20c5ad8e7b1a61ad0e"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-reconstruction/extracted/badcaa59ed2cc3ac50e3dfd29f4c9f92b0625c7b5a160420d20823146737a039/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/server/src/storage/mod.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/api/photos.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/PhotoGrid.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/components/UploadZone.tsx",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/client/src/types/photo.ts",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/handlers/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/photo_response.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/models/upload_photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/repositories/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/routes/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/services/photo.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/storage/mod.rs"
+    ],
+    "path": "server/src/storage/mod.rs.before-v15-storage",
+    "provenance_type": "recovered-exact",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/storage/pool.rs"
+    ],
+    "path": "server/src/storage/pool.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "e758ecf8145afe87d4ea78ecb18d7d5fc547300c2e784f224db17536fb4b52c8"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-reconstruction/extracted/74f6c29a8e489b8ba266f3f63f7a1474cf8535a8b5b09e82be3decfc92ff0295/PhotoOS-recovery/source/server/src/storage_monitor.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/server/src/storage_monitor.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/server/src/storage_monitor.rs"
+    ],
+    "path": "server/src/storage_monitor.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "fb44bf097ec2adaf5c0b4977a3b7401fb97ce23d7041b7bb61c1b1b53a6828e9"
+  },
+  {
+    "origins": [],
+    "path": "smoke-v15/cloud-health.out",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "c64a0a641e54d97665730d1f146875b69ddb48f6dd6b7df462146b378ab102d1"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/smoke-v15/frontend/index.html"
+    ],
+    "path": "smoke-v15/frontend/index.html",
+    "provenance_type": "recovered-exact",
+    "sha256": "01dd0521156cbd57924dc0684c8431aec934b09a8f69721ae1b1ca1a1b85eb03"
+  },
+  {
+    "origins": [],
+    "path": "smoke-v15/health.out",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "b808daea0f225957b3cddad9d5e33cb8dd4da1dbfc1d764e291f8d2e9fa4f857"
+  },
+  {
+    "origins": [],
+    "path": "smoke-v15/logs-health.out",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "95fe80b3b43536c83b3fb25039807d9c7b8546c107122c55af3c532e206a6e69"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/smoke-v15/frontend/index.html"
+    ],
+    "path": "smoke-v15/root.out",
+    "provenance_type": "recovered-exact",
+    "sha256": "01dd0521156cbd57924dc0684c8431aec934b09a8f69721ae1b1ca1a1b85eb03"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/smoke-v15/run-inside.sh"
+    ],
+    "path": "smoke-v15/run-inside.sh",
+    "provenance_type": "recovered-exact",
+    "sha256": "09185edfe1ce2585acffd2517fb1b48e818a7a8131fa537b6b16c6bfc30f0318"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/smoke-v15/runtime/notification-producers/notifications-aggregate.json"
+    ],
+    "path": "smoke-v15/runtime/notification-producers/notifications-aggregate.json",
+    "provenance_type": "recovered-exact",
+    "sha256": "6ac6e82ab4c60376e078475e2a5edd1befc3fcbda3695adec7b7a52d042fbefb"
+  },
+  {
+    "origins": [],
+    "path": "smoke-v15/runtime/smoke.db",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "7206d01806bd8f58f2bc7e3f434107e25aee54a57ab40a7aab8ad651779d5aa6"
+  },
+  {
+    "origins": [],
+    "path": "smoke-v15/setup-status.out",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "c5f67757ed0d9dc78166f5fc6f23d0e98bae25c9ce9fdda2ca145992a816b242"
+  },
+  {
+    "origins": [],
+    "path": "smoke-v15/system-health.out",
+    "provenance_type": "canonical-baseline-unmatched",
+    "sha256": "95fe80b3b43536c83b3fb25039807d9c7b8546c107122c55af3c532e206a6e69"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/storage/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/storage/Cargo.toml",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/storage/Cargo.toml"
+    ],
+    "path": "storage/Cargo.toml",
+    "provenance_type": "recovered-exact",
+    "sha256": "03664c741f636f93d799bf4b9dd0125b577be2774857ad6590e886ff56423d1e"
+  },
+  {
+    "origins": [
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/git-main-20260910-004803/storage/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/reimplementation-v15-20260911-172343/storage/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/auth/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/common/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/core/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/database/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/media/src/lib.rs",
+      "/home/photoos/PhotoOS-recovery/source-recovered-20260910-010351/storage/src/lib.rs"
+    ],
+    "path": "storage/src/lib.rs",
+    "provenance_type": "recovered-exact",
+    "sha256": "c04c976b49d9540ebad87db788a0887ce2806ffef3f1ea64736bb845e6c7568b"
+  },
+  {
+    "origins": [],
+    "path": "systemd/drop-ins/photoos-firstboot-installer.service/10-installed-only.conf",
+    "provenance_type": "live-runtime-import",
+    "sha256": "3dd6dc440c46e54e9ebc1cbbb6439bdcc072dd310876f39062d2f3e8b67ecaaf"
+  },
+  {
+    "origins": [],
+    "path": "systemd/drop-ins/photoos.service/20-internal-curl.conf",
+    "provenance_type": "live-runtime-import",
+    "sha256": "00a1cc5f666e3538542069de00415855414f7b6ddda6e973043f5ed62d383872"
+  },
+  {
+    "origins": [],
+    "path": "systemd/photoos-disk-health.timer",
+    "provenance_type": "live-runtime-import",
+    "sha256": "70b8f18bb639a9e44fe0afc98ec2dc524ede9c69026880e7b26d9cc1c6d10866"
+  },
+  {
+    "origins": [],
+    "path": "systemd/photoos-firstboot-installer.service",
+    "provenance_type": "live-runtime-import",
+    "sha256": "3fa8f4ce4bb5e2cffbf4137daaf93b3bc7d4eb28df5ce70d5108e3fd43d0e2dd"
+  },
+  {
+    "origins": [],
+    "path": "systemd/photoos-notification-aggregator.timer",
+    "provenance_type": "live-runtime-import",
+    "sha256": "b3071244663df15a7741d3ec9187c4e2de5f455e27d091e3f13065f2b7cd3a19"
+  },
+  {
+    "origins": [],
+    "path": "systemd/photoos-setup-provisioner.service",
+    "provenance_type": "live-runtime-import",
+    "sha256": "dad4f363931fd6980bc2356588a717b54b46f1b811f1d28ef76e38d213f25f06"
+  },
+  {
+    "origins": [],
+    "path": "systemd/photoos-storage-core.service",
+    "provenance_type": "live-runtime-import",
+    "sha256": "69da2486cb48e8be730da3b6ea9b5a0339153748ba0c7bf21e59ecb8b6f78c21"
+  },
+  {
+    "origins": [],
+    "path": "systemd/photoos-storage-helper.service",
+    "provenance_type": "live-runtime-import",
+    "sha256": "dc6809a5231a88b110745fc82d7ebbce786057d1ae2f1b9ff994e322ae575286"
+  },
+  {
+    "origins": [],
+    "path": "systemd/photoos-storage-notification-producer.timer",
+    "provenance_type": "live-runtime-import",
+    "sha256": "57c22e748116167ff4cb94f4b57b0cc650aafb4d3201997bb87c9ed26bd7073f"
+  },
+  {
+    "origins": [],
+    "path": "systemd/photoos-update-agent.service",
+    "provenance_type": "live-runtime-import",
+    "sha256": "170106cc5156f275a9efd94a806d29328e70507dcd08fc2c4c7128a8bbfa50b5"
+  },
+  {
+    "origins": [],
+    "path": "systemd/photoos.service",
+    "provenance_type": "live-runtime-import",
+    "sha256": "ddd93f55848b1100967d75dd30a4b75afc5323878bca9bbeed13f016a495c736"
+  },
+  {
+    "origins": [],
+    "path": "systemd/timesyncd/10-photoos.conf",
+    "provenance_type": "live-runtime-import",
+    "sha256": "1fbdd04b603c2232d2177cd1003a6c6a15ebbd0aea8c157451298c883b6f59ee"
+  }
+]

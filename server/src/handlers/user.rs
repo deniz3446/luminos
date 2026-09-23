@@ -1,10 +1,14 @@
 use axum::{
     extract::State,
-    http::StatusCode,
+    http::{header, HeaderMap, StatusCode},
     Json,
 };
 
+use serde::Serialize;
+use sqlx::SqlitePool;
+
 use crate::{
+    auth::decode_token,
     models::{
         api_response::ApiResponse,
         create_user::CreateUserRequest,
@@ -69,6 +73,98 @@ pub async fn create_user(
     }
 }
 
+
+#[derive(Debug, Clone, Serialize, PartialEq, Eq)]
+pub struct CurrentUserResponse {
+    pub username: String,
+    pub role: String,
+}
+
+async fn current_user_by_id(
+    db: &SqlitePool,
+    user_id: i64,
+) -> Result<Option<CurrentUserResponse>, sqlx::Error> {
+    sqlx::query_as::<_, (String, String)>(
+        "SELECT username, role FROM users WHERE id = ? LIMIT 1",
+    )
+    .bind(user_id)
+    .fetch_optional(db)
+    .await
+    .map(|row| {
+        row.map(|(username, role)| CurrentUserResponse {
+            username,
+            role,
+        })
+    })
+}
+
+pub async fn me(
+    State(state): State<AppState>,
+    headers: HeaderMap,
+) -> (StatusCode, Json<ApiResponse<CurrentUserResponse>>) {
+    let token = headers
+        .get(header::AUTHORIZATION)
+        .and_then(|value| value.to_str().ok())
+        .map(str::trim)
+        .map(|value| value.strip_prefix("Bearer ").unwrap_or(value))
+        .map(str::trim)
+        .filter(|value| !value.is_empty());
+
+    let Some(token) = token else {
+        return (
+            StatusCode::UNAUTHORIZED,
+            Json(ApiResponse {
+                success: false,
+                message: "Oturum anahtarı bulunamadı.".to_string(),
+                data: None,
+            }),
+        );
+    };
+
+    let claims = match decode_token(token) {
+        Ok(claims) => claims,
+        Err(_) => {
+            return (
+                StatusCode::UNAUTHORIZED,
+                Json(ApiResponse {
+                    success: false,
+                    message: "Oturum süresi dolmuş veya token geçersiz.".to_string(),
+                    data: None,
+                }),
+            );
+        }
+    };
+
+    match current_user_by_id(&state.db, claims.sub).await {
+        Ok(Some(user)) => (
+            StatusCode::OK,
+            Json(ApiResponse {
+                success: true,
+                message: "Oturum doğrulandı.".to_string(),
+                data: Some(user),
+            }),
+        ),
+
+        Ok(None) => (
+            StatusCode::UNAUTHORIZED,
+            Json(ApiResponse {
+                success: false,
+                message: "Oturuma ait kullanıcı bulunamadı.".to_string(),
+                data: None,
+            }),
+        ),
+
+        Err(_) => (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            Json(ApiResponse {
+                success: false,
+                message: "Oturum bilgisi okunamadı.".to_string(),
+                data: None,
+            }),
+        ),
+    }
+}
+
 pub async fn login(
     State(state): State<AppState>,
     Json(req): Json<LoginRequest>,
@@ -91,5 +187,46 @@ pub async fn login(
                 data: None,
             }),
         ),
+    }
+}
+
+// PHOTOOS CURRENT SESSION CONTRACT TESTS
+#[cfg(test)]
+mod current_session_tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn current_user_lookup_returns_username_and_role() {
+        let pool = SqlitePool::connect("sqlite::memory:")
+            .await
+            .unwrap();
+
+        sqlx::query(
+            r#"
+            CREATE TABLE users (
+                id INTEGER PRIMARY KEY,
+                username TEXT NOT NULL,
+                role TEXT NOT NULL
+            )
+            "#,
+        )
+        .execute(&pool)
+        .await
+        .unwrap();
+
+        sqlx::query(
+            "INSERT INTO users(id, username, role) VALUES(7, 'DenemeAdmin', 'admin')",
+        )
+        .execute(&pool)
+        .await
+        .unwrap();
+
+        let user = current_user_by_id(&pool, 7)
+            .await
+            .unwrap()
+            .expect("current user");
+
+        assert_eq!(user.username, "DenemeAdmin");
+        assert_eq!(user.role, "admin");
     }
 }

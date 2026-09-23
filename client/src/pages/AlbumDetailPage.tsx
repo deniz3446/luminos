@@ -1,0 +1,427 @@
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+    deleteAlbum,
+    getAlbum,
+    removePhotoFromAlbum,
+    type Album,
+    type AlbumPhoto,
+} from "../api/albums";
+
+import { API_URL } from "../api/client";
+
+function isVideo(photo: AlbumPhoto) {
+    return photo.mime_type.startsWith("video/");
+}
+
+export default function AlbumDetailPage() {
+    const navigate = useNavigate();
+    const params = useParams();
+
+    const albumId = Number(params.id);
+
+    const [album, setAlbum] = useState<Album | null>(null);
+    const [photos, setPhotos] = useState<AlbumPhoto[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [selected, setSelected] = useState<AlbumPhoto | null>(null);
+    const [visibleLimit, setVisibleLimit] = useState(80);
+
+    async function loadAlbum() {
+        try {
+            setLoading(true);
+
+            const data = await getAlbum(albumId);
+            setAlbum(data.album);
+            setPhotos(data.photos);
+            setVisibleLimit(80);
+        } catch (err) {
+            console.error(err);
+            alert("Albüm yüklenemedi.");
+            navigate("/albums");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        if (!albumId || Number.isNaN(albumId)) {
+            navigate("/albums");
+            return;
+        }
+
+        loadAlbum();
+    }, [albumId]);
+
+    async function handleDeleteAlbum() {
+        if (!album) return;
+
+        if (!confirm(`"${album.title}" albümü silinsin mi? Fotoğraflar silinmez.`)) {
+            return;
+        }
+
+        try {
+            await deleteAlbum(album.id);
+            navigate("/albums");
+        } catch (err) {
+            console.error(err);
+            alert("Albüm silinemedi.");
+        }
+    }
+
+    async function handleRemovePhoto(photo: AlbumPhoto) {
+        if (!album) return;
+
+        if (!confirm("Bu fotoğraf albümden çıkarılsın mı? Dosya silinmez.")) {
+            return;
+        }
+
+        try {
+            await removePhotoFromAlbum(album.id, photo.id);
+            setPhotos((prev) => {
+                const next = prev.filter((p) => p.id !== photo.id);
+                if (visibleLimit > next.length && next.length > 0) {
+                    setVisibleLimit(next.length);
+                }
+                return next;
+            });
+            setSelected(null);
+        } catch (err) {
+            console.error(err);
+            alert("Fotoğraf albümden çıkarılamadı.");
+        }
+    }
+
+    const visiblePhotos = useMemo(
+        () => photos.slice(0, visibleLimit),
+        [photos, visibleLimit]
+    );
+
+    if (loading) {
+        return <div style={{ padding: 24 }}>Albüm yükleniyor...</div>;
+    }
+
+    if (!album) {
+        return <div style={{ padding: 24 }}>Albüm bulunamadı.</div>;
+    }
+
+    return (
+        <div>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    gap: 14,
+                    flexWrap: "wrap",
+                    marginBottom: 24,
+                }}
+            >
+                <div>
+                    <button
+                        onClick={() => navigate("/albums")}
+                        style={{
+                            marginBottom: 12,
+                            borderRadius: 12,
+                            border: "1px solid #3f3f46",
+                            background: "#111",
+                            color: "#fff",
+                            padding: "9px 13px",
+                            fontWeight: 700,
+                            cursor: "pointer",
+                        }}
+                    >
+                        ← Albümlere Dön
+                    </button>
+
+                    <h1 style={{ margin: 0, fontSize: 32 }}>{album.title}</h1>
+                    <p style={{ margin: "8px 0 0", color: "#fca5a5" }}>
+                        {photos.length} medya
+                        {photos.length > visibleLimit ? ` · ${visiblePhotos.length} gösteriliyor` : ""}
+                        {album.description ? ` · ${album.description}` : ""}
+                    </p>
+                </div>
+
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                    <button
+                        onClick={() => navigate("/photos")}
+                        style={{
+                            height: 44,
+                            borderRadius: 14,
+                            border: "1px solid #7f1d1d",
+                            background: "#991b1b",
+                            color: "#fff",
+                            padding: "0 16px",
+                            fontWeight: 800,
+                            cursor: "pointer",
+                        }}
+                    >
+                        + Fotoğraf Ekle
+                    </button>
+
+                    <button
+                        onClick={handleDeleteAlbum}
+                        style={{
+                            height: 44,
+                            borderRadius: 14,
+                            border: "1px solid #991b1b",
+                            background: "#450a0a",
+                            color: "#fff",
+                            padding: "0 16px",
+                            fontWeight: 800,
+                            cursor: "pointer",
+                        }}
+                    >
+                        Albümü Sil
+                    </button>
+                </div>
+            </div>
+
+            {photos.length === 0 ? (
+                <div
+                    style={{
+                        padding: 22,
+                        borderRadius: 18,
+                        background: "#0b0b0b",
+                        border: "1px solid rgba(239,68,68,0.16)",
+                        color: "#aaa",
+                    }}
+                >
+                    Bu albümde henüz medya yok.
+                </div>
+            ) : (
+                <div
+                    style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
+                        gap: 14,
+                    }}
+                >
+                    {visiblePhotos.map((photo) => (
+                        <div
+                            key={photo.id}
+                            onClick={() => setSelected(photo)}
+                            style={{
+                                height: 165,
+                                borderRadius: 16,
+                                overflow: "hidden",
+                                background: "#080808",
+                                border: "1px solid rgba(239,68,68,0.22)",
+                                cursor: "pointer",
+                                position: "relative",
+                            }}
+                        >
+                            {isVideo(photo) ? (
+                                <div
+                                    style={{
+                                        height: "100%",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        fontSize: 42,
+                                        color: "#fff",
+                                        background: "#111",
+                                    }}
+                                >
+                                    ▶
+                                </div>
+                            ) : (
+                                <img
+                                    src={`${API_URL}/api/v1/photos/thumb/${photo.filename}`}
+                                    alt={photo.filename}
+                                    loading="lazy"
+                                    decoding="async"
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        objectFit: "cover",
+                                        display: "block",
+                                    }}
+                                />
+                            )}
+                        </div>
+                    ))}
+                </div>
+            )}
+
+            {photos.length > visiblePhotos.length && (
+                <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
+                    <button
+                        onClick={() => setVisibleLimit((prev) => prev + 80)}
+                        style={{
+                            height: 46,
+                            borderRadius: 14,
+                            border: "1px solid #7f1d1d",
+                            background: "#991b1b",
+                            color: "#fff",
+                            padding: "0 18px",
+                            fontWeight: 800,
+                            cursor: "pointer",
+                        }}
+                    >
+                        Daha Fazla Yükle ({photos.length - visiblePhotos.length} kaldı)
+                    </button>
+                </div>
+            )}
+
+            {selected && (
+                <div
+                    onClick={() => setSelected(null)}
+                    style={{
+                        position: "fixed",
+                        inset: 0,
+                        zIndex: 9999,
+                        background: "rgba(0,0,0,0.94)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        padding: 22,
+                    }}
+                >
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                            width: "min(1180px, 94vw)",
+                            maxHeight: "92vh",
+                            display: "grid",
+                            gridTemplateRows: "auto minmax(0, 1fr) auto",
+                            background: "#070707",
+                            border: "1px solid rgba(239,68,68,0.32)",
+                            borderRadius: 24,
+                            overflow: "hidden",
+                            boxShadow: "0 30px 100px rgba(0,0,0,0.75)",
+                        }}
+                    >
+                        <div
+                            style={{
+                                padding: "14px 18px",
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                gap: 14,
+                                borderBottom: "1px solid rgba(239,68,68,0.18)",
+                                background: "linear-gradient(90deg, #130406, #070707)",
+                            }}
+                        >
+                            <div style={{ minWidth: 0 }}>
+                                <div
+                                    style={{
+                                        color: "#fff",
+                                        fontWeight: 900,
+                                        whiteSpace: "nowrap",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                    }}
+                                >
+                                    {selected.original_name || selected.filename}
+                                </div>
+
+                                <div style={{ color: "#fecaca", fontSize: 13, marginTop: 4 }}>
+                                    {selected.owner_username}
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={() => setSelected(null)}
+                                style={{
+                                    width: 38,
+                                    height: 38,
+                                    borderRadius: 999,
+                                    border: "1px solid rgba(255,255,255,0.12)",
+                                    background: "#151515",
+                                    color: "#fff",
+                                    cursor: "pointer",
+                                    fontSize: 18,
+                                }}
+                            >
+                                ✕
+                            </button>
+                        </div>
+
+                        <div
+                            style={{
+                                minHeight: 0,
+                                background: "#000",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                padding: 16,
+                            }}
+                        >
+                            {isVideo(selected) ? (
+                                <video
+                                    src={`${API_URL}${selected.url}`}
+                                    controls
+                                    autoPlay
+                                    style={{
+                                        maxWidth: "100%",
+                                        maxHeight: "72vh",
+                                        background: "#000",
+                                    }}
+                                />
+                            ) : (
+                                <img
+                                    src={`${API_URL}${selected.url}`}
+                                    alt={selected.filename}
+                                    style={{
+                                        maxWidth: "100%",
+                                        maxHeight: "72vh",
+                                        objectFit: "contain",
+                                    }}
+                                />
+                            )}
+                        </div>
+
+                        <div
+                            style={{
+                                padding: 14,
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                                gap: 12,
+                                flexWrap: "wrap",
+                                borderTop: "1px solid rgba(239,68,68,0.18)",
+                                background: "#090909",
+                            }}
+                        >
+                            <div style={{ color: "#aaa", fontSize: 13 }}>
+                                Albüm içi görüntüleme
+                            </div>
+
+                            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                                <button
+                                    onClick={() => window.open(`${API_URL}${selected.url}`, "_blank")}
+                                    style={{
+                                        borderRadius: 12,
+                                        border: "1px solid #7f1d1d",
+                                        background: "#991b1b",
+                                        color: "#fff",
+                                        padding: "10px 14px",
+                                        fontWeight: 700,
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    Yeni Sekmede Aç
+                                </button>
+
+                                <button
+                                    onClick={() => handleRemovePhoto(selected)}
+                                    style={{
+                                        borderRadius: 12,
+                                        border: "1px solid #991b1b",
+                                        background: "#450a0a",
+                                        color: "#fff",
+                                        padding: "10px 14px",
+                                        fontWeight: 700,
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    Albümden Çıkar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}

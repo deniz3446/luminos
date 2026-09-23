@@ -1,35 +1,10 @@
-# Rust
-target/
-**/target/
-Cargo.lock
-
-# IDE
-.vscode/
-.idea/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
+/target/
+/client/node_modules/
+/client/dist/
 *.log
-
-# Temporary
-tmp/
-temp/
-
-# Environment
+*.tmp
 .env
 .env.*
+.DS_Store
 
-# Build
-dist/
-build/
-
-# Database
-*.db
-*.sqlite
-*.sqlite3
-
-# Backup
-*.bak
+.worktrees/

@@ -1,0 +1,189 @@
+.storage-telemetry-panel {
+  overflow: hidden;
+}
+
+.storage-telemetry-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #71717a;
+  font-size: 9px;
+}
+
+.storage-telemetry-status i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.75);
+}
+
+.storage-telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.storage-telemetry-card {
+  min-width: 0;
+  padding: 17px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.storage-telemetry-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.storage-telemetry-head > div {
+  display: grid;
+  min-width: 0;
+}
+
+.storage-telemetry-head span {
+  color: #60a5fa;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.storage-telemetry-head h3 {
+  margin: 4px 0 2px;
+  font-size: 17px;
+}
+
+.storage-telemetry-head small {
+  overflow: hidden;
+  color: #71717a;
+  font-size: 9px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.storage-telemetry-head > strong {
+  color: #4ade80;
+  font-size: 26px;
+}
+
+.storage-telemetry-head > strong.hot {
+  color: #f87171;
+}
+
+.storage-io-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.storage-io-grid > div {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+  padding: 10px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.storage-io-grid small {
+  color: #71717a;
+  font-size: 8px;
+}
+
+.storage-io-grid strong {
+  overflow: hidden;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.storage-temperature-chart {
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid rgba(96, 165, 250, 0.13);
+  border-radius: 13px;
+  background: rgba(37, 99, 235, 0.035);
+}
+
+.storage-chart-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.storage-chart-title > div {
+  display: grid;
+  gap: 3px;
+}
+
+.storage-chart-title strong {
+  font-size: 11px;
+}
+
+.storage-chart-title small,
+.storage-chart-title > span {
+  color: #71717a;
+  font-size: 8px;
+}
+
+.storage-temperature-chart svg {
+  display: block;
+  width: 100%;
+  height: 145px;
+  margin-top: 8px;
+}
+
+.storage-temperature-chart line {
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 1;
+}
+
+.storage-temperature-chart polyline {
+  fill: none;
+  stroke: #60a5fa;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 4;
+  filter: drop-shadow(0 0 5px rgba(96, 165, 250, 0.45));
+}
+
+.storage-chart-empty {
+  display: grid;
+  min-height: 145px;
+  place-items: center;
+  color: #71717a;
+  font-size: 9px;
+  text-align: center;
+}
+
+.storage-telemetry-error {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 11px;
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.06);
+  font-size: 9px;
+}
+
+@media (max-width: 1050px) {
+  .storage-telemetry-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .storage-io-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .storage-chart-title {
+    flex-direction: column;
+  }
+}

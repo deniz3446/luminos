@@ -4,17 +4,17 @@ use axum::{
 };
 use serde::Serialize;
 
-use crate::state::AppState;
+use crate::{config::Settings, state::AppState};
 
 #[derive(Serialize)]
 pub struct HealthResponse {
     status: &'static str,
 }
 
-#[derive(Serialize)]
+#[derive(Debug, Serialize)]
 pub struct InfoResponse {
     product: &'static str,
-    version: &'static str,
+    version: String,
     status: &'static str,
     api: &'static str,
 }
@@ -25,20 +25,35 @@ pub async fn health() -> Json<HealthResponse> {
     })
 }
 
+fn info_response(settings: &Settings) -> InfoResponse {
+    InfoResponse {
+        product: "PhotoOS Server",
+        version: settings.release.version.clone(),
+        status: "running",
+        api: "v1",
+    }
+}
+
 pub async fn info(
     State(state): State<AppState>,
 ) -> Json<InfoResponse> {
+    Json(info_response(&state.settings))
+}
 
-    println!("==============================");
-    println!("LuminOS AppState Test");
-    println!("Storage Root : {}", state.settings.storage.root);
-    println!("Database     : {}", state.settings.database.path);
-    println!("==============================");
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-    Json(InfoResponse {
-        product: "LuminOS Server",
-        version: "0.1.0-dev",
-        status: "running",
-        api: "v1",
-    })
+    #[test]
+    fn system_info_uses_photoos_product_and_configured_release() {
+        let mut settings = Settings::default();
+        settings.release.version = "9.9.9-test".to_string();
+
+        let response = info_response(&settings);
+
+        assert_eq!(response.product, "PhotoOS Server");
+        assert_eq!(response.version, "9.9.9-test");
+        assert_eq!(response.status, "running");
+        assert_eq!(response.api, "v1");
+    }
 }

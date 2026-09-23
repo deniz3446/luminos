@@ -1,0 +1,18 @@
+[Unit]
+Description=PhotoOS First Boot Offline Installer
+Documentation=file:/opt/photoos-installer/docs/INSTALL.md
+After=local-fs.target
+ConditionPathExists=/opt/photoos-installer/install.sh
+ConditionPathExists=!/var/lib/photoos/installer/firstboot-completed
+
+[Service]
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+Type=oneshot
+ExecStart=/usr/local/sbin/photoos-firstboot-install
+TimeoutStartSec=1800
+RemainAfterExit=no
+StandardOutput=journal+console
+StandardError=journal+console
+
+[Install]
+WantedBy=multi-user.target

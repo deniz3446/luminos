@@ -8,6 +8,7 @@ use crate::{
         create_user,
         list_users,
         login,
+        me,
     },
     state::AppState,
 };
@@ -23,5 +24,9 @@ pub fn router() -> Router<AppState> {
         .route(
             "/api/v1/login",
             post(login),
+        )
+        .route(
+            "/api/v1/me",
+            get(me),
         )
 }

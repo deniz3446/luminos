@@ -1,0 +1,12 @@
+ACCEL_BACKEND_B_PC_BACKUP=PASS
+base=6a0656a92d7fa1ac9e6ae96bfbb6884343c5aea4
+pc_backup_red=PASS_EXPECTED_FAILURE
+pc_backup_targeted=PASS
+security_policy=PASS
+full_server=PASS
+workspace_cargo_check=PASS
+pairing_ttl_seconds=600
+online_window_seconds=120
+transfer_body_limit_bytes=67108864
+assignments_path=/var/lib/photoos/storage/assignments.json
+live_deploy=false

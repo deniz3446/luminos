@@ -1,0 +1,12 @@
+[Unit]
+Description=Run PhotoOS Storage Notification Producer
+
+[Timer]
+OnBootSec=30s
+OnUnitActiveSec=60s
+AccuracySec=5s
+Persistent=true
+Unit=photoos-storage-notification-producer.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,543 @@
+import { useEffect, useMemo, useState } from "react";
+import { api } from "../api/client";
+
+type StorageInfo = {
+    total_bytes: number;
+    used_bytes: number;
+    free_bytes: number;
+};
+
+type SystemInfo = {
+    product?: string;
+    version?: string;
+    status?: string;
+    api?: string;
+};
+
+type HealthInfo = {
+    status?: string;
+};
+
+type DashboardStats = {
+    user_count: number;
+    total_media_count: number;
+    photo_count: number;
+    video_count: number;
+};
+
+type Photo = {
+    id: number;
+    filename: string;
+    original_name: string;
+    mime_type: string;
+    uploaded_at: string;
+    taken_at?: string | null;
+    owner_username: string;
+};
+
+function isVideo(item: Photo) {
+    return item.mime_type?.startsWith("video/");
+}
+
+function gb(bytes: number) {
+    return (bytes / 1024 / 1024 / 1024).toFixed(2);
+}
+
+function percent(used: number, total: number) {
+    if (!total) return 0;
+    return Math.round((used / total) * 100);
+}
+
+export default function ControlPage() {
+    const [system, setSystem] = useState<SystemInfo | null>(null);
+    const [health, setHealth] = useState<HealthInfo | null>(null);
+    const [storage, setStorage] = useState<StorageInfo | null>(null);
+    const [photos, setPhotos] = useState<Photo[]>([]);
+    const [stats, setStats] = useState<DashboardStats | null>(null);
+    const [lastChecked, setLastChecked] = useState("");
+    const [error, setError] = useState("");
+    const [actionMessage, setActionMessage] = useState("");
+    const [actionLoading, setActionLoading] = useState(false);
+    const [rescanOffset, setRescanOffset] = useState(0);
+    const [rescanLimit] = useState(100);
+    const [thumbOffset, setThumbOffset] = useState(0);
+    const [thumbLimit] = useState(10);
+
+    async function loadControl() {
+        try {
+            setError("");
+            const ts = Date.now();
+
+            const [systemRes, healthRes, storageRes, photosRes, statsRes] = await Promise.all([
+                api(`/api/v1/system/info?ts=${ts}`),
+                api(`/api/v1/system/health?ts=${ts}`),
+                api(`/api/v1/storage?ts=${ts}`),
+                api(`/api/v1/photos?limit=20&offset=0&ts=${ts}`),
+                api(`/api/v1/dashboard/stats?ts=${ts}`),
+            ]);
+
+            const systemData = await systemRes.json();
+            const healthData = await healthRes.json();
+            const storageData = await storageRes.json();
+            const photosData = await photosRes.json();
+            const statsData = await statsRes.json();
+
+            setSystem(systemData ?? null);
+            setHealth(healthData ?? null);
+            setStorage(storageData ?? null);
+            setPhotos(Array.isArray(photosData) ? photosData : []);
+            setStats(statsData ?? null);
+            setLastChecked(new Date().toLocaleString("tr-TR"));
+        } catch (err) {
+            console.error("Kontrol verileri alınamadı:", err);
+            setError("Kontrol verileri alınamadı.");
+        }
+    }
+
+    useEffect(() => {
+        loadControl();
+        const timer = setInterval(loadControl, 15000);
+        return () => clearInterval(timer);
+    }, []);
+
+    async function runBackfillTakenAt() {
+        try {
+            setActionLoading(true);
+            setActionMessage("EXIF tarih düzeltme çalışıyor...");
+
+            const res = await api("/api/v1/system/backfill-taken-at", {
+                method: "POST",
+            });
+
+            const data = await res.json();
+
+            setActionMessage(
+                `EXIF tarih düzeltme tamamlandı. Taranan: ${data.scanned}, Güncellenen: ${data.updated}, Atlanan: ${data.skipped}`
+            );
+
+            await loadControl();
+        } catch (err) {
+            console.error("EXIF tarih düzeltme hatası:", err);
+            setActionMessage("EXIF tarih düzeltme çalıştırılamadı.");
+        } finally {
+            setActionLoading(false);
+        }
+    }
+
+    async function runRescanMedia() {
+        try {
+            setActionLoading(true);
+            setActionMessage(
+                `Medya yeniden tarama çalışıyor... (offset=${rescanOffset}, limit=${rescanLimit})`
+            );
+
+            const res = await api(
+                `/api/v1/system/rescan-media?limit=${rescanLimit}&offset=${rescanOffset}`,
+                {
+                    method: "POST",
+                }
+            );
+
+            const data = await res.json();
+
+            setActionMessage(
+                `Medya tarama tamamlandı. Taranan: ${data.scanned_files}, Yeni eklenen: ${data.inserted}, Zaten vardı: ${data.skipped_existing}, Kullanıcısı bulunamayan: ${data.skipped_unknown_user}, Hata: ${data.errors}`
+            );
+
+            setRescanOffset((prev) => prev + rescanLimit);
+
+            await loadControl();
+        } catch (err) {
+            console.error("Medya yeniden tarama hatası:", err);
+            setActionMessage("Medya yeniden tarama çalıştırılamadı.");
+        } finally {
+            setActionLoading(false);
+        }
+    }
+
+    async function runGenerateThumbnails() {
+        try {
+            setActionLoading(true);
+            setActionMessage(
+                `Thumbnail üretimi çalışıyor... (offset=${thumbOffset}, limit=${thumbLimit})`
+            );
+
+            const res = await api(
+                `/api/v1/system/generate-thumbnails?limit=${thumbLimit}&offset=${thumbOffset}`,
+                {
+                    method: "POST",
+                }
+            );
+
+            const data = await res.json();
+
+            setActionMessage(
+                `Thumbnail üretimi tamamlandı. Taranan: ${data.scanned}, Üretilen: ${data.generated}, Zaten vardı: ${data.skipped_existing}, Video atlandı: ${data.skipped_video}, Hata: ${data.errors}`
+            );
+
+            setThumbOffset((prev) => prev + thumbLimit);
+
+            await loadControl();
+        } catch (err) {
+            console.error("Thumbnail üretme hatası:", err);
+            setActionMessage("Thumbnail üretimi çalıştırılamadı.");
+        } finally {
+            setActionLoading(false);
+        }
+    }
+
+    async function runClearThumbs() {
+        try {
+            setActionLoading(true);
+            setActionMessage("Thumbnail önbelleği temizleniyor...");
+
+            const res = await api("/api/v1/system/clear-thumbs", {
+                method: "POST",
+            });
+
+            const data = await res.json();
+
+            setActionMessage(
+                `Önbellek temizlendi. Silinen thumbnail: ${data.deleted}, Hata: ${data.errors}`
+            );
+
+            setThumbOffset(0);
+            await loadControl();
+        } catch (err) {
+            console.error("Önbellek temizleme hatası:", err);
+            setActionMessage("Önbellek temizleme çalıştırılamadı.");
+        } finally {
+            setActionLoading(false);
+        }
+    }
+
+    async function runServiceCheck() {
+        try {
+            setActionLoading(true);
+            setActionMessage("Servis kontrolü yapılıyor...");
+
+            await loadControl();
+
+            setActionMessage(
+                `Servis kontrolü tamamlandı. API: ${health?.status || "kontrol edildi"} · Sistem: ${system?.product || "PhotoOS"} · Medya: ${photos.length}`
+            );
+        } catch (err) {
+            console.error("Servis kontrolü hatası:", err);
+            setActionMessage("Servis kontrolü başarısız oldu.");
+        } finally {
+            setActionLoading(false);
+        }
+    }
+
+    const photoCount = useMemo(
+        () => photos.filter((p) => !isVideo(p)).length,
+        [photos]
+    );
+
+    const videoCount = useMemo(
+        () => photos.filter((p) => isVideo(p)).length,
+        [photos]
+    );
+
+    const latestUpload = useMemo(() => {
+        if (photos.length === 0) return "-";
+
+        const sorted = [...photos].sort((a, b) => {
+            const aTime = new Date(a.uploaded_at.replace(" ", "T")).getTime();
+            const bTime = new Date(b.uploaded_at.replace(" ", "T")).getTime();
+            return bTime - aTime;
+        });
+
+        return sorted[0]?.uploaded_at ?? "-";
+    }, [photos]);
+
+    const usedPercent = storage
+        ? percent(storage.used_bytes, storage.total_bytes)
+        : 0;
+
+    return (
+        <>
+            <div className="page-title">
+                <h1>Kontrol Paneli</h1>
+                <p>PhotoOS sistem, medya ve depolama kontrol merkezi</p>
+                {lastChecked && <p>Son kontrol: {lastChecked}</p>}
+                {error && <p style={{ color: "#fca5a5" }}>{error}</p>}
+            </div>
+
+            <div className="stats-grid">
+                <ControlCard
+                    title="API Durumu"
+                    value={health?.status === "healthy" ? "Sağlıklı" : "Bilinmiyor"}
+                    icon="🟢"
+                />
+                <ControlCard
+                    title="Sistem"
+                    value={system?.product || "PhotoOS"}
+                    icon="🖥️"
+                />
+                <ControlCard
+                    title="Sürüm"
+                    value={system?.version || "-"}
+                    icon="🏷️"
+                />
+                <ControlCard
+                    title="Toplam Medya"
+                    value={String(stats?.total_media_count ?? photos.length)}
+                    icon="🗂️"
+                />
+            </div>
+
+            <section className="panel" style={{ marginBottom: 24 }}>
+                <div className="panel-header">
+                    <div>
+                        <h2>Depolama Durumu</h2>
+                        <p>Disk kullanım bilgisi</p>
+                    </div>
+
+                    <button className="primary-btn" onClick={loadControl}>
+                        Yenile
+                    </button>
+                </div>
+
+                {storage ? (
+                    <>
+                        <div style={{ marginBottom: 12 }}>
+                            <strong>{usedPercent}% dolu</strong>
+                        </div>
+
+                        <div
+                            style={{
+                                height: 18,
+                                background: "#18181b",
+                                borderRadius: 999,
+                                overflow: "hidden",
+                                border: "1px solid rgba(239,68,68,0.25)",
+                                marginBottom: 18,
+                            }}
+                        >
+                            <div
+                                style={{
+                                    width: `${usedPercent}%`,
+                                    height: "100%",
+                                    background: "linear-gradient(90deg, #991b1b, #ef4444)",
+                                }}
+                            />
+                        </div>
+
+                        <table className="data-table">
+                            <tbody>
+                                <tr>
+                                    <td>Toplam Alan</td>
+                                    <td>{gb(storage.total_bytes)} GB</td>
+                                </tr>
+                                <tr>
+                                    <td>Kullanılan Alan</td>
+                                    <td>{gb(storage.used_bytes)} GB</td>
+                                </tr>
+                                <tr>
+                                    <td>Boş Alan</td>
+                                    <td>{gb(storage.free_bytes)} GB</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </>
+                ) : (
+                    <p>Depolama bilgisi alınamadı.</p>
+                )}
+            </section>
+
+            <section className="panel" style={{ marginBottom: 24 }}>
+                <div className="panel-header">
+                    <div>
+                        <h2>Medya Özeti</h2>
+                        <p>Fotoğraf ve video durumu</p>
+                    </div>
+                </div>
+
+                <table className="data-table">
+                    <tbody>
+                        <tr>
+                            <td>Fotoğraf Sayısı</td>
+                            <td>{stats?.photo_count ?? photoCount}</td>
+                        </tr>
+                        <tr>
+                            <td>Video Sayısı</td>
+                            <td>{stats?.video_count ?? videoCount}</td>
+                        </tr>
+                        <tr>
+                            <td>Toplam Medya</td>
+                            <td>{stats?.total_media_count ?? photos.length}</td>
+                        </tr>
+                        <tr>
+                            <td>Son Yükleme</td>
+                            <td>{latestUpload}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section className="panel">
+                <div className="panel-header">
+                    <div>
+                        <h2>Yönetim Aksiyonları</h2>
+                        <p>İleride sunucu komutları buradan çalışacak</p>
+                    </div>
+                </div>
+
+                {actionMessage && (
+                    <div
+                        style={{
+                            marginBottom: 14,
+                            padding: 12,
+                            borderRadius: 12,
+                            background: "#111",
+                            border: "1px solid rgba(239,68,68,0.25)",
+                            color: "#fecaca",
+                            fontWeight: 700,
+                        }}
+                    >
+                        <div>{actionMessage}</div>
+                        <div style={{ marginTop: 8, fontSize: 13, color: "#fca5a5" }}>
+                            Sonraki medya tarama başlangıcı: {rescanOffset} · Sonraki thumbnail başlangıcı: {thumbOffset}
+                        </div>
+
+                        <div style={{ marginTop: 10, display: "flex", gap: 10, flexWrap: "wrap" }}>
+                            <button
+                                onClick={() => setRescanOffset(0)}
+                                style={{
+                                    borderRadius: 10,
+                                    border: "1px solid #3f3f46",
+                                    background: "#18181b",
+                                    color: "#fff",
+                                    padding: "8px 12px",
+                                    fontWeight: 700,
+                                    cursor: "pointer",
+                                }}
+                            >
+                                Medya offset sıfırla
+                            </button>
+
+                            <button
+                                onClick={() => setThumbOffset(0)}
+                                style={{
+                                    borderRadius: 10,
+                                    border: "1px solid #3f3f46",
+                                    background: "#18181b",
+                                    color: "#fff",
+                                    padding: "8px 12px",
+                                    fontWeight: 700,
+                                    cursor: "pointer",
+                                }}
+                            >
+                                Thumbnail offset sıfırla
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                    <button
+                        onClick={runRescanMedia}
+                        disabled={actionLoading}
+                        style={{
+                            borderRadius: 12,
+                            border: "1px solid #1d4ed8",
+                            background: actionLoading ? "#3f3f46" : "#1d4ed8",
+                            color: "#fff",
+                            padding: "12px 16px",
+                            fontWeight: 700,
+                            cursor: actionLoading ? "not-allowed" : "pointer",
+                        }}
+                    >
+                        {actionLoading
+                            ? "Çalışıyor..."
+                            : `Medya Yeniden Tara (${rescanLimit})`}
+                    </button>
+                    <button
+                        onClick={runGenerateThumbnails}
+                        disabled={actionLoading}
+                        style={{
+                            borderRadius: 12,
+                            border: "1px solid #0f766e",
+                            background: actionLoading ? "#3f3f46" : "#0f766e",
+                            color: "#fff",
+                            padding: "12px 16px",
+                            fontWeight: 700,
+                            cursor: actionLoading ? "not-allowed" : "pointer",
+                        }}
+                    >
+                        {actionLoading
+                            ? "Çalışıyor..."
+                            : `Thumbnail Yeniden Üret (${thumbLimit})`}
+                    </button>
+                    <button
+                        onClick={runBackfillTakenAt}
+                        disabled={actionLoading}
+                        style={{
+                            borderRadius: 12,
+                            border: "1px solid #7f1d1d",
+                            background: actionLoading ? "#3f3f46" : "#991b1b",
+                            color: "#fff",
+                            padding: "12px 16px",
+                            fontWeight: 700,
+                            cursor: actionLoading ? "not-allowed" : "pointer",
+                        }}
+                    >
+                        {actionLoading ? "Çalışıyor..." : "EXIF Tarih Düzelt"}
+                    </button>
+                    <button
+                        onClick={runClearThumbs}
+                        disabled={actionLoading}
+                        style={{
+                            borderRadius: 12,
+                            border: "1px solid #7f1d1d",
+                            background: actionLoading ? "#3f3f46" : "#450a0a",
+                            color: "#fff",
+                            padding: "12px 16px",
+                            fontWeight: 700,
+                            cursor: actionLoading ? "not-allowed" : "pointer",
+                        }}
+                    >
+                        {actionLoading ? "Çalışıyor..." : "Önbellek Temizle"}
+                    </button>
+                    <button
+                        onClick={runServiceCheck}
+                        disabled={actionLoading}
+                        style={{
+                            borderRadius: 12,
+                            border: "1px solid #3f3f46",
+                            background: actionLoading ? "#3f3f46" : "#18181b",
+                            color: "#fff",
+                            padding: "12px 16px",
+                            fontWeight: 700,
+                            cursor: actionLoading ? "not-allowed" : "pointer",
+                        }}
+                    >
+                        {actionLoading ? "Çalışıyor..." : "Servis Kontrolü"}
+                    </button>
+                </div>
+            </section>
+        </>
+    );
+}
+
+function ControlCard({
+    title,
+    value,
+    icon,
+}: {
+    title: string;
+    value: string;
+    icon: string;
+}) {
+    return (
+        <div className="stat-card">
+            <div className="stat-icon">{icon}</div>
+            <div className="stat-content">
+                <h3>{title}</h3>
+                <strong>{value}</strong>
+            </div>
+        </div>
+    );
+}
+

@@ -1,0 +1,445 @@
+warning: unused import: `Claims`
+ --> server/src/auth/mod.rs:8:5
+  |
+8 |     Claims,
+  |     ^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `ConnectOptions`
+ --> server/src/database/mod.rs:6:5
+  |
+6 |     ConnectOptions,
+  |     ^^^^^^^^^^^^^^
+
+warning: unused imports: `delete` and `put`
+ --> server/src/routes/automation.rs:3:15
+  |
+3 |     routing::{delete, get, post, put},
+  |               ^^^^^^             ^^^
+
+warning: unused import: `put`
+ --> server/src/routes/cloud_sync.rs:3:20
+  |
+3 |     routing::{get, put},
+  |                    ^^^
+
+warning: unused import: `delete`
+ --> server/src/routes/docker.rs:3:15
+  |
+3 |     routing::{delete, get, post},
+  |               ^^^^^^
+
+warning: unused imports: `delete`, `post`, and `put`
+ --> server/src/routes/cloud_accounts.rs:3:15
+  |
+3 |     routing::{delete, get, post, put},
+  |               ^^^^^^       ^^^^  ^^^
+
+warning: unused imports: `AllocationStrategy` and `DiskAllocator`
+ --> server/src/storage/mod.rs:6:21
+  |
+6 | pub use allocator::{AllocationStrategy, DiskAllocator};
+  |                     ^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^
+
+warning: unused imports: `DiskStatus` and `StorageDisk`
+ --> server/src/storage/mod.rs:8:16
+  |
+8 | pub use disk::{DiskStatus, StorageDisk};
+  |                ^^^^^^^^^^  ^^^^^^^^^^^
+
+warning: unused imports: `MediaKind`, `StorageError`, and `StorageTarget`
+  --> server/src/storage/mod.rs:10:18
+   |
+10 | pub use engine::{MediaKind, StorageEngine, StorageError, StorageTarget};
+   |                  ^^^^^^^^^                 ^^^^^^^^^^^^  ^^^^^^^^^^^^^
+
+warning: unused imports: `PoolStatus` and `StoragePool`
+  --> server/src/storage/mod.rs:12:16
+   |
+12 | pub use pool::{PoolStatus, StoragePool};
+   |                ^^^^^^^^^^  ^^^^^^^^^^^
+
+warning: function `mirror_source_path` is never used
+   --> server/src/config/mod.rs:355:8
+    |
+355 | pub fn mirror_source_path() -> &'static str {
+    |        ^^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: function `mirror_target_root_path` is never used
+   --> server/src/config/mod.rs:361:8
+    |
+361 | pub fn mirror_target_root_path() -> &'static str {
+    |        ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `mirror_target_path` is never used
+   --> server/src/config/mod.rs:373:8
+    |
+373 | pub fn mirror_target_path() -> &'static str {
+    |        ^^^^^^^^^^^^^^^^^^
+
+warning: function `internal_api_base_url` is never used
+   --> server/src/config/mod.rs:386:8
+    |
+386 | pub fn internal_api_base_url() -> String {
+    |        ^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `CpuSnapshot` is never constructed
+ --> server/src/handlers/system_metrics.rs:7:8
+  |
+7 | struct CpuSnapshot {
+  |        ^^^^^^^^^^^
+
+warning: struct `MemoryMetrics` is never constructed
+  --> server/src/handlers/system_metrics.rs:13:12
+   |
+13 | pub struct MemoryMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `NetworkInterfaceMetrics` is never constructed
+  --> server/src/handlers/system_metrics.rs:21:12
+   |
+21 | pub struct NetworkInterfaceMetrics {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `DiskMetrics` is never constructed
+  --> server/src/handlers/system_metrics.rs:28:12
+   |
+28 | pub struct DiskMetrics {
+   |            ^^^^^^^^^^^
+
+warning: struct `SystemMetrics` is never constructed
+  --> server/src/handlers/system_metrics.rs:42:12
+   |
+42 | pub struct SystemMetrics {
+   |            ^^^^^^^^^^^^^
+
+warning: function `read_cpu_snapshot` is never used
+  --> server/src/handlers/system_metrics.rs:63:4
+   |
+63 | fn read_cpu_snapshot() -> Option<CpuSnapshot> {
+   |    ^^^^^^^^^^^^^^^^^
+
+warning: function `cpu_usage_percent` is never used
+   --> server/src/handlers/system_metrics.rs:103:10
+    |
+103 | async fn cpu_usage_percent() -> f64 {
+    |          ^^^^^^^^^^^^^^^^^
+
+warning: function `read_memory_metrics` is never used
+   --> server/src/handlers/system_metrics.rs:126:4
+    |
+126 | fn read_memory_metrics() -> MemoryMetrics {
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_network_metrics` is never used
+   --> server/src/handlers/system_metrics.rs:168:4
+    |
+168 | fn read_network_metrics() -> Vec<NetworkInterfaceMetrics> {
+    |    ^^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_uptime_seconds` is never used
+   --> server/src/handlers/system_metrics.rs:202:4
+    |
+202 | fn read_uptime_seconds() -> u64 {
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_load_average` is never used
+   --> server/src/handlers/system_metrics.rs:215:4
+    |
+215 | fn read_load_average() -> (f64, f64, f64) {
+    |    ^^^^^^^^^^^^^^^^^
+
+warning: function `read_hostname` is never used
+   --> server/src/handlers/system_metrics.rs:230:4
+    |
+230 | fn read_hostname() -> String {
+    |    ^^^^^^^^^^^^^
+
+warning: function `read_os_name` is never used
+   --> server/src/handlers/system_metrics.rs:237:4
+    |
+237 | fn read_os_name() -> String {
+    |    ^^^^^^^^^^^^
+
+warning: function `read_kernel_version` is never used
+   --> server/src/handlers/system_metrics.rs:249:4
+    |
+249 | fn read_kernel_version() -> String {
+    |    ^^^^^^^^^^^^^^^^^^^
+
+warning: function `read_cpu_model` is never used
+   --> server/src/handlers/system_metrics.rs:256:4
+    |
+256 | fn read_cpu_model() -> String {
+    |    ^^^^^^^^^^^^^^
+
+warning: function `read_cpu_cores` is never used
+   --> server/src/handlers/system_metrics.rs:273:4
+    |
+273 | fn read_cpu_cores() -> usize {
+    |    ^^^^^^^^^^^^^^
+
+warning: function `json_string` is never used
+   --> server/src/handlers/system_metrics.rs:284:4
+    |
+284 | fn json_string(value: Option<&serde_json::Value>) -> String {
+    |    ^^^^^^^^^^^
+
+warning: function `json_u64` is never used
+   --> server/src/handlers/system_metrics.rs:292:4
+    |
+292 | fn json_u64(value: Option<&serde_json::Value>) -> u64 {
+    |    ^^^^^^^^
+
+warning: function `child_value` is never used
+   --> server/src/handlers/system_metrics.rs:302:4
+    |
+302 | fn child_value(device: &serde_json::Value, key: &str) -> String {
+    |    ^^^^^^^^^^^
+
+warning: function `read_mount_usage` is never used
+   --> server/src/handlers/system_metrics.rs:324:10
+    |
+324 | async fn read_mount_usage(mountpoint: &str) -> (u64, u64, f64) {
+    |          ^^^^^^^^^^^^^^^^
+
+warning: function `read_disks` is never used
+   --> server/src/handlers/system_metrics.rs:367:10
+    |
+367 | async fn read_disks() -> Vec<DiskMetrics> {
+    |          ^^^^^^^^^^
+
+warning: function `system_metrics` is never used
+   --> server/src/handlers/system_metrics.rs:440:14
+    |
+440 | pub async fn system_metrics() -> Json<SystemMetrics> {
+    |              ^^^^^^^^^^^^^^
+
+warning: struct `HistoryQuery` is never constructed
+  --> server/src/handlers/storage_history.rs:14:12
+   |
+14 | pub struct HistoryQuery {
+   |            ^^^^^^^^^^^^
+
+warning: struct `TemperatureHistoryPoint` is never constructed
+  --> server/src/handlers/storage_history.rs:19:12
+   |
+19 | pub struct TemperatureHistoryPoint {
+   |            ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `IoHistoryPoint` is never constructed
+  --> server/src/handlers/storage_history.rs:25:12
+   |
+25 | pub struct IoHistoryPoint {
+   |            ^^^^^^^^^^^^^^
+
+warning: struct `DeviceHistory` is never constructed
+  --> server/src/handlers/storage_history.rs:35:12
+   |
+35 | pub struct DeviceHistory {
+   |            ^^^^^^^^^^^^^
+
+warning: struct `StorageHistoryResponse` is never constructed
+  --> server/src/handlers/storage_history.rs:42:12
+   |
+42 | pub struct StorageHistoryResponse {
+   |            ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: struct `StorageAlert` is never constructed
+  --> server/src/handlers/storage_history.rs:50:12
+   |
+50 | pub struct StorageAlert {
+   |            ^^^^^^^^^^^^
+
+warning: struct `StorageAlertsResponse` is never constructed
+  --> server/src/handlers/storage_history.rs:62:12
+   |
+62 | pub struct StorageAlertsResponse {
+   |            ^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `range_seconds` is never used
+   --> server/src/handlers/storage_history.rs:256:4
+    |
+256 | fn range_seconds(range: &str) -> i64 {
+    |    ^^^^^^^^^^^^^
+
+warning: function `get_storage_history` is never used
+   --> server/src/handlers/storage_history.rs:260:14
+    |
+260 | pub async fn get_storage_history(State(state): State<AppState>, Query(query): Query<HistoryQuery>) -> Json<StorageHistoryResponse> {
+    |              ^^^^^^^^^^^^^^^^^^^
+
+warning: function `get_storage_alerts` is never used
+   --> server/src/handlers/storage_history.rs:288:14
+    |
+288 | pub async fn get_storage_alerts(State(state): State<AppState>) -> Json<StorageAlertsResponse> {
+    |              ^^^^^^^^^^^^^^^^^^
+
+warning: struct `Media` is never constructed
+ --> server/src/models/media.rs:5:12
+  |
+5 | pub struct Media {
+  |            ^^^^^
+
+warning: field `storage` is never read
+  --> server/src/state.rs:11:9
+   |
+ 8 | pub struct AppState {
+   |            -------- field in this struct
+...
+11 |     pub storage: Arc<StorageEngine>,
+   |         ^^^^^^^
+   |
+   = note: `AppState` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: variant `LowestUsage` is never constructed
+ --> server/src/storage/allocator.rs:6:5
+  |
+4 | pub enum AllocationStrategy {
+  |          ------------------ variant in this enum
+5 |     MostFreeSpace,
+6 |     LowestUsage,
+  |     ^^^^^^^^^^^
+  |
+  = note: `AllocationStrategy` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: field `strategy` is never read
+  --> server/src/storage/allocator.rs:11:5
+   |
+10 | pub struct DiskAllocator {
+   |            ------------- field in this struct
+11 |     strategy: AllocationStrategy,
+   |     ^^^^^^^^
+   |
+   = note: `DiskAllocator` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: associated items `new` and `choose` are never used
+  --> server/src/storage/allocator.rs:23:12
+   |
+22 | impl DiskAllocator {
+   | ------------------ associated items in this implementation
+23 |     pub fn new(strategy: AllocationStrategy) -> Self {
+   |            ^^^
+...
+27 |     pub fn choose<'a>(
+   |            ^^^^^^
+
+warning: methods `with_reserve_bytes` and `disabled` are never used
+  --> server/src/storage/disk.rs:44:12
+   |
+29 | impl StorageDisk {
+   | ---------------- methods in this implementation
+...
+44 |     pub fn with_reserve_bytes(mut self, reserve_bytes: u64) -> Self {
+   |            ^^^^^^^^^^^^^^^^^^
+...
+49 |     pub fn disabled(mut self) -> Self {
+   |            ^^^^^^^^
+
+warning: enum `MediaKind` is never used
+  --> server/src/storage/engine.rs:11:10
+   |
+11 | pub enum MediaKind {
+   |          ^^^^^^^^^
+
+warning: method `directory_name` is never used
+  --> server/src/storage/engine.rs:21:12
+   |
+20 | impl MediaKind {
+   | -------------- method in this implementation
+21 |     pub fn directory_name(self) -> &'static str {
+   |            ^^^^^^^^^^^^^^
+
+warning: struct `StorageTarget` is never constructed
+  --> server/src/storage/engine.rs:34:12
+   |
+34 | pub struct StorageTarget {
+   |            ^^^^^^^^^^^^^
+
+warning: variants `NoWritableDisk` and `InvalidFilename` are never constructed
+  --> server/src/storage/engine.rs:48:5
+   |
+47 | pub enum StorageError {
+   |          ------------ variants in this enum
+48 |     NoWritableDisk { required_bytes: u64 },
+   |     ^^^^^^^^^^^^^^
+49 |
+50 |     InvalidFilename,
+   |     ^^^^^^^^^^^^^^^
+   |
+   = note: `StorageError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: associated items `new`, `status`, and `allocate` are never used
+   --> server/src/storage/engine.rs:88:12
+    |
+ 87 | impl StorageEngine {
+    | ------------------ associated items in this implementation
+ 88 |     pub fn new(pool: StoragePool) -> Self {
+    |            ^^^
+...
+103 |     pub async fn status(&self) -> PoolStatus {
+    |                  ^^^^^^
+...
+107 |     pub async fn allocate(
+    |                  ^^^^^^^^
+
+warning: function `validate_filename` is never used
+   --> server/src/storage/engine.rs:125:4
+    |
+125 | fn validate_filename(filename: &str) -> Result<(), StorageError> {
+    |    ^^^^^^^^^^^^^^^^^
+
+warning: function `create_target` is never used
+   --> server/src/storage/engine.rs:137:4
+    |
+137 | fn create_target(disk: &DiskStatus, media_kind: MediaKind, filename: &str) -> StorageTarget {
+    |    ^^^^^^^^^^^^^
+
+warning: fields `name` and `allocator` are never read
+  --> server/src/storage/pool.rs:11:9
+   |
+10 | pub struct StoragePool {
+   |            ----------- fields in this struct
+11 |     pub name: String,
+   |         ^^^^
+12 |     pub disks: Vec<StorageDisk>,
+13 |     allocator: DiskAllocator,
+   |     ^^^^^^^^^
+   |
+   = note: `StoragePool` has derived impls for the traits `Clone` and `Debug`, but these are intentionally ignored during dead code analysis
+
+warning: struct `PoolStatus` is never constructed
+  --> server/src/storage/pool.rs:17:12
+   |
+17 | pub struct PoolStatus {
+   |            ^^^^^^^^^^
+
+warning: methods `status` and `choose_disk` are never used
+  --> server/src/storage/pool.rs:62:18
+   |
+30 | impl StoragePool {
+   | ---------------- methods in this implementation
+...
+62 |     pub async fn status(&self) -> PoolStatus {
+   |                  ^^^^^^
+...
+81 |     pub async fn choose_disk(&self, required_bytes: u64) -> Option<DiskStatus> {
+   |                  ^^^^^^^^^^^
+
+warning: `server` (bin "server" test) generated 62 warnings (run `cargo fix --bin "server" -p server --tests` to apply 10 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.54s
+     Running unittests src/main.rs (PhotoOS-reconstruction/staging/phase2a-cargo-target/debug/deps/server-51c05db86efc9ac0)
+
+running 6 tests
+test app::security_policy_tests::bootstrap_routes_remain_public ... ok
+test app::security_policy_tests::media_get_compatibility_is_explicit ... ok
+test app::security_policy_tests::sensitive_api_routes_require_auth ... ok
+test auth::jwt::tests::token_validation_depends_on_secret ... ok
+test config::phase2a_tests::secure_server_defaults_bind_localhost ... ok
+test auth::jwt::tests::secret_file_is_created_and_reused ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

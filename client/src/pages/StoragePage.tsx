@@ -1,0 +1,1270 @@
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+import { api } from "../api/client";
+import StorageTelemetryPanel, { type StorageTelemetryDisk } from "./StorageTelemetryPanel";
+import "./StoragePage.css";
+
+type StorageDisk = {
+    name: string;
+    device: string;
+    parent_device: string;
+    device_type: string;
+    model: string;
+    label: string;
+    uuid: string;
+    filesystem: string;
+    mountpoint: string;
+    total_bytes: number;
+    used_bytes: number;
+    free_bytes: number;
+    usage_percent: number;
+    mounted: boolean;
+    system_disk: boolean;
+    photoos_data_disk: boolean;
+};
+
+type StorageDisksResponse = {
+    disks: StorageDisk[];
+    physical_disk_count: number;
+    mounted_disk_count: number;
+    photoos_data_disk_count: number;
+    data_total_bytes: number;
+    data_used_bytes: number;
+    data_free_bytes: number;
+    data_usage_percent: number;
+};
+
+type SmartDiskHealth = {
+    device: string;
+    model: string;
+    serial: string;
+    smart_available: boolean;
+    smart_passed: boolean;
+    status: string;
+    temperature_celsius: number | null;
+    power_on_hours: number | null;
+    reallocated_sectors: number | null;
+    pending_sectors: number | null;
+    offline_uncorrectable: number | null;
+    crc_errors: number | null;
+};
+
+type RaidHealth = {
+    configured: boolean;
+    status: string;
+    details: string;
+};
+
+type StorageHealthResponse = {
+    disks: SmartDiskHealth[];
+    raid: RaidHealth;
+    checked_at: string;
+};
+
+type DiskView = {
+    storage: StorageDisk;
+    health?: SmartDiskHealth;
+};
+
+// PHOTOOS_SMART_TEST_UI_V1
+type SmartSelfTestStatus = {
+    remaining_percent?: number;
+    string?: string;
+    passed?: boolean;
+    value?: number;
+};
+
+type SmartTestLogEntry = {
+    lifetime_hours?: number;
+    status?: SmartSelfTestStatus;
+    type?: {
+        string?: string;
+        value?: number;
+    };
+};
+
+type SmartTestStatusResponse = {
+    photoos_success?: boolean;
+    photoos_device?: string;
+    success?: boolean;
+    message?: string;
+    ata_smart_data?: {
+        self_test?: {
+            status?: SmartSelfTestStatus;
+            polling_minutes?: {
+                short?: number;
+                extended?: number;
+                conveyance?: number;
+            };
+        };
+    };
+    ata_smart_self_test_log?: {
+        standard?: {
+            count?: number;
+            error_count_total?: number;
+            table?: SmartTestLogEntry[];
+        };
+    };
+};
+
+type SmartTestStartResponse = {
+    device: string;
+    success: boolean;
+    message: string;
+};
+
+type SmartTestViewState = {
+    loading: boolean;
+    starting: boolean;
+    error: string;
+    message: string;
+    running: boolean;
+    remainingPercent: number | null;
+    completedPercent: number | null;
+    lastResult: string;
+    lastPassed: boolean | null;
+    lastLifetimeHours: number | null;
+};
+
+function formatBytes(value: number | null | undefined) {
+    const bytes = Number(value ?? 0);
+
+    if (!Number.isFinite(bytes) || bytes <= 0) {
+        return "0 B";
+    }
+
+    const kb = bytes / 1024;
+    const mb = kb / 1024;
+    const gb = mb / 1024;
+    const tb = gb / 1024;
+
+    if (tb >= 1) {
+        return `${tb.toLocaleString("tr-TR", {
+            maximumFractionDigits: 2,
+        })} TB`;
+    }
+
+    if (gb >= 1) {
+        return `${gb.toLocaleString("tr-TR", {
+            maximumFractionDigits: 2,
+        })} GB`;
+    }
+
+    if (mb >= 1) {
+        return `${mb.toLocaleString("tr-TR", {
+            maximumFractionDigits: 1,
+        })} MB`;
+    }
+
+    return `${kb.toLocaleString("tr-TR", {
+        maximumFractionDigits: 1,
+    })} KB`;
+}
+
+function formatInteger(value: number | null | undefined) {
+    if (value === null || value === undefined) {
+        return "—";
+    }
+
+    return value.toLocaleString("tr-TR");
+}
+
+function clampPercent(value: number | null | undefined) {
+    const percentage = Number(value ?? 0);
+
+    if (!Number.isFinite(percentage)) {
+        return 0;
+    }
+
+    return Math.min(100, Math.max(0, percentage));
+}
+
+function diskDisplayName(disk: StorageDisk) {
+    if (disk.label.trim()) {
+        return disk.label;
+    }
+
+    if (disk.system_disk) {
+        return "Sistem Diski";
+    }
+
+    return disk.name.toUpperCase();
+}
+
+function diskParent(device: string) {
+    return device.replace(/[0-9]+$/, "");
+}
+
+function healthTone(health?: SmartDiskHealth) {
+    if (!health || !health.smart_available) {
+        return "neutral";
+    }
+
+    const hasSectorError =
+        (health.reallocated_sectors ?? 0) > 0 ||
+        (health.pending_sectors ?? 0) > 0 ||
+        (health.offline_uncorrectable ?? 0) > 0;
+
+    const hasTemperatureWarning =
+        (health.temperature_celsius ?? 0) >= 50;
+
+    const hasCrcWarning =
+        (health.crc_errors ?? 0) > 0;
+
+    if (!health.smart_passed || hasSectorError) {
+        return "danger";
+    }
+
+    if (hasTemperatureWarning || hasCrcWarning) {
+        return "warning";
+    }
+
+    return "healthy";
+}
+
+function healthLabel(health?: SmartDiskHealth) {
+    const tone = healthTone(health);
+
+    if (tone === "danger") {
+        return "Kontrol gerekli";
+    }
+
+    if (tone === "warning") {
+        return "Sağlıklı · Uyarı";
+    }
+
+    if (tone === "healthy") {
+        return "Sağlıklı";
+    }
+
+    return "SMART yok";
+}
+
+
+function smartDeviceName(device: string) {
+    return diskParent(device)
+        .replace(/^\/dev\//, "")
+        .trim();
+}
+
+function emptySmartTestState(): SmartTestViewState {
+    return {
+        loading: false,
+        starting: false,
+        error: "",
+        message: "",
+        running: false,
+        remainingPercent: null,
+        completedPercent: null,
+        lastResult: "",
+        lastPassed: null,
+        lastLifetimeHours: null,
+    };
+}
+
+function parseSmartTestStatus(
+    data: SmartTestStatusResponse
+): Partial<SmartTestViewState> {
+    const current =
+        data.ata_smart_data?.self_test?.status;
+
+    const remaining =
+        typeof current?.remaining_percent === "number"
+            ? clampPercent(current.remaining_percent)
+            : null;
+
+    const currentText =
+        current?.string?.trim() || "";
+
+    const running =
+        currentText.toLowerCase().includes("progress") ||
+        (remaining !== null &&
+            remaining > 0 &&
+            (current?.value ?? 0) !== 0);
+
+    const latest =
+        data.ata_smart_self_test_log?.standard?.table?.[0];
+
+    const latestText =
+        latest?.status?.string?.trim() || "";
+
+    const latestPassed =
+        typeof latest?.status?.passed === "boolean"
+            ? latest.status.passed
+            : latestText
+                  .toLowerCase()
+                  .includes("completed without error")
+              ? true
+              : latestText
+                    .toLowerCase()
+                    .includes("self-test routine in progress")
+                ? null
+                : latestText
+                      .toLowerCase()
+                      .includes("completed")
+                  ? false
+                  : null;
+
+    return {
+        running,
+        remainingPercent: running ? remaining : null,
+        completedPercent:
+            running && remaining !== null
+                ? clampPercent(100 - remaining)
+                : running
+                  ? null
+                  : 100,
+        message:
+            data.message ||
+            currentText ||
+            latestText ||
+            "SMART test durumu alındı.",
+        lastResult: latestText,
+        lastPassed: latestPassed,
+        lastLifetimeHours:
+            typeof latest?.lifetime_hours === "number"
+                ? latest.lifetime_hours
+                : null,
+    };
+}
+
+function SummaryCard(props: {
+    icon: string;
+    title: string;
+    value: string;
+    detail: string;
+}) {
+    return (
+        <article className="storage-summary-card">
+            <span className="storage-summary-icon">{props.icon}</span>
+
+            <div>
+                <small>{props.title}</small>
+                <strong>{props.value}</strong>
+                <span>{props.detail}</span>
+            </div>
+        </article>
+    );
+}
+
+export default function StoragePage() {
+    const [storageData, setStorageData] =
+        useState<StorageDisksResponse | null>(null);
+
+    const [healthData, setHealthData] =
+        useState<StorageHealthResponse | null>(null);
+
+    const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
+    const [error, setError] = useState("");
+
+    const [smartTests, setSmartTests] = useState<
+        Record<string, SmartTestViewState>
+    >({});
+
+    const loadStorage = useCallback(async (manual = false) => {
+        if (manual) {
+            setRefreshing(true);
+        }
+
+        try {
+            const timestamp = Date.now();
+
+            const [disksResponse, healthResponse] =
+                await Promise.all([
+                    api(`/api/v1/storage/disks?ts=${timestamp}`),
+                    api(`/api/v1/storage/health?ts=${timestamp}`),
+                ]);
+
+            if (!disksResponse.ok) {
+                throw new Error(
+                    `Disk API hatası: ${disksResponse.status}`
+                );
+            }
+
+            if (!healthResponse.ok) {
+                throw new Error(
+                    `SMART API hatası: ${healthResponse.status}`
+                );
+            }
+
+            const disks =
+                (await disksResponse.json()) as StorageDisksResponse;
+
+            const health =
+                (await healthResponse.json()) as StorageHealthResponse;
+
+            setStorageData(disks);
+            setHealthData(health);
+            setError("");
+        } catch (err) {
+            console.error("Storage Manager yüklenemedi:", err);
+
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : "Depolama bilgileri alınamadı."
+            );
+        } finally {
+            setLoading(false);
+            setRefreshing(false);
+        }
+    }, []);
+
+    const loadSmartTestStatus = useCallback(
+        async (device: string) => {
+            if (!device) {
+                return;
+            }
+
+            setSmartTests((current) => ({
+                ...current,
+                [device]: {
+                    ...(current[device] ??
+                        emptySmartTestState()),
+                    loading: true,
+                    error: "",
+                },
+            }));
+
+            try {
+                const response = await api(
+                    `/api/v1/storage/disks/${encodeURIComponent(
+                        device
+                    )}/smart-test?ts=${Date.now()}`
+                );
+
+                const data =
+                    (await response.json()) as SmartTestStatusResponse;
+
+                if (!response.ok || data.success === false) {
+                    throw new Error(
+                        data.message ||
+                            `SMART durum hatası: ${response.status}`
+                    );
+                }
+
+                const parsed = parseSmartTestStatus(data);
+
+                setSmartTests((current) => ({
+                    ...current,
+                    [device]: {
+                        ...(current[device] ??
+                            emptySmartTestState()),
+                        ...parsed,
+                        loading: false,
+                        starting: false,
+                        error: "",
+                    },
+                }));
+            } catch (err) {
+                setSmartTests((current) => ({
+                    ...current,
+                    [device]: {
+                        ...(current[device] ??
+                            emptySmartTestState()),
+                        loading: false,
+                        starting: false,
+                        error:
+                            err instanceof Error
+                                ? err.message
+                                : "SMART test durumu alınamadı.",
+                    },
+                }));
+            }
+        },
+        []
+    );
+
+    const startSmartTest = useCallback(
+        async (device: string) => {
+            if (!device) {
+                return;
+            }
+
+            setSmartTests((current) => ({
+                ...current,
+                [device]: {
+                    ...(current[device] ??
+                        emptySmartTestState()),
+                    starting: true,
+                    loading: false,
+                    error: "",
+                    message: "SMART kısa testi başlatılıyor...",
+                },
+            }));
+
+            try {
+                const response = await api(
+                    `/api/v1/storage/disks/${encodeURIComponent(
+                        device
+                    )}/smart-test`,
+                    {
+                        method: "POST",
+                    }
+                );
+
+                const data =
+                    (await response.json()) as SmartTestStartResponse;
+
+                if (!response.ok || !data.success) {
+                    throw new Error(
+                        data.message ||
+                            `SMART test hatası: ${response.status}`
+                    );
+                }
+
+                setSmartTests((current) => ({
+                    ...current,
+                    [device]: {
+                        ...(current[device] ??
+                            emptySmartTestState()),
+                        starting: false,
+                        loading: false,
+                        running: true,
+                        remainingPercent: 100,
+                        completedPercent: 0,
+                        error: "",
+                        message:
+                            "SMART kısa testi başlatıldı.",
+                    },
+                }));
+
+                window.setTimeout(() => {
+                    void loadSmartTestStatus(device);
+                }, 1200);
+            } catch (err) {
+                setSmartTests((current) => ({
+                    ...current,
+                    [device]: {
+                        ...(current[device] ??
+                            emptySmartTestState()),
+                        starting: false,
+                        loading: false,
+                        running: false,
+                        error:
+                            err instanceof Error
+                                ? err.message
+                                : "SMART testi başlatılamadı.",
+                    },
+                }));
+            }
+        },
+        [loadSmartTestStatus]
+    );
+
+    useEffect(() => {
+        void loadStorage();
+
+        const timer = window.setInterval(() => {
+            void loadStorage();
+        }, 30000);
+
+        return () => {
+            window.clearInterval(timer);
+        };
+    }, [loadStorage]);
+
+    const physicalDisks = useMemo<DiskView[]>(() => {
+        if (!storageData) {
+            return [];
+        }
+
+        return storageData.disks
+            .filter(
+                (disk) =>
+                    disk.mounted &&
+                    (disk.system_disk || disk.photoos_data_disk)
+            )
+            .map((disk) => {
+                const parent =
+                    disk.parent_device || diskParent(disk.device);
+
+                const health = healthData?.disks.find(
+                    (item) =>
+                        item.device === parent ||
+                        item.device === disk.device
+                );
+
+                return {
+                    storage: disk,
+                    health,
+                };
+            });
+    }, [storageData, healthData]);
+
+    const dataDisks = physicalDisks.filter(
+        (item) => item.storage.photoos_data_disk
+    );
+
+    useEffect(() => {
+        for (const item of dataDisks) {
+            const device = smartDeviceName(
+                item.storage.parent_device ||
+                    item.storage.device
+            );
+
+            if (device && !smartTests[device]) {
+                void loadSmartTestStatus(device);
+            }
+        }
+    }, [dataDisks, loadSmartTestStatus, smartTests]);
+
+    useEffect(() => {
+        const runningDevices = Object.entries(smartTests)
+            .filter(([, status]) => status.running)
+            .map(([device]) => device);
+
+        if (runningDevices.length === 0) {
+            return;
+        }
+
+        const timer = window.setInterval(() => {
+            for (const device of runningDevices) {
+                void loadSmartTestStatus(device);
+            }
+        }, 5000);
+
+        return () => {
+            window.clearInterval(timer);
+        };
+    }, [smartTests, loadSmartTestStatus]);
+
+    const systemDisks = physicalDisks.filter(
+        (item) => item.storage.system_disk
+    );
+
+    const telemetryDisks: StorageTelemetryDisk[] = Array.from(
+        new Map(
+            dataDisks
+                .map(({ storage }) => {
+                    const device =
+                        storage.parent_device ||
+                        diskParent(storage.device);
+
+                    return [
+                        device,
+                        {
+                            device,
+                            label: diskDisplayName(storage),
+                        } satisfies StorageTelemetryDisk,
+                    ] as const;
+                })
+                .filter(([device]) => Boolean(device))
+        ).values()
+    );
+
+    const smartHealthyCount =
+        healthData?.disks.filter(
+            (disk) =>
+                disk.smart_available &&
+                disk.smart_passed &&
+                (disk.reallocated_sectors ?? 0) === 0 &&
+                (disk.pending_sectors ?? 0) === 0 &&
+                (disk.offline_uncorrectable ?? 0) === 0
+        ).length ?? 0;
+
+    const lastCheck = healthData?.checked_at
+        ? new Date(healthData.checked_at).toLocaleString("tr-TR")
+        : "—";
+
+    return (
+        <div className="storage-manager">
+            <section className="storage-manager-hero">
+                <div>
+                    <span className="storage-manager-kicker">
+                        PhotoOS Depolama
+                    </span>
+
+                    <h1>Storage Manager</h1>
+
+                    <p>
+                        Disk kapasitesi, SMART sağlığı, sıcaklık
+                        ve RAID durumu.
+                    </p>
+                </div>
+
+                <div className="storage-manager-hero-actions">
+                    <div className="storage-manager-status">
+                        <span className="storage-status-dot" />
+
+                        <div>
+                            <small>Sistem durumu</small>
+                            <strong>Çalışıyor</strong>
+                        </div>
+                    </div>
+
+                    <button
+                        type="button"
+                        onClick={() => void loadStorage(true)}
+                        disabled={refreshing}
+                    >
+                        {refreshing ? "Yenileniyor..." : "↻ Yenile"}
+                    </button>
+                </div>
+            </section>
+
+            {error && (
+                <div className="storage-manager-error">
+                    ⚠️ {error}
+                </div>
+            )}
+
+            <section className="storage-summary-grid">
+                <SummaryCard
+                    icon="💽"
+                    title="Toplam veri alanı"
+                    value={formatBytes(
+                        storageData?.data_total_bytes
+                    )}
+                    detail={`${formatBytes(
+                        storageData?.data_free_bytes
+                    )} kullanılabilir`}
+                />
+
+                <SummaryCard
+                    icon="📊"
+                    title="Kullanılan alan"
+                    value={formatBytes(
+                        storageData?.data_used_bytes
+                    )}
+                    detail={`%${clampPercent(
+                        storageData?.data_usage_percent
+                    ).toFixed(1)} kullanım`}
+                />
+
+                <SummaryCard
+                    icon="🗄️"
+                    title="Veri diskleri"
+                    value={String(
+                        storageData?.photoos_data_disk_count ?? 0
+                    )}
+                    detail={`${storageData?.physical_disk_count ?? 0} fiziksel disk algılandı`}
+                />
+
+                <SummaryCard
+                    icon="🛡️"
+                    title="SMART sağlıklı"
+                    value={String(smartHealthyCount)}
+                    detail={`Son kontrol: ${lastCheck}`}
+                />
+
+                <SummaryCard
+                    icon="🧩"
+                    title="RAID"
+                    value={
+                        healthData?.raid.configured
+                            ? healthData.raid.status
+                            : "Yok"
+                    }
+                    detail={
+                        healthData?.raid.details ||
+                        "Bağımsız diskler kullanılıyor"
+                    }
+                />
+            </section>
+
+            <section className="storage-manager-panel">
+                <div className="storage-panel-heading">
+                    <div>
+                        <span>Veri diskleri</span>
+                        <h2>PhotoOS Depolama Diskleri</h2>
+                    </div>
+
+                    <div className="storage-panel-count">
+                        {dataDisks.length} disk bağlı
+                    </div>
+                </div>
+
+                {loading ? (
+                    <div className="storage-loading">
+                        Disk bilgileri yükleniyor...
+                    </div>
+                ) : dataDisks.length > 0 ? (
+                    <div className="storage-disk-grid">
+                        {dataDisks.map(({ storage, health }) => {
+                            const tone = healthTone(health);
+                            const usage =
+                                clampPercent(storage.usage_percent);
+
+                            const smartDevice =
+                                smartDeviceName(
+                                    storage.parent_device ||
+                                        storage.device
+                                );
+
+                            const smartTest =
+                                smartTests[smartDevice] ??
+                                emptySmartTestState();
+
+                            const smartProgress =
+                                smartTest.completedPercent ??
+                                0;
+
+                            return (
+                                <article
+                                    className="storage-disk-card"
+                                    key={storage.device}
+                                >
+                                    <div className="storage-disk-head">
+                                        <div className="storage-disk-icon">
+                                            💽
+                                        </div>
+
+                                        <div className="storage-disk-title">
+                                            <h3>
+                                                {diskDisplayName(storage)}
+                                            </h3>
+
+                                            <p>
+                                                {health?.model ||
+                                                    storage.model ||
+                                                    storage.device}
+                                            </p>
+                                        </div>
+
+                                        <span
+                                            className={`storage-health-badge ${tone}`}
+                                        >
+                                            ● {healthLabel(health)}
+                                        </span>
+                                    </div>
+
+                                    <div className="storage-disk-capacity">
+                                        <div>
+                                            <small>Toplam kapasite</small>
+                                            <strong>
+                                                {formatBytes(
+                                                    storage.total_bytes
+                                                )}
+                                            </strong>
+                                        </div>
+
+                                        <div>
+                                            <small>Boş alan</small>
+                                            <strong>
+                                                {formatBytes(
+                                                    storage.free_bytes
+                                                )}
+                                            </strong>
+                                        </div>
+                                    </div>
+
+                                    <div className="storage-usage-heading">
+                                        <span>Disk kullanımı</span>
+                                        <strong>
+                                            %{usage.toFixed(1)}
+                                        </strong>
+                                    </div>
+
+                                    <div className="storage-usage-track">
+                                        <span
+                                            style={{
+                                                width: `${usage}%`,
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="storage-smart-grid">
+                                        <div>
+                                            <small>Sıcaklık</small>
+                                            <strong
+                                                className={
+                                                    (health?.temperature_celsius ??
+                                                        0) >= 50
+                                                        ? "metric-warning"
+                                                        : ""
+                                                }
+                                            >
+                                                {health?.temperature_celsius !==
+                                                null &&
+                                                health?.temperature_celsius !==
+                                                    undefined
+                                                    ? `${health.temperature_celsius}°C`
+                                                    : "—"}
+                                            </strong>
+                                        </div>
+
+                                        <div>
+                                            <small>Çalışma süresi</small>
+                                            <strong>
+                                                {health?.power_on_hours !==
+                                                null &&
+                                                health?.power_on_hours !==
+                                                    undefined
+                                                    ? `${formatInteger(
+                                                        health.power_on_hours
+                                                    )} saat`
+                                                    : "—"}
+                                            </strong>
+                                        </div>
+
+                                        <div>
+                                            <small>Bekleyen sektör</small>
+                                            <strong>
+                                                {formatInteger(
+                                                    health?.pending_sectors
+                                                )}
+                                            </strong>
+                                        </div>
+
+                                        <div>
+                                            <small>Bozuk sektör</small>
+                                            <strong>
+                                                {formatInteger(
+                                                    health?.reallocated_sectors
+                                                )}
+                                            </strong>
+                                        </div>
+
+                                        <div>
+                                            <small>Düzeltilemeyen</small>
+                                            <strong>
+                                                {formatInteger(
+                                                    health?.offline_uncorrectable
+                                                )}
+                                            </strong>
+                                        </div>
+
+                                        <div>
+                                            <small>CRC hatası</small>
+                                            <strong
+                                                className={
+                                                    (health?.crc_errors ??
+                                                        0) > 0
+                                                        ? "metric-warning"
+                                                        : ""
+                                                }
+                                            >
+                                                {formatInteger(
+                                                    health?.crc_errors
+                                                )}
+                                            </strong>
+                                        </div>
+                                    </div>
+
+                                    {(health?.crc_errors ?? 0) > 0 && (
+                                        <div className="storage-warning-box">
+                                            ⚠️ Geçmiş SATA bağlantı
+                                            hatası algılandı. CRC değeri
+                                            artarsa disk bağlantısını
+                                            kontrol et.
+                                        </div>
+                                    )}
+
+                                    <div className="storage-smart-test-box">
+                                        <div className="storage-smart-test-head">
+                                            <div>
+                                                <small>
+                                                    SMART kısa testi
+                                                </small>
+
+                                                <strong>
+                                                    {smartTest.running
+                                                        ? "Test devam ediyor"
+                                                        : smartTest.lastPassed ===
+                                                            true
+                                                          ? "Son test başarılı"
+                                                          : smartTest.lastPassed ===
+                                                              false
+                                                            ? "Son test uyarılı"
+                                                            : "Test hazır"}
+                                                </strong>
+                                            </div>
+
+                                            <span
+                                                className={`storage-smart-test-badge ${
+                                                    smartTest.running
+                                                        ? "running"
+                                                        : smartTest.lastPassed ===
+                                                            true
+                                                          ? "passed"
+                                                          : smartTest.lastPassed ===
+                                                              false
+                                                            ? "failed"
+                                                            : ""
+                                                }`}
+                                            >
+                                                {smartTest.running
+                                                    ? smartTest.remainingPercent !==
+                                                      null
+                                                        ? `%${smartTest.remainingPercent} kaldı`
+                                                        : "Çalışıyor"
+                                                    : smartTest.lastPassed ===
+                                                        true
+                                                      ? "PASS"
+                                                      : smartTest.lastPassed ===
+                                                          false
+                                                        ? "KONTROL"
+                                                        : "BEKLİYOR"}
+                                            </span>
+                                        </div>
+
+                                        {smartTest.running && (
+                                            <div className="storage-smart-test-progress">
+                                                <span
+                                                    style={{
+                                                        width: `${smartProgress}%`,
+                                                    }}
+                                                />
+                                            </div>
+                                        )}
+
+                                        <div className="storage-smart-test-message">
+                                            {smartTest.error ? (
+                                                <span className="smart-test-error">
+                                                    ⚠️ {smartTest.error}
+                                                </span>
+                                            ) : (
+                                                <span>
+                                                    {smartTest.message ||
+                                                        smartTest.lastResult ||
+                                                        "Disk üzerinde yaklaşık 1 dakikalık kısa test çalıştırır."}
+                                                </span>
+                                            )}
+
+                                            {smartTest.lastLifetimeHours !==
+                                                null && (
+                                                <small>
+                                                    Test zamanı: disk ömrünün{" "}
+                                                    {formatInteger(
+                                                        smartTest.lastLifetimeHours
+                                                    )}
+                                                    . saati
+                                                </small>
+                                            )}
+                                        </div>
+
+                                        <div className="storage-smart-test-actions">
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    void startSmartTest(
+                                                        smartDevice
+                                                    )
+                                                }
+                                                disabled={
+                                                    !health?.smart_available ||
+                                                    smartTest.starting ||
+                                                    smartTest.running
+                                                }
+                                            >
+                                                {smartTest.starting
+                                                    ? "Başlatılıyor..."
+                                                    : smartTest.running
+                                                      ? "Test çalışıyor"
+                                                      : "▶ SMART Test Başlat"}
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                className="secondary"
+                                                onClick={() =>
+                                                    void loadSmartTestStatus(
+                                                        smartDevice
+                                                    )
+                                                }
+                                                disabled={
+                                                    smartTest.loading ||
+                                                    smartTest.starting
+                                                }
+                                            >
+                                                {smartTest.loading
+                                                    ? "Kontrol ediliyor..."
+                                                    : "↻ Test Durumu"}
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div className="storage-disk-footer">
+                                        <div>
+                                            <small>Cihaz</small>
+                                            <strong>
+                                                {storage.device}
+                                            </strong>
+                                        </div>
+
+                                        <div>
+                                            <small>Dosya sistemi</small>
+                                            <strong>
+                                                {storage.filesystem ||
+                                                    "Bilinmiyor"}
+                                            </strong>
+                                        </div>
+
+                                        <div>
+                                            <small>Bağlama noktası</small>
+                                            <strong>
+                                                {storage.mountpoint}
+                                            </strong>
+                                        </div>
+
+                                        <div>
+                                            <small>Seri numarası</small>
+                                            <strong>
+                                                {health?.serial || "—"}
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </article>
+                            );
+                        })}
+                    </div>
+                ) : (
+                    <div className="storage-empty-state">
+                        <span>💽</span>
+                        <strong>PhotoOS veri diski bulunamadı</strong>
+                        <small>
+                            /srv/photoos/disks altında bağlı disk yok.
+                        </small>
+                    </div>
+                )}
+            </section>
+
+            <StorageTelemetryPanel disks={telemetryDisks} />
+
+            <section className="storage-bottom-grid">
+                <article className="storage-manager-panel">
+                    <div className="storage-panel-heading">
+                        <div>
+                            <span>Sistem depolaması</span>
+                            <h2>USB / İşletim Sistemi</h2>
+                        </div>
+                    </div>
+
+                    {systemDisks.length > 0 ? (
+                        <div className="storage-system-list">
+                            {systemDisks.map(
+                                ({ storage, health }) => (
+                                    <div key={storage.device}>
+                                        <span>💾</span>
+
+                                        <div>
+                                            <strong>
+                                                {health?.model ||
+                                                    storage.model ||
+                                                    "Sistem Diski"}
+                                            </strong>
+
+                                            <small>
+                                                {storage.device} ·{" "}
+                                                {formatBytes(
+                                                    storage.total_bytes
+                                                )}{" "}
+                                                · %
+                                                {clampPercent(
+                                                    storage.usage_percent
+                                                ).toFixed(0)}
+                                            </small>
+                                        </div>
+
+                                        <b>Sistem</b>
+                                    </div>
+                                )
+                            )}
+                        </div>
+                    ) : (
+                        <div className="storage-empty-inline">
+                            Sistem diski bilgisi bulunamadı.
+                        </div>
+                    )}
+                </article>
+
+                <article className="storage-manager-panel">
+                    <div className="storage-panel-heading">
+                        <div>
+                            <span>Dizi durumu</span>
+                            <h2>RAID</h2>
+                        </div>
+
+                        <span
+                            className={
+                                healthData?.raid.configured
+                                    ? "raid-badge configured"
+                                    : "raid-badge"
+                            }
+                        >
+                            {healthData?.raid.configured
+                                ? "Yapılandırılmış"
+                                : "RAID yok"}
+                        </span>
+                    </div>
+
+                    <div className="storage-raid-card">
+                        <div className="storage-raid-icon">
+                            🧩
+                        </div>
+
+                        <div>
+                            <strong>
+                                {healthData?.raid.status ||
+                                    "RAID bilgisi bekleniyor"}
+                            </strong>
+
+                            <p>
+                                {healthData?.raid.details ||
+                                    "Bağımsız diskler kullanılıyor."}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="storage-readonly-note">
+                        Bu ekran şu anda yalnızca izleme yapar.
+                        RAID oluşturma ve disk biçimlendirme kapalıdır.
+                    </div>
+                </article>
+
+                <article className="storage-manager-panel">
+                    <div className="storage-panel-heading">
+                        <div>
+                            <span>SMART özeti</span>
+                            <h2>Disk Kontrolleri</h2>
+                        </div>
+                    </div>
+
+                    <div className="storage-check-list">
+                        <div>
+                            <span>✓</span>
+                            <div>
+                                <strong>SMART verileri</strong>
+                                <small>
+                                    Gerçek disk verileri okunuyor
+                                </small>
+                            </div>
+                        </div>
+
+                        <div>
+                            <span>✓</span>
+                            <div>
+                                <strong>Sektör kontrolü</strong>
+                                <small>
+                                    Pending ve uncorrectable izleniyor
+                                </small>
+                            </div>
+                        </div>
+
+                        <div>
+                            <span>✓</span>
+                            <div>
+                                <strong>Sıcaklık takibi</strong>
+                                <small>
+                                    50°C ve üzeri uyarı oluşturur
+                                </small>
+                            </div>
+                        </div>
+
+                        <div>
+                            <span>✓</span>
+                            <div>
+                                <strong>Bağlantı kontrolü</strong>
+                                <small>
+                                    CRC hata sayacı izleniyor
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </div>
+    );
+}

@@ -1,0 +1,997 @@
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
+
+import { api } from "../api/client";
+import "./StoragePage.css";
+
+type StorageDisk = {
+    name: string;
+    device: string;
+    parent_device: string;
+    device_type: string;
+    model: string;
+    label: string;
+    uuid: string;
+    filesystem: string;
+    mountpoint: string;
+    total_bytes: number;
+    used_bytes: number;
+    free_bytes: number;
+    usage_percent: number;
+    mounted: boolean;
+    system_disk: boolean;
+    photoos_data_disk: boolean;
+};
+
+type StorageDisksResponse = {
+    disks: StorageDisk[];
+    physical_disk_count: number;
+    mounted_disk_count: number;
+    photoos_data_disk_count: number;
+    data_total_bytes: number;
+    data_used_bytes: number;
+    data_free_bytes: number;
+    data_usage_percent: number;
+};
+
+type SmartDiskHealth = {
+    device: string;
+    model: string;
+    serial: string;
+    smart_available: boolean;
+    smart_passed: boolean;
+    status: string;
+    temperature_celsius: number | null;
+    power_on_hours: number | null;
+    reallocated_sectors: number | null;
+    pending_sectors: number | null;
+    offline_uncorrectable: number | null;
+    crc_errors: number | null;
+};
+
+type RaidHealth = {
+    configured: boolean;
+    status: string;
+    details: string;
+};
+
+type StorageHealthResponse = {
+    disks: SmartDiskHealth[];
+    raid: RaidHealth;
+    checked_at: string;
+};
+
+
+
+type TemperaturePoint = {
+    timestamp: number;
+    temperature_celsius: number;
+};
+
+type TemperatureHistoryResponse = {
+    disks: Array<{
+        device: string;
+        points: TemperaturePoint[];
+    }>;
+    retention_points: number;
+};
+
+type DiskIoMetric = {
+    device: string;
+    read_bytes_per_second: number;
+    write_bytes_per_second: number;
+    read_iops: number;
+    write_iops: number;
+    utilization_percent: number;
+};
+
+type DiskIoResponse = {
+    disks: DiskIoMetric[];
+    sampled_at: number;
+    interval_seconds: number;
+};
+
+type HistoryRange = "1h" | "24h" | "7d";
+
+type StoredTemperaturePoint = {
+    timestamp: number;
+    temperature_celsius: number;
+};
+
+type StoredIoPoint = {
+    timestamp: number;
+    read_bytes_per_second: number;
+    write_bytes_per_second: number;
+    read_iops: number;
+    write_iops: number;
+    utilization_percent: number;
+};
+
+type StorageHistoryResponse = {
+    range: HistoryRange;
+    from_timestamp: number;
+    to_timestamp: number;
+    devices: Array<{
+        device: string;
+        temperatures: StoredTemperaturePoint[];
+        io: StoredIoPoint[];
+    }>;
+};
+
+type StorageAlert = {
+    id: number;
+    device: string;
+    severity: "warning" | "critical" | string;
+    alert_type: string;
+    message: string;
+    value: number | null;
+    created_at: number;
+    resolved_at: number | null;
+};
+
+type StorageAlertsResponse = {
+    alerts: StorageAlert[];
+    active_count: number;
+};
+
+type DiskView = {
+    storage: StorageDisk;
+    health?: SmartDiskHealth;
+};
+
+// PHOTOOS_SMART_TEST_UI_V1
+type SmartSelfTestStatus = {
+    remaining_percent?: number;
+    string?: string;
+    passed?: boolean;
+    value?: number;
+};
+
+type SmartTestLogEntry = {
+    lifetime_hours?: number;
+    status?: SmartSelfTestStatus;
+    type?: {
+        string?: string;
+        value?: number;
+    };
+};
+
+type SmartTestStatusResponse = {
+    photoos_success?: boolean;
+    photoos_device?: string;
+    success?: boolean;
+    message?: string;
+    ata_smart_data?: {
+        self_test?: {
+            status?: SmartSelfTestStatus;
+            polling_minutes?: {
+                short?: number;
+                extended?: number;
+                conveyance?: number;
+            };
+        };
+    };
+    ata_smart_self_test_log?: {
+        standard?: {
+            count?: number;
+            error_count_total?: number;
+            table?: SmartTestLogEntry[];
+        };
+    };
+};
+
+type SmartTestStartResponse = {
+    device: string;
+    success: boolean;
+    message: string;
+};
+
+type SmartTestViewState = {
+    loading: boolean;
+    starting: boolean;
+    error: string;
+    message: string;
+    running: boolean;
+    remainingPercent: number | null;
+    completedPercent: number | null;
+    lastResult: string;
+    lastPassed: boolean | null;
+    lastLifetimeHours: number | null;
+};
+
+function formatBytes(value: number | null | undefined) {
+    const bytes = Number(value ?? 0);
+
+    if (!Number.isFinite(bytes) || bytes <= 0) {
+        return "0 B";
+    }
+
+    const kb = bytes / 1024;
+    const mb = kb / 1024;
+    const gb = mb / 1024;
+    const tb = gb / 1024;
+
+    if (tb >= 1) {
+        return `${tb.toLocaleString("tr-TR", {
+            maximumFractionDigits: 2,
+        })} TB`;
+    }
+
+    if (gb >= 1) {
+        return `${gb.toLocaleString("tr-TR", {
+            maximumFractionDigits: 2,
+        })} GB`;
+    }
+
+    if (mb >= 1) {
+        return `${mb.toLocaleString("tr-TR", {
+            maximumFractionDigits: 1,
+        })} MB`;
+    }
+
+    return `${kb.toLocaleString("tr-TR", {
+        maximumFractionDigits: 1,
+    })} KB`;
+}
+
+function formatInteger(value: number | null | undefined) {
+    if (value === null || value === undefined) {
+        return "—";
+    }
+
+    return value.toLocaleString("tr-TR");
+}
+
+function clampPercent(value: number | null | undefined) {
+    const percentage = Number(value ?? 0);
+
+    if (!Number.isFinite(percentage)) {
+        return 0;
+    }
+
+    return Math.min(100, Math.max(0, percentage));
+}
+
+function diskDisplayName(disk: StorageDisk) {
+    if (disk.label.trim()) {
+        return disk.label;
+    }
+
+    if (disk.system_disk) {
+        return "Sistem Diski";
+    }
+
+    return disk.name.toUpperCase();
+}
+
+function diskParent(device: string) {
+    return device.replace(/[0-9]+$/, "");
+}
+
+function healthTone(health?: SmartDiskHealth) {
+    if (!health || !health.smart_available) {
+        return "neutral";
+    }
+
+    const hasSectorError =
+        (health.reallocated_sectors ?? 0) > 0 ||
+        (health.pending_sectors ?? 0) > 0 ||
+        (health.offline_uncorrectable ?? 0) > 0;
+
+    const hasTemperatureWarning =
+        (health.temperature_celsius ?? 0) >= 50;
+
+    const hasCrcWarning =
+        (health.crc_errors ?? 0) > 0;
+
+    if (!health.smart_passed || hasSectorError) {
+        return "danger";
+    }
+
+    if (hasTemperatureWarning || hasCrcWarning) {
+        return "warning";
+    }
+
+    return "healthy";
+}
+
+function healthLabel(health?: SmartDiskHealth) {
+    const tone = healthTone(health);
+
+    if (tone === "danger") {
+        return "Kontrol gerekli";
+    }
+
+    if (tone === "warning") {
+        return "Sağlıklı · Uyarı";
+    }
+
+    if (tone === "healthy") {
+        return "Sağlıklı";
+    }
+
+    return "SMART yok";
+}
+
+
+function smartDeviceName(device: string) {
+    return diskParent(device)
+        .replace(/^\/dev\//, "")
+        .trim();
+}
+
+function emptySmartTestState(): SmartTestViewState {
+    return {
+        loading: false,
+        starting: false,
+        error: "",
+        message: "",
+        running: false,
+        remainingPercent: null,
+        completedPercent: null,
+        lastResult: "",
+        lastPassed: null,
+        lastLifetimeHours: null,
+    };
+}
+
+function parseSmartTestStatus(
+    data: SmartTestStatusResponse
+): Partial<SmartTestViewState> {
+    const current =
+        data.ata_smart_data?.self_test?.status;
+
+    const remaining =
+        typeof current?.remaining_percent === "number"
+            ? clampPercent(current.remaining_percent)
+            : null;
+
+    const currentText =
+        current?.string?.trim() || "";
+
+    const running =
+        currentText.toLowerCase().includes("progress") ||
+        (remaining !== null &&
+            remaining > 0 &&
+            (current?.value ?? 0) !== 0);
+
+    const latest =
+        data.ata_smart_self_test_log?.standard?.table?.[0];
+
+    const latestText =
+        latest?.status?.string?.trim() || "";
+
+    const latestPassed =
+        typeof latest?.status?.passed === "boolean"
+            ? latest.status.passed
+            : latestText
+                  .toLowerCase()
+                  .includes("completed without error")
+              ? true
+              : latestText
+                    .toLowerCase()
+                    .includes("self-test routine in progress")
+                ? null
+                : latestText
+                      .toLowerCase()
+                      .includes("completed")
+                  ? false
+                  : null;
+
+    return {
+        running,
+        remainingPercent: running ? remaining : null,
+        completedPercent:
+            running && remaining !== null
+                ? clampPercent(100 - remaining)
+                : running
+                  ? null
+                  : 100,
+        message:
+            data.message ||
+            currentText ||
+            latestText ||
+            "SMART test durumu alındı.",
+        lastResult: latestText,
+        lastPassed: latestPassed,
+        lastLifetimeHours:
+            typeof latest?.lifetime_hours === "number"
+                ? latest.lifetime_hours
+                : null,
+    };
+}
+
+
+
+function temperaturePolyline(points: TemperaturePoint[]) {
+    if (points.length < 2) return "";
+    const recent = points.slice(-60);
+    const temperatures = recent.map((point) => point.temperature_celsius);
+    const min = Math.min(...temperatures) - 2;
+    const max = Math.max(...temperatures) + 2;
+    const range = Math.max(1, max - min);
+    return recent
+        .map((point, index) => {
+            const x = (index / Math.max(1, recent.length - 1)) * 100;
+            const y = 36 - ((point.temperature_celsius - min) / range) * 32;
+            return `${x.toFixed(2)},${y.toFixed(2)}`;
+        })
+        .join(" ");
+}
+
+
+function rangeLabel(range: HistoryRange) {
+    switch (range) {
+        case "1h":
+            return "1 Saat";
+        case "24h":
+            return "24 Saat";
+        case "7d":
+            return "7 Gün";
+        default:
+            return range;
+    }
+}
+
+function alertTypeLabel(alertType: string) {
+    switch (alertType) {
+        case "temperature_warning":
+            return "Sıcaklık Uyarısı";
+        case "temperature_critical":
+            return "Kritik Sıcaklık";
+        case "smart_failed":
+            return "SMART Hatası";
+        case "reallocated_sectors":
+            return "Yeniden Ayrılan Sektör";
+        case "pending_sectors":
+            return "Bekleyen Sektör";
+        case "offline_uncorrectable":
+            return "Düzeltilemeyen Sektör";
+        case "crc_errors":
+            return "CRC Hatası";
+        case "raid_degraded":
+            return "RAID Bozulmuş";
+        case "raid_failed":
+            return "RAID Hatası";
+        default:
+            return alertType
+                .replaceAll("_", " ")
+                .replace(/\b\w/g, (letter) => letter.toUpperCase());
+    }
+}
+
+function SummaryCard(props: {
+    icon: string;
+    title: string;
+    value: string;
+    detail: string;
+}) {
+    return (
+        <article className="storage-summary-card">
+            <span className="storage-summary-icon">{props.icon}</span>
+
+            <div>
+                <small>{props.title}</small>
+                <strong>{props.value}</strong>
+                <span>{props.detail}</span>
+            </div>
+        </article>
+    );
+}
+
+export default function StoragePage() {
+    const [storageData, setStorageData] =
+        useState<StorageDisksResponse | null>(null);
+
+    const [healthData, setHealthData] =
+        useState<StorageHealthResponse | null>(null);
+
+    const [refreshing, setRefreshing] = useState(false);
+    const [error, setError] = useState("");
+    const [diskIo, setDiskIo] = useState<DiskIoResponse | null>(null);
+    const [historyRange, setHistoryRange] = useState<HistoryRange>("24h");
+    const [notificationsOpen, setNotificationsOpen] = useState(false);
+    const [storedHistory, setStoredHistory] =
+        useState<StorageHistoryResponse | null>(null);
+    const [alertsData, setAlertsData] =
+        useState<StorageAlertsResponse | null>(null);
+
+    const [smartTests, setSmartTests] = useState<
+        Record<string, SmartTestViewState>
+    >({});
+
+    const loadStorage = useCallback(async (manual = false) => {
+        if (manual) {
+            setRefreshing(true);
+        }
+
+        try {
+            const timestamp = Date.now();
+
+            const [disksResponse, healthResponse, temperatureResponse, ioResponse] =
+                await Promise.all([
+                    api(`/api/v1/storage/disks?ts=${timestamp}`),
+                    api(`/api/v1/storage/health?ts=${timestamp}`),
+                    api(`/api/v1/storage/temperature-history?ts=${timestamp}`),
+                    api(`/api/v1/storage/io?ts=${timestamp}`),
+                ]);
+
+            if (!disksResponse.ok) {
+                throw new Error(
+                    `Disk API hatası: ${disksResponse.status}`
+                );
+            }
+
+            if (!healthResponse.ok) {
+                throw new Error(
+                    `SMART API hatası: ${healthResponse.status}`
+                );
+            }
+
+            const disks =
+                (await disksResponse.json()) as StorageDisksResponse;
+
+            const health =
+                (await healthResponse.json()) as StorageHealthResponse;
+
+            const temperature = temperatureResponse.ok
+                ? ((await temperatureResponse.json()) as TemperatureHistoryResponse)
+                : null;
+            const io = ioResponse.ok
+                ? ((await ioResponse.json()) as DiskIoResponse)
+                : null;
+
+            setStorageData(disks);
+            setHealthData(health);
+            setDiskIo(io);
+            setError("");
+        } catch (err) {
+            console.error("Storage Manager yüklenemedi:", err);
+
+            setError(
+                err instanceof Error
+                    ? err.message
+                    : "Depolama bilgileri alınamadı."
+            );
+        } finally {
+            setRefreshing(false);
+        }
+    }, []);
+
+    const loadHistoryAndAlerts = useCallback(
+        async (range: HistoryRange) => {
+
+            try {
+                const timestamp = Date.now();
+                const [historyResponse, alertsResponse] =
+                    await Promise.all([
+                        api(`/api/v1/storage/history?range=${range}&ts=${timestamp}`),
+                        api(`/api/v1/storage/alerts?ts=${timestamp}`),
+                    ]);
+
+                if (!historyResponse.ok) {
+                    throw new Error(
+                        `Geçmiş API hatası: ${historyResponse.status}`
+                    );
+                }
+
+                if (!alertsResponse.ok) {
+                    throw new Error(
+                        `Alarm API hatası: ${alertsResponse.status}`
+                    );
+                }
+
+                setStoredHistory(
+                    (await historyResponse.json()) as StorageHistoryResponse
+                );
+                setAlertsData(
+                    (await alertsResponse.json()) as StorageAlertsResponse
+                );
+            } catch (err) {
+                console.error("Geçmiş/alarm verisi alınamadı:", err);
+            } finally {
+                }
+        },
+        []
+    );
+
+    const loadSmartTestStatus = useCallback(
+        async (device: string) => {
+            if (!device) {
+                return;
+            }
+
+            setSmartTests((current) => ({
+                ...current,
+                [device]: {
+                    ...(current[device] ??
+                        emptySmartTestState()),
+                    loading: true,
+                    error: "",
+                },
+            }));
+
+            try {
+                const response = await api(
+                    `/api/v1/storage/disks/${encodeURIComponent(
+                        device
+                    )}/smart-test?ts=${Date.now()}`
+                );
+
+                const data =
+                    (await response.json()) as SmartTestStatusResponse;
+
+                if (!response.ok || data.success === false) {
+                    throw new Error(
+                        data.message ||
+                            `SMART durum hatası: ${response.status}`
+                    );
+                }
+
+                const parsed = parseSmartTestStatus(data);
+
+                setSmartTests((current) => ({
+                    ...current,
+                    [device]: {
+                        ...(current[device] ??
+                            emptySmartTestState()),
+                        ...parsed,
+                        loading: false,
+                        starting: false,
+                        error: "",
+                    },
+                }));
+            } catch (err) {
+                setSmartTests((current) => ({
+                    ...current,
+                    [device]: {
+                        ...(current[device] ??
+                            emptySmartTestState()),
+                        loading: false,
+                        starting: false,
+                        error:
+                            err instanceof Error
+                                ? err.message
+                                : "SMART test durumu alınamadı.",
+                    },
+                }));
+            }
+        },
+        []
+    );
+
+    const startSmartTest = useCallback(
+        async (device: string) => {
+            if (!device) {
+                return;
+            }
+
+            setSmartTests((current) => ({
+                ...current,
+                [device]: {
+                    ...(current[device] ??
+                        emptySmartTestState()),
+                    starting: true,
+                    loading: false,
+                    error: "",
+                    message: "SMART kısa testi başlatılıyor...",
+                },
+            }));
+
+            try {
+                const response = await api(
+                    `/api/v1/storage/disks/${encodeURIComponent(
+                        device
+                    )}/smart-test`,
+                    {
+                        method: "POST",
+                    }
+                );
+
+                const data =
+                    (await response.json()) as SmartTestStartResponse;
+
+                if (!response.ok || !data.success) {
+                    throw new Error(
+                        data.message ||
+                            `SMART test hatası: ${response.status}`
+                    );
+                }
+
+                setSmartTests((current) => ({
+                    ...current,
+                    [device]: {
+                        ...(current[device] ??
+                            emptySmartTestState()),
+                        starting: false,
+                        loading: false,
+                        running: true,
+                        remainingPercent: 100,
+                        completedPercent: 0,
+                        error: "",
+                        message:
+                            "SMART kısa testi başlatıldı.",
+                    },
+                }));
+
+                window.setTimeout(() => {
+                    void loadSmartTestStatus(device);
+                }, 1200);
+            } catch (err) {
+                setSmartTests((current) => ({
+                    ...current,
+                    [device]: {
+                        ...(current[device] ??
+                            emptySmartTestState()),
+                        starting: false,
+                        loading: false,
+                        running: false,
+                        error:
+                            err instanceof Error
+                                ? err.message
+                                : "SMART testi başlatılamadı.",
+                    },
+                }));
+            }
+        },
+        [loadSmartTestStatus]
+    );
+
+    useEffect(() => {
+        void loadStorage();
+
+        const timer = window.setInterval(() => {
+            void loadStorage();
+        }, 2000);
+
+        return () => {
+            window.clearInterval(timer);
+        };
+    }, [loadStorage]);
+
+    useEffect(() => {
+        void loadHistoryAndAlerts(historyRange);
+
+        const timer = window.setInterval(() => {
+            void loadHistoryAndAlerts(historyRange);
+        }, 60000);
+
+        return () => window.clearInterval(timer);
+    }, [historyRange, loadHistoryAndAlerts]);
+
+    const physicalDisks = useMemo<DiskView[]>(() => {
+        if (!storageData) {
+            return [];
+        }
+
+        return storageData.disks
+            .filter(
+                (disk) =>
+                    disk.mounted &&
+                    (disk.system_disk || disk.photoos_data_disk)
+            )
+            .map((disk) => {
+                const parent =
+                    disk.parent_device || diskParent(disk.device);
+
+                const health = healthData?.disks.find(
+                    (item) =>
+                        item.device === parent ||
+                        item.device === disk.device
+                );
+
+                return {
+                    storage: disk,
+                    health,
+                };
+            });
+    }, [storageData, healthData]);
+
+    const dataDisks = physicalDisks.filter(
+        (item) => item.storage.photoos_data_disk
+    );
+
+    useEffect(() => {
+        for (const item of dataDisks) {
+            const device = smartDeviceName(
+                item.storage.parent_device ||
+                    item.storage.device
+            );
+
+            if (device && !smartTests[device]) {
+                void loadSmartTestStatus(device);
+            }
+        }
+    }, [dataDisks, loadSmartTestStatus, smartTests]);
+
+    useEffect(() => {
+        const runningDevices = Object.entries(smartTests)
+            .filter(([, status]) => status.running)
+            .map(([device]) => device);
+
+        if (runningDevices.length === 0) {
+            return;
+        }
+
+        const timer = window.setInterval(() => {
+            for (const device of runningDevices) {
+                void loadSmartTestStatus(device);
+            }
+        }, 5000);
+
+        return () => {
+            window.clearInterval(timer);
+        };
+    }, [smartTests, loadSmartTestStatus]);
+
+    const systemDisks = physicalDisks.filter(
+        (item) => item.storage.system_disk
+    );
+
+    const smartHealthyCount =
+        healthData?.disks.filter(
+            (disk) =>
+                disk.smart_available &&
+                disk.smart_passed &&
+                (disk.reallocated_sectors ?? 0) === 0 &&
+                (disk.pending_sectors ?? 0) === 0 &&
+                (disk.offline_uncorrectable ?? 0) === 0
+        ).length ?? 0;
+
+    const lastCheck = healthData?.checked_at
+        ? new Date(healthData.checked_at).toLocaleString("tr-TR")
+        : "—";
+
+    const totalRead = dataDisks.reduce((sum, item) => {
+        const device = item.storage.parent_device || diskParent(item.storage.device);
+        return sum + (diskIo?.disks.find((metric) => metric.device === device)?.read_bytes_per_second ?? 0);
+    }, 0);
+    const totalWrite = dataDisks.reduce((sum, item) => {
+        const device = item.storage.parent_device || diskParent(item.storage.device);
+        return sum + (diskIo?.disks.find((metric) => metric.device === device)?.write_bytes_per_second ?? 0);
+    }, 0);
+    const totalIops = dataDisks.reduce((sum, item) => {
+        const device = item.storage.parent_device || diskParent(item.storage.device);
+        const metric = diskIo?.disks.find((entry) => entry.device === device);
+        return sum + (metric?.read_iops ?? 0) + (metric?.write_iops ?? 0);
+    }, 0);
+    const avgUtil = dataDisks.length
+        ? dataDisks.reduce((sum, item) => {
+              const device = item.storage.parent_device || diskParent(item.storage.device);
+              return sum + (diskIo?.disks.find((entry) => entry.device === device)?.utilization_percent ?? 0);
+          }, 0) / dataDisks.length
+        : 0;
+
+    const recentAlerts = alertsData?.alerts.slice(0, 5) ?? [];
+
+    return (
+        <div className="storage-v3">
+            <header className="storage-v3-header">
+                <div>
+                    <span className="eyebrow">PHOTOOS DEPOLAMA</span>
+                    <h1>Storage Dashboard</h1>
+                    <p>Sistem depolama durumu, disk sağlığı ve canlı performans</p>
+                </div>
+                <div className="header-actions">
+                    <div className="notification-wrap">
+                        <button className="icon-button" onClick={() => setNotificationsOpen((open) => !open)} aria-label="Bildirimler">
+                            🔔
+                            {(alertsData?.active_count ?? 0) > 0 && <b>{alertsData?.active_count}</b>}
+                        </button>
+                        {notificationsOpen && (
+                            <div className="notification-panel">
+                                <div className="notification-head"><strong>Bildirimler</strong><span>{alertsData?.active_count ?? 0} aktif</span></div>
+                                {recentAlerts.length ? recentAlerts.map((alert) => (
+                                    <div className={`notification-item ${alert.resolved_at ? "resolved" : alert.severity}`} key={alert.id}>
+                                        <span>{alert.resolved_at ? "✓" : alert.severity === "critical" ? "!" : "⚠"}</span>
+                                        <div><strong>{alertTypeLabel(alert.alert_type)}</strong><small>{alert.message}</small></div>
+                                    </div>
+                                )) : <div className="notification-empty">Aktif bildirim bulunmuyor.</div>}
+                            </div>
+                        )}
+                    </div>
+                    <button className="refresh-button" onClick={() => void loadStorage(true)} disabled={refreshing}>{refreshing ? "Yenileniyor" : "↻ Yenile"}</button>
+                </div>
+            </header>
+
+            {error && <div className="storage-v3-error">⚠ {error}</div>}
+
+            <section className="top-stat-grid">
+                <SummaryCard icon="◉" title="Toplam kapasite" value={formatBytes(storageData?.data_total_bytes)} detail={`Kullanılan ${formatBytes(storageData?.data_used_bytes)}`} />
+                <SummaryCard icon="▣" title="Disk sayısı" value={String(dataDisks.length)} detail={`${smartHealthyCount} disk sağlıklı`} />
+                <SummaryCard icon="◇" title="RAID durumu" value={healthData?.raid.configured ? "Aktif" : "Yok"} detail={healthData?.raid.status ?? "RAID yapılandırılmamış"} />
+                <SummaryCard icon="✓" title="Aktif alarmlar" value={String(alertsData?.active_count ?? 0)} detail={(alertsData?.active_count ?? 0) ? "Dikkat gerekiyor" : "Tümü normal"} />
+            </section>
+
+            <section className="disk-dashboard-grid">
+                {dataDisks.map(({ storage, health }) => {
+                    const device = storage.parent_device || diskParent(storage.device);
+                    const io = diskIo?.disks.find((metric) => metric.device === device);
+                    const temp = health?.temperature_celsius ?? 0;
+                    const smartScore = health?.smart_available && health.smart_passed ? 100 : 0;
+                    const testDevice = smartDeviceName(device);
+                    const test = smartTests[testDevice] ?? emptySmartTestState();
+                    return (
+                        <article className="disk-modern-card" key={storage.device}>
+                            <div className="disk-modern-head">
+                                <div><span className="disk-icon">💽</span><div><h2>{diskDisplayName(storage)}</h2><small>{device}</small></div></div>
+                                <span className={`health-pill ${healthTone(health)}`}>{healthLabel(health)}</span>
+                            </div>
+                            <div className="gauge-row">
+                                <div className="gauge" style={{"--value": `${clampPercent((temp / 60) * 100)}%`} as CSSProperties}>
+                                    <div><strong>{temp || "—"}°C</strong><small>{temp >= 55 ? "Kritik" : temp >= 50 ? "Uyarı" : "Normal"}</small></div>
+                                    <span>Sıcaklık</span>
+                                </div>
+                                <div className="gauge capacity" style={{"--value": `${clampPercent(storage.usage_percent)}%`} as CSSProperties}>
+                                    <div><strong>{formatBytes(storage.total_bytes)}</strong><small>%{clampPercent(storage.usage_percent).toFixed(1)} dolu</small></div>
+                                    <span>Kapasite</span>
+                                </div>
+                                <div className="gauge smart" style={{"--value": `${smartScore}%`} as CSSProperties}>
+                                    <div><strong>{smartScore}%</strong><small>{smartScore === 100 ? "Mükemmel" : "Kontrol et"}</small></div>
+                                    <span>SMART</span>
+                                </div>
+                                <div className="live-io">
+                                    <span>Canlı I/O</span>
+                                    <div><small>Okuma</small><strong>{formatBytes(io?.read_bytes_per_second)}/s</strong></div>
+                                    <div><small>Yazma</small><strong>{formatBytes(io?.write_bytes_per_second)}/s</strong></div>
+                                    <em>{((io?.read_iops ?? 0) + (io?.write_iops ?? 0)).toFixed(1)} IOPS · %{(io?.utilization_percent ?? 0).toFixed(2)}</em>
+                                </div>
+                            </div>
+                            <div className="disk-meta-row">
+                                <span>Model <b>{health?.model || storage.model || "—"}</b></span>
+                                <span>Seri <b>{health?.serial || "—"}</b></span>
+                                <span>Dosya sistemi <b>{storage.filesystem || "—"}</b></span>
+                                <span>Çalışma <b>{formatInteger(health?.power_on_hours)} saat</b></span>
+                            </div>
+                            <div className="smart-actions">
+                                <button onClick={() => void startSmartTest(testDevice)} disabled={test.starting || test.running}>{test.starting ? "Başlatılıyor" : test.running ? `Test %${test.completedPercent ?? 0}` : "SMART Testi Başlat"}</button>
+                                <button className="secondary" onClick={() => void loadSmartTestStatus(testDevice)} disabled={test.loading}>{test.loading ? "Kontrol ediliyor" : "Test Durumu"}</button>
+                            </div>
+                        </article>
+                    );
+                })}
+            </section>
+
+            <section className="analytics-grid">
+                <article className="panel temperature-main-panel">
+                    <div className="panel-title-row">
+                        <div><span className="eyebrow">SICAKLIK GEÇMİŞİ</span><h2>Disk sıcaklıkları</h2></div>
+                        <div className="range-switch">{(["1h", "24h", "7d"] as HistoryRange[]).map((range) => <button className={historyRange === range ? "active" : ""} key={range} onClick={() => setHistoryRange(range)}>{rangeLabel(range)}</button>)}</div>
+                    </div>
+                    <div className="big-chart">
+                        <div className="chart-y-labels"><span>60°</span><span>45°</span><span>30°</span><span>15°</span><span>0°</span></div>
+                        <svg viewBox="0 0 100 42" preserveAspectRatio="none">
+                            {[0,10,20,30,40].map((y) => <line key={y} x1="0" y1={y} x2="100" y2={y} className="grid-line" />)}
+                            {(storedHistory?.devices ?? []).map((device, index) => <polyline key={device.device} className={`temp-line line-${index}`} points={temperaturePolyline(device.temperatures)} />)}
+                        </svg>
+                        <div className="chart-legend">{(storedHistory?.devices ?? []).map((device, index) => <span key={device.device} className={`legend-${index}`}>{device.device}</span>)}</div>
+                        <div className="chart-hover-note">Grafiğin üzerine gelerek ayrıntılı eğilimi inceleyin</div>
+                    </div>
+                </article>
+
+                <div className="side-status-stack">
+                    <article className="panel compact-status"><div className="status-orb raid">◇</div><div><span>RAID Durumu</span><strong>{healthData?.raid.configured ? "RAID aktif" : "RAID yapılandırılmamış"}</strong><small>{healthData?.raid.details}</small></div></article>
+                    <article className="panel compact-status"><div className="status-orb smart">✓</div><div><span>SMART Durumu</span><strong>{smartHealthyCount === dataDisks.length ? "Tüm diskler sağlıklı" : "Kontrol gerekli"}</strong><small>Son kontrol: {lastCheck}</small></div></article>
+                    <article className="panel capacity-summary"><h3>Depolama dağılımı</h3><div className="mini-donut" style={{"--value": `${clampPercent(storageData?.data_usage_percent)}%`} as CSSProperties}><strong>%{clampPercent(storageData?.data_usage_percent).toFixed(2)}</strong><small>Kullanılan</small></div><div className="capacity-lines"><span>Kullanılan <b>{formatBytes(storageData?.data_used_bytes)}</b></span><span>Boş <b>{formatBytes(storageData?.data_free_bytes)}</b></span><span>Toplam <b>{formatBytes(storageData?.data_total_bytes)}</b></span></div></article>
+                </div>
+            </section>
+
+            <section className="bottom-grid">
+                <article className="panel performance-panel">
+                    <div className="panel-title-row"><div><span className="eyebrow">CANLI PERFORMANS</span><h2>Disk performansı</h2></div><span className="live-badge">CANLI</span></div>
+                    <div className="performance-cards">
+                        <div><small>Toplam okuma</small><strong>{formatBytes(totalRead)}/s</strong><i /></div>
+                        <div><small>Toplam yazma</small><strong>{formatBytes(totalWrite)}/s</strong><i /></div>
+                        <div><small>Toplam IOPS</small><strong>{totalIops.toFixed(1)}</strong><i /></div>
+                        <div><small>Kullanım oranı</small><strong>%{avgUtil.toFixed(2)}</strong><i /></div>
+                    </div>
+                </article>
+                <article className="panel alert-panel">
+                    <div className="panel-title-row"><div><span className="eyebrow">SON ALARMLAR</span><h2>Bildirim merkezi</h2></div><span>{alertsData?.active_count ?? 0} aktif</span></div>
+                    {(alertsData?.active_count ?? 0) === 0 ? <div className="all-clear"><b>✓</b><div><strong>Aktif alarm bulunmuyor. Sistem normal.</strong><small>Tüm sistem bileşenleri sağlıklı çalışıyor.</small></div></div> : recentAlerts.map((alert) => <div className={`alert-row ${alert.severity}`} key={alert.id}><b>!</b><div><strong>{alertTypeLabel(alert.alert_type)}</strong><small>{alert.device} · {alert.message}</small></div></div>)}
+                </article>
+            </section>
+
+            {systemDisks.length > 0 && <section className="system-disk-note">Sistem diski izleniyor: {systemDisks.map((item) => item.storage.device).join(", ")}</section>}
+        </div>
+    );
+}

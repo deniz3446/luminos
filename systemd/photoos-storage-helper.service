@@ -1,0 +1,30 @@
+[Unit]
+Description=PhotoOS Privileged Storage Helper
+After=local-fs.target
+Before=photoos-storage-core.service photoos-setup-provisioner.service
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/usr/local/sbin/photoos-storage-helperd
+Restart=on-failure
+RestartSec=2
+
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+
+RestrictAddressFamilies=AF_UNIX
+
+ReadWritePaths=/etc/fstab
+ReadWritePaths=/etc/photoos
+ReadWritePaths=/etc/mdadm
+ReadWritePaths=/var/lib/photoos
+ReadWritePaths=/srv/photoos
+
+[Install]
+WantedBy=multi-user.target

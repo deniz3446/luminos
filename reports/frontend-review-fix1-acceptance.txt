@@ -1,0 +1,17 @@
+PHOTOOS_FRONTEND_REVIEW_FIX1=PASS
+base=5d7375e1c34c73435c3297e442102e761c8b7e96
+review_contract_red=PASS_EXPECTED_FAILURE
+focused_lint_red=PASS_EXPECTED_FAILURE
+role_aware_session_shell=PASS
+absolute_api_url_rejected=PASS
+notification_summary_contract=PASS
+canonical_dark_theme=PASS
+default_focused_eslint=PASS
+production_build=PASS
+spa_smoke=PASS
+active_hardcoded_lan=0
+v4_global_lint_errors=32
+reviewed_global_lint_errors=19
+global_lint_regression_gate=PASS_LE_25
+browser_visual_gate=PENDING
+live_unchanged=true

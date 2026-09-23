@@ -1,0 +1,10 @@
+PHASE2B3_CLOUD_ACCOUNTS=PASS
+branch=phase2b-cloud-accounts
+base_head=8b366cc1f8c80f500a2e9846f0b53fe7d319e5b6
+validation_red=PASS_EXPECTED_FAILURE
+repository_red=PASS_EXPECTED_FAILURE
+targeted_green=PASS
+full_server_tests=PASS
+workspace_cargo_check=PASS
+api_secret_redaction=PASS
+live_deploy=false

@@ -1,0 +1,25 @@
+[Unit]
+Description=PhotoOS Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+
+User=photoos
+Group=photoos
+
+WorkingDirectory=/var/lib/photoos/runtime
+ExecStart=/opt/photoos/current/server
+
+Environment=RUST_LOG=info
+Environment=PHOTOOS_CONFIG_FILE=/etc/photoos/config.toml
+
+Restart=always
+RestartSec=5
+
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

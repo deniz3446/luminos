@@ -1,0 +1,8 @@
+PHASE2B2_LOGS_REVIEW_FIX1=PASS
+issue=live UI supports since_minutes=43200 but reconstructed backend clamped to 10080
+resolution=backend now accepts/clamps through 43200
+red_test=PASS_EXPECTED_FAILURE (from prior run)
+green_test=PASS
+full_server_tests=PASS
+workspace_cargo_check=PASS
+live_deploy=false

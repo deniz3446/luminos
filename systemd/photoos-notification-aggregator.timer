@@ -1,0 +1,12 @@
+[Unit]
+Description=Run PhotoOS Notification Aggregator
+
+[Timer]
+OnBootSec=45s
+OnUnitActiveSec=30s
+AccuracySec=5s
+Persistent=true
+Unit=photoos-notification-aggregator.service
+
+[Install]
+WantedBy=timers.target

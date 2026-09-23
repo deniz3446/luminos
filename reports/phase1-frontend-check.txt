@@ -1,0 +1,12 @@
+CLIENT=/home/photoos/PhotoOS-final-source/client
+package_json_exists=true
+package_name=client
+scripts=build,dev,lint,preview
+TS_TSX_FILE_COUNT=23
+PHOTOS_API_EXISTS=True
+PHOTOS_API_SIZE=0
+ALBUMS_API_EXISTS=False
+MISSING_IMPORT src/pages/AlbumDetailPage.tsx -> ../api/albums
+MISSING_IMPORT src/pages/AlbumsPage.tsx -> ../api/albums
+MISSING_IMPORT src/pages/PhotosPage.tsx -> ../api/albums
+MISSING_IMPORT_COUNT=3

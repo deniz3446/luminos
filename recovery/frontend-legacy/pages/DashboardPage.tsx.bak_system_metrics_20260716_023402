@@ -1,0 +1,541 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { api } from "../api/client";
+
+type StorageInfo = {
+    total_bytes: number;
+    used_bytes: number;
+    free_bytes: number;
+    usage_percent: number;
+};
+
+type MediaByUser = {
+    username: string;
+    count: number;
+};
+
+type SourceStats = {
+    camera: number;
+    whatsapp_received: number;
+    whatsapp_sent: number;
+    screenshot: number;
+    download: number;
+    telegram: number;
+    other: number;
+};
+
+type UploadPeriods = {
+    today: number;
+    this_week: number;
+    this_month: number;
+    this_year: number;
+};
+
+type DashboardStats = {
+    user_count: number;
+    total_media_count: number;
+    photo_count: number;
+    video_count: number;
+    source_stats: SourceStats;
+    upload_periods: UploadPeriods;
+    media_by_user: MediaByUser[];
+    version: string;
+};
+
+function formatBytes(bytes: number) {
+    if (!Number.isFinite(bytes) || bytes <= 0) {
+        return "0 B";
+    }
+
+    const kb = bytes / 1024;
+    const mb = kb / 1024;
+    const gb = mb / 1024;
+    const tb = gb / 1024;
+
+    if (tb >= 1) {
+        return `${tb.toLocaleString("tr-TR", {
+            maximumFractionDigits: 2,
+        })} TB`;
+    }
+
+    if (gb >= 1) {
+        return `${gb.toLocaleString("tr-TR", {
+            maximumFractionDigits: 2,
+        })} GB`;
+    }
+
+    if (mb >= 1) {
+        return `${mb.toLocaleString("tr-TR", {
+            maximumFractionDigits: 2,
+        })} MB`;
+    }
+
+    return `${kb.toLocaleString("tr-TR", {
+        maximumFractionDigits: 2,
+    })} KB`;
+}
+
+export default function DashboardPage() {
+    const navigate = useNavigate();
+
+    const [stats, setStats] =
+        useState<DashboardStats | null>(null);
+
+    const [storage, setStorage] =
+        useState<StorageInfo | null>(null);
+
+    const [lastUpdated, setLastUpdated] =
+        useState("");
+
+    const [error, setError] =
+        useState("");
+
+    async function loadDashboard() {
+        try {
+            setError("");
+
+            const timestamp = Date.now();
+
+            const [statsRes, storageRes] =
+                await Promise.all([
+                    api(
+                        `/api/v1/dashboard/stats?ts=${timestamp}`
+                    ),
+                    api(
+                        `/api/v1/storage?ts=${timestamp}`
+                    ),
+                ]);
+
+            if (!statsRes.ok) {
+                throw new Error(
+                    `Stats alınamadı: ${statsRes.status}`
+                );
+            }
+
+            if (!storageRes.ok) {
+                throw new Error(
+                    `Storage alınamadı: ${storageRes.status}`
+                );
+            }
+
+            const statsData =
+                await statsRes.json();
+
+            const storageData =
+                await storageRes.json();
+
+            setStats(statsData);
+            setStorage(storageData);
+
+            setLastUpdated(
+                new Date().toLocaleTimeString(
+                    "tr-TR"
+                )
+            );
+        } catch (err) {
+            console.error(
+                "Dashboard verileri alınamadı:",
+                err
+            );
+
+            setError(
+                "Dashboard verileri alınamadı."
+            );
+        }
+    }
+
+    useEffect(() => {
+        loadDashboard();
+
+        const timer = window.setInterval(
+            loadDashboard,
+            10000
+        );
+
+        return () => {
+            window.clearInterval(timer);
+        };
+    }, []);
+
+    const sourceStats = stats?.source_stats;
+
+    return (
+        <>
+            <div className="page-title">
+                <h1>Dashboard</h1>
+
+                <p>
+                    PhotoOS Yönetim Paneli · v
+                    {stats?.version ?? "1.0.0"}
+                </p>
+
+                {lastUpdated && (
+                    <p>
+                        Son güncelleme: {lastUpdated}
+                    </p>
+                )}
+
+                {error && (
+                    <p style={{ color: "#ef4444" }}>
+                        {error}
+                    </p>
+                )}
+            </div>
+
+            <div className="stats-grid">
+                <StatCard
+                    title="Kullanıcılar"
+                    value={stats?.user_count ?? 0}
+                    icon="👥"
+                />
+
+                <StatCard
+                    title="Toplam Medya"
+                    value={
+                        stats?.total_media_count ?? 0
+                    }
+                    icon="🗂️"
+                    onClick={() =>
+                        navigate("/photos")
+                    }
+                />
+
+                <StatCard
+                    title="Fotoğraflar"
+                    value={stats?.photo_count ?? 0}
+                    icon="📷"
+                />
+
+                <StatCard
+                    title="Videolar"
+                    value={stats?.video_count ?? 0}
+                    icon="🎥"
+                />
+
+                <StatCard
+                    title="Depolama"
+                    value={
+                        storage
+                            ? formatBytes(
+                                  storage.used_bytes
+                              )
+                            : "0 B"
+                    }
+                    icon="💾"
+                    subtitle={
+                        storage
+                            ? `%${Number(
+                                  storage.usage_percent ?? 0
+                              ).toLocaleString(
+                                  "tr-TR",
+                                  {
+                                      maximumFractionDigits: 2,
+                                  }
+                              )} kullanılıyor`
+                            : undefined
+                    }
+                />
+            </div>
+
+            <section className="panel">
+                <div className="panel-header">
+                    <div>
+                        <h2>Medya Kaynakları</h2>
+                        <p>
+                            Telefonlardan gelen medya
+                            dağılımı
+                        </p>
+                    </div>
+                </div>
+
+                <div className="stats-grid">
+                    <StatCard
+                        title="Kamera"
+                        value={
+                            sourceStats?.camera ?? 0
+                        }
+                        icon="📷"
+                    />
+
+                    <StatCard
+                        title="WhatsApp Gelen"
+                        value={
+                            sourceStats
+                                ?.whatsapp_received ?? 0
+                        }
+                        icon="💬"
+                    />
+
+                    <StatCard
+                        title="WhatsApp Gönderilen"
+                        value={
+                            sourceStats
+                                ?.whatsapp_sent ?? 0
+                        }
+                        icon="📤"
+                    />
+
+                    <StatCard
+                        title="Ekran Görüntüleri"
+                        value={
+                            sourceStats?.screenshot ?? 0
+                        }
+                        icon="📱"
+                    />
+
+                    <StatCard
+                        title="İndirilenler"
+                        value={
+                            sourceStats?.download ?? 0
+                        }
+                        icon="📥"
+                    />
+
+                    <StatCard
+                        title="Telegram"
+                        value={
+                            sourceStats?.telegram ?? 0
+                        }
+                        icon="✈️"
+                    />
+
+                    <StatCard
+                        title="Diğer"
+                        value={
+                            sourceStats?.other ?? 0
+                        }
+                        icon="🖼️"
+                    />
+                </div>
+            </section>
+
+            <section className="panel">
+                <div className="panel-header">
+                    <div>
+                        <h2>Yükleme Dönemleri</h2>
+                        <p>
+                            Sunucuya eklenen medya sayıları
+                        </p>
+                    </div>
+                </div>
+
+                <div className="stats-grid">
+                    <StatCard
+                        title="Bugün"
+                        value={
+                            stats?.upload_periods
+                                ?.today ?? 0
+                        }
+                        icon="☀️"
+                    />
+
+                    <StatCard
+                        title="Son 7 Gün"
+                        value={
+                            stats?.upload_periods
+                                ?.this_week ?? 0
+                        }
+                        icon="📆"
+                    />
+
+                    <StatCard
+                        title="Bu Ay"
+                        value={
+                            stats?.upload_periods
+                                ?.this_month ?? 0
+                        }
+                        icon="🗓️"
+                    />
+
+                    <StatCard
+                        title="Bu Yıl"
+                        value={
+                            stats?.upload_periods
+                                ?.this_year ?? 0
+                        }
+                        icon="📅"
+                    />
+                </div>
+            </section>
+
+            <section className="panel">
+                <div className="panel-header">
+                    <div>
+                        <h2>
+                            Kullanıcı Başına Medya
+                        </h2>
+
+                        <p>
+                            Tüm sistemdeki medya
+                            dağılımı
+                        </p>
+                    </div>
+
+                    <button
+                        onClick={loadDashboard}
+                        style={{
+                            borderRadius: 12,
+                            border:
+                                "1px solid #7f1d1d",
+                            background: "#1a0a0d",
+                            color: "#fff",
+                            padding: "10px 14px",
+                            fontWeight: 700,
+                            cursor: "pointer",
+                        }}
+                    >
+                        Yenile
+                    </button>
+                </div>
+
+                {stats?.media_by_user?.length ? (
+                    <div
+                        style={{
+                            display: "grid",
+                            gap: 12,
+                        }}
+                    >
+                        {stats.media_by_user.map(
+                            (item) => (
+                                <div
+                                    key={
+                                        item.username
+                                    }
+                                    style={{
+                                        display:
+                                            "flex",
+                                        justifyContent:
+                                            "space-between",
+                                        alignItems:
+                                            "center",
+                                        padding:
+                                            "14px 16px",
+                                        borderRadius:
+                                            14,
+                                        background:
+                                            "#100608",
+                                        border:
+                                            "1px solid rgba(239,68,68,0.18)",
+                                    }}
+                                >
+                                    <strong>
+                                        {
+                                            item.username
+                                        }
+                                    </strong>
+
+                                    <span
+                                        style={{
+                                            color:
+                                                "#fca5a5",
+                                            fontWeight:
+                                                800,
+                                        }}
+                                    >
+                                        {item.count} medya
+                                    </span>
+                                </div>
+                            )
+                        )}
+                    </div>
+                ) : (
+                    <p style={{ color: "#aaa" }}>
+                        Henüz medya bulunmuyor.
+                    </p>
+                )}
+            </section>
+
+            <div
+                style={{
+                    textAlign: "center",
+                    color: "#71717a",
+                    padding: "24px 0 10px",
+                    fontSize: 13,
+                }}
+            >
+                PhotoOS v
+                {stats?.version ?? "1.0.0"}
+            </div>
+        </>
+    );
+}
+
+function StatCard({
+    title,
+    value,
+    icon,
+    subtitle,
+    onClick,
+}: {
+    title: string;
+    value: number | string;
+    icon: string;
+    subtitle?: string;
+    onClick?: () => void;
+}) {
+    return (
+        <div
+            onClick={onClick}
+            style={{
+                cursor: onClick
+                    ? "pointer"
+                    : "default",
+                borderRadius: 18,
+                padding: 18,
+                background:
+                    "linear-gradient(145deg, #160608, #090909)",
+                border:
+                    "1px solid rgba(239,68,68,0.22)",
+                minHeight: 112,
+            }}
+        >
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent:
+                        "space-between",
+                    gap: 12,
+                }}
+            >
+                <div>
+                    <div
+                        style={{
+                            color: "#fca5a5",
+                            fontSize: 14,
+                            fontWeight: 700,
+                        }}
+                    >
+                        {title}
+                    </div>
+
+                    <div
+                        style={{
+                            color: "#fff",
+                            fontSize: 28,
+                            fontWeight: 900,
+                            marginTop: 8,
+                        }}
+                    >
+                        {value}
+                    </div>
+
+                    {subtitle && (
+                        <div
+                            style={{
+                                color: "#a1a1aa",
+                                fontSize: 12,
+                                marginTop: 5,
+                            }}
+                        >
+                            {subtitle}
+                        </div>
+                    )}
+                </div>
+
+                <div style={{ fontSize: 28 }}>
+                    {icon}
+                </div>
+            </div>
+        </div>
+    );
+}

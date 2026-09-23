@@ -1,0 +1,79 @@
+import { useEffect, useState } from "react";
+import { getStorageInfo, type StorageInfo } from "../api/storage";
+
+function formatBytes(bytes: number) {
+    const tb = bytes / 1024 / 1024 / 1024 / 1024;
+    const gb = bytes / 1024 / 1024 / 1024;
+
+    if (tb >= 1) {
+        return `${tb.toFixed(2)} TB`;
+    }
+
+    return `${gb.toFixed(2)} GB`;
+}
+
+export default function StoragePage() {
+    const [storage, setStorage] = useState<StorageInfo | null>(null);
+
+    useEffect(() => {
+        getStorageInfo()
+            .then(setStorage)
+            .catch(() => setStorage(null));
+    }, []);
+
+    const usedPercent = storage
+        ? Math.round((storage.used_bytes / storage.total_bytes) * 100)
+        : 0;
+
+    return (
+        <>
+            <div className="page-title">
+                <h1>Depolama</h1>
+                <p>PhotoOS RAID depolama durumu</p>
+            </div>
+
+            <section className="panel">
+                <div className="panel-header">
+                    <div>
+                        <h2>PhotoOS RAID1</h2>
+                        <p>/srv/photoos depolama alanı</p>
+                    </div>
+                </div>
+
+                {storage ? (
+                    <div className="storage-box">
+                        <div className="storage-row">
+                            <span>Toplam Alan</span>
+                            <strong>{formatBytes(storage.total_bytes)}</strong>
+                        </div>
+
+                        <div className="storage-row">
+                            <span>Kullanılan</span>
+                            <strong>{formatBytes(storage.used_bytes)}</strong>
+                        </div>
+
+                        <div className="storage-row">
+                            <span>Boş Alan</span>
+                            <strong>{formatBytes(storage.free_bytes)}</strong>
+                        </div>
+
+                        <div className="storage-bar">
+                            <div
+                                className="storage-bar-fill"
+                                style={{ width: `${usedPercent}%` }}
+                            />
+                        </div>
+
+                        <p className="storage-percent">
+                            Kullanım: %{usedPercent}
+                        </p>
+                    </div>
+                ) : (
+                    <p style={{ padding: 28 }}>
+                        Depolama bilgisi alınamadı.
+                    </p>
+                )}
+            </section>
+        </>
+    );
+}

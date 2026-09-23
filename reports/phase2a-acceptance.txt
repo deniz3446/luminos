@@ -1,0 +1,7 @@
+PHASE2A_SECURITY_FOUNDATION=PASS
+branch=phase2-backend-security
+worktree=/home/photoos/PhotoOS-worktrees/phase2-backend-security
+base_head=2ccc828e6eecc5708a09ea65872cd819e5e8d13c
+live_release=/opt/photoos/releases/1.2.1-storage-usbtest-20260909-015410
+live_server_sha256=03de1250f4700f516273159db7b6b2afdd30023d9d6c442cd22380f95bc63a5c
+live_deploy_performed=false

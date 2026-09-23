@@ -1,23 +1,29 @@
-import { api } from "./client";
+import { apiJson } from "./client";
 
-export async function getUsers() {
-    const res = await api("/api/v1/users");
+export type UserSummary = {
+    id: number;
+    username: string;
+    created_at: string;
+};
 
-    return res.json();
-}
-
-export async function createUser(data: {
+export type CreateUserInput = {
     username: string;
     email: string;
     password: string;
-}) {
-    const res = await api(
-        "/api/v1/users",
-        {
-            method: "POST",
-            body: JSON.stringify(data),
-        },
-    );
+};
 
-    return res.json();
+export type ApiMessage = {
+    success: boolean;
+    message: string;
+};
+
+export async function getUsers(): Promise<UserSummary[]> {
+    return apiJson<UserSummary[]>("/api/v1/users");
+}
+
+export async function createUser(data: CreateUserInput): Promise<ApiMessage> {
+    return apiJson<ApiMessage>("/api/v1/users", {
+        method: "POST",
+        body: JSON.stringify(data),
+    });
 }

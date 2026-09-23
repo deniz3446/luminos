@@ -1,0 +1,14 @@
+ACCEL_BACKEND_A=PASS
+branch=phase2b-accelerated-mobile-performance
+base_head=e8bbcb6a6c5684ea63a871cef8e49ed171d1e4d6
+mobile_contract_capture=PASS
+mobile_red=PASS_EXPECTED_FAILURE
+devices_red=PASS_EXPECTED_FAILURE
+performance_red=PASS_EXPECTED_FAILURE
+mobile_targeted_tests=PASS
+devices_targeted_tests=PASS
+performance_targeted_tests=PASS
+full_server_tests=PASS
+workspace_cargo_check=PASS
+static_security_parity=PASS
+live_deploy=false

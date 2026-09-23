@@ -1,0 +1,12 @@
+[Unit]
+Description=Run PhotoOS Disk Health Producer
+
+[Timer]
+OnBootSec=20s
+OnUnitActiveSec=5min
+AccuracySec=10s
+Persistent=true
+Unit=photoos-disk-health.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,12 @@
+PHOTOOS_PC_BACKUP_REVIEW_FIX1=PASS
+base=df43e3b04ff49f686bd09e7f022099248cbc879e
+target_source_sha=8dac10639d7c5fde5154a4940241f45a4504ecbabe301402e83ed90a3554eb82
+pc_backup_targeted=10/10 PASS
+security=1/1 PASS
+full_server=40/40 PASS
+workspace_cargo_check=PASS
+finalized_file_preserved_on_accounting_failure=true
+internal_parts_symlink_rejected=true
+assigned_root_symlink_rejected=true
+canonical_unchanged=true
+live_unchanged=true

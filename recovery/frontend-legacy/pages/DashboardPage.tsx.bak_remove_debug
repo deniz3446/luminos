@@ -1,0 +1,204 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { api } from "../api/client";
+
+type StorageInfo = {
+    total_bytes: number;
+    used_bytes: number;
+    free_bytes: number;
+};
+
+type MediaByUser = {
+    username: string;
+    count: number;
+};
+
+type DashboardStats = {
+    user_count: number;
+    total_media_count: number;
+    photo_count: number;
+    video_count: number;
+    media_by_user: MediaByUser[];
+};
+
+function formatBytesToGB(bytes: number) {
+    return Math.round(bytes / 1024 / 1024 / 1024);
+}
+
+export default function DashboardPage() {
+    const navigate = useNavigate();
+
+    const [stats, setStats] = useState<DashboardStats | null>(null);
+    const [storage, setStorage] = useState<StorageInfo | null>(null);
+    const [lastUpdated, setLastUpdated] = useState("");
+    const [error, setError] = useState("");
+    const [debug, setDebug] = useState("");
+
+    async function loadDashboard() {
+        try {
+            setError("");
+            const ts = Date.now();
+
+            const [statsRes, storageRes] = await Promise.all([
+                api(`/api/v1/dashboard/stats?ts=${ts}`),
+                api(`/api/v1/storage?ts=${ts}`),
+            ]);
+
+            if (!statsRes.ok) {
+                throw new Error(`Stats alınamadı: ${statsRes.status}`);
+            }
+
+            if (!storageRes.ok) {
+                throw new Error(`Storage alınamadı: ${storageRes.status}`);
+            }
+
+            const statsData = await statsRes.json();
+            const storageData = await storageRes.json();
+
+            setDebug(JSON.stringify({
+                statsStatus: statsRes.status,
+                storageStatus: storageRes.status,
+                statsData,
+                storageData,
+                tokenExists: !!localStorage.getItem("token"),
+            }, null, 2));
+
+            setStats(statsData);
+            setStorage(storageData);
+            setLastUpdated(new Date().toLocaleTimeString("tr-TR"));
+        } catch (err) {
+            console.error("Dashboard verileri alınamadı:", err);
+            setError("Dashboard verileri alınamadı.");
+            setDebug(String(err));
+        }
+    }
+
+    useEffect(() => {
+        loadDashboard();
+    }, []);
+
+    return (
+        <>
+            <div className="page-title">
+                <h1>Dashboard</h1>
+                <p>PhotoOS Yönetim Paneli</p>
+                {lastUpdated && <p>Son güncelleme: {lastUpdated}</p>}
+                {error && <p style={{ color: "#ef4444" }}>{error}</p>}
+            </div>
+
+            <div className="stats-grid">
+                <StatCard title="Kullanıcılar" value={stats?.user_count ?? 0} icon="👥" />
+                <StatCard title="Toplam Medya" value={stats?.total_media_count ?? 0} icon="🗂️" />
+                <StatCard title="Fotoğraflar" value={stats?.photo_count ?? 0} icon="📷" />
+                <StatCard title="Videolar" value={stats?.video_count ?? 0} icon="🎥" />
+                <StatCard
+                    title="Kullanılan GB"
+                    value={storage ? formatBytesToGB(storage.used_bytes) : 0}
+                    icon="💾"
+                />
+            </div>
+
+            <section className="panel" style={{ marginBottom: 24 }}>
+                <div className="panel-header">
+                    <div>
+                        <h2>Debug</h2>
+                        <p>Dashboard API cevabı</p>
+                    </div>
+                </div>
+
+                <pre style={{
+                    whiteSpace: "pre-wrap",
+                    padding: 16,
+                    margin: 0,
+                    color: "#fecaca",
+                    background: "#080808",
+                    borderRadius: 12,
+                    overflowX: "auto",
+                }}>{debug || "Henüz veri yok"}</pre>
+            </section>
+
+            <section className="panel">
+                <div className="panel-header">
+                    <div>
+                        <h2>Kullanıcı Başına Medya</h2>
+                        <p>Tüm sistemdeki medya dağılımı</p>
+                    </div>
+
+                    <button className="primary-btn" onClick={loadDashboard}>
+                        Yenile
+                    </button>
+                </div>
+
+                <table className="data-table">
+                    <thead>
+                        <tr>
+                            <th>Kullanıcı</th>
+                            <th>Medya Sayısı</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {(stats?.media_by_user ?? []).map((row) => (
+                            <tr key={row.username}>
+                                <td>{row.username}</td>
+                                <td>{row.count}</td>
+                            </tr>
+                        ))}
+
+                        {(stats?.media_by_user ?? []).length === 0 && (
+                            <tr>
+                                <td colSpan={2} style={{ textAlign: "center", padding: 20 }}>
+                                    Veri yok
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </section>
+
+            <section className="panel" style={{ marginTop: 24 }}>
+                <div className="panel-header">
+                    <div>
+                        <h2>Kısayollar</h2>
+                        <p>Hızlı erişim</p>
+                    </div>
+                </div>
+
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap", padding: 24 }}>
+                    <button className="primary-btn" onClick={() => navigate("/photos")}>
+                        Fotoğraflara Git
+                    </button>
+
+                    <button className="primary-btn" onClick={() => navigate("/users")}>
+                        Kullanıcılara Git
+                    </button>
+
+                    <button className="primary-btn" onClick={() => navigate("/storage")}>
+                        Depolamaya Git
+                    </button>
+                </div>
+            </section>
+        </>
+    );
+}
+
+function StatCard({
+    title,
+    value,
+    icon,
+}: {
+    title: string;
+    value: number;
+    icon: string;
+}) {
+    return (
+        <div className="stat-card">
+            <div className="stat-icon">{icon}</div>
+
+            <div className="stat-content">
+                <h3>{title}</h3>
+                <strong>{value}</strong>
+            </div>
+        </div>
+    );
+}

@@ -1,4 +1,20 @@
+pub mod albums;
 pub mod media;
+pub mod photos;
 pub mod storage;
 pub mod system;
 pub mod user;
+
+pub mod dashboard;
+pub mod devices;
+pub mod system_metrics;
+pub mod updates;
+pub mod storage_history;
+pub mod backups;
+pub mod pc_backups;
+pub mod raid;
+pub mod notifications;
+pub mod logs;
+pub mod mobile;
+pub mod setup;
+pub mod performance_alerts;

@@ -1,0 +1,4 @@
+PHASE2B2 LOG STATIC GATE
+50: let mut c=Command::new(JOURNALCTL); c.arg("--no-pager").arg("--output=json").arg("--reverse").arg("--since").arg(format!("{} minutes ago",q.since_minutes)).arg("-n").arg(fetch.to_string()); for u in units { c.arg("-u").arg(u); }
+38: Ok(NormalizedLogsQuery{service,limit:q.limit.unwrap_or(200).clamp(1,2000),since_minutes:q.since_minutes.unwrap_or(120).clamp(1,10080),priority,search})
+38: Ok(NormalizedLogsQuery{service,limit:q.limit.unwrap_or(200).clamp(1,2000),since_minutes:q.since_minutes.unwrap_or(120).clamp(1,10080),priority,search})
