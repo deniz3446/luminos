@@ -20,21 +20,21 @@ type Photo = {
 import { API_URL } from "../api/client";
 const PAGE_SIZE = 500;
 
-const SOURCE_OPTIONS = [
-    { value: "all", label: "🗂️ Tüm kaynaklar" },
+const SOURCE_FILTER_OPTIONS = [
+    { value: "all", label: "🗂️ Tümü" },
     { value: "camera", label: "📷 Kamera" },
-    {
-        value: "whatsapp_received",
-        label: "💬 WhatsApp Gelen",
-    },
-    {
-        value: "whatsapp_sent",
-        label: "📤 WhatsApp Gönderilen",
-    },
-    {
-        value: "screenshot",
-        label: "📱 Ekran Görüntüleri",
-    },
+    { value: "whatsapp", label: "💬 WhatsApp" },
+    { value: "screenshot", label: "📱 Ekran Görüntüleri" },
+    { value: "download", label: "📥 İndirilenler" },
+    { value: "telegram", label: "✈️ Telegram" },
+    { value: "other", label: "🖼️ Diğer" },
+];
+
+const SOURCE_LABEL_OPTIONS = [
+    { value: "camera", label: "📷 Kamera" },
+    { value: "whatsapp_received", label: "💬 WhatsApp Gelen" },
+    { value: "whatsapp_sent", label: "📤 WhatsApp Gönderilen" },
+    { value: "screenshot", label: "📱 Ekran Görüntüleri" },
     { value: "download", label: "📥 İndirilenler" },
     { value: "telegram", label: "✈️ Telegram" },
     { value: "other", label: "🖼️ Diğer" },
@@ -60,7 +60,7 @@ function sourceIcon(sourceType?: string) {
 }
 
 function sourceLabel(sourceType?: string) {
-    const option = SOURCE_OPTIONS.find(
+    const option = SOURCE_LABEL_OPTIONS.find(
         (item) => item.value === sourceType
     );
 
@@ -717,30 +717,41 @@ export default function PhotosPage() {
                         </>
                     )}
 
-                    <select
-                        value={sourceFilter}
-                        onChange={(e) =>
-                            setSourceFilter(e.target.value)
-                        }
+                    <div
+                        role="group"
+                        aria-label="Fotoğraf kaynakları"
                         style={{
-                            height: 44,
-                            borderRadius: 14,
-                            background: "#120406",
-                            color: "#fff",
-                            border: "1px solid #7f1d1d",
-                            padding: "0 16px",
-                            minWidth: 230,
+                            display: "flex",
+                            flexWrap: "wrap",
+                            gap: 8,
+                            width: "100%",
                         }}
                     >
-                        {SOURCE_OPTIONS.map((option) => (
-                            <option
-                                key={option.value}
-                                value={option.value}
-                            >
-                                {option.label}
-                            </option>
-                        ))}
-                    </select>
+                        {SOURCE_FILTER_OPTIONS.map((option) => {
+                            const active = sourceFilter === option.value;
+                            return (
+                                <button
+                                    key={option.value}
+                                    type="button"
+                                    data-source-filter={option.value}
+                                    aria-pressed={active}
+                                    onClick={() => setSourceFilter(option.value)}
+                                    style={{
+                                        minHeight: 44,
+                                        borderRadius: 14,
+                                        border: active ? "1px solid #ef4444" : "1px solid #3f3f46",
+                                        background: active ? "#7f1d1d" : "#18181b",
+                                        color: "#fff",
+                                        padding: "0 15px",
+                                        fontWeight: 800,
+                                        cursor: "pointer",
+                                    }}
+                                >
+                                    {option.label}
+                                </button>
+                            );
+                        })}
+                    </div>
 
                     <select
                         value={mediaFilter}

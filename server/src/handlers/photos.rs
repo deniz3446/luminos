@@ -9,6 +9,7 @@ use exif::{In, Reader, Tag};
 use image::codecs::jpeg::JpegEncoder;
 use image::imageops::FilterType;
 use serde::{Deserialize, Serialize};
+use sqlx::{QueryBuilder, Sqlite};
 use std::{
     io::{Cursor, Write},
     path::Path,
@@ -52,6 +53,30 @@ pub struct DownloadZipRequest {
 pub struct PhotoListParams {
     pub limit: Option<i64>,
     pub offset: Option<i64>,
+    pub source_type: Option<String>,
+    pub media_type: Option<String>,
+}
+
+fn normalize_source_filter(value: Option<&str>) -> Option<&'static str> {
+    match value.map(str::trim) {
+        Some("camera") => Some("camera"),
+        Some("whatsapp") => Some("whatsapp"),
+        Some("whatsapp_received") => Some("whatsapp_received"),
+        Some("whatsapp_sent") => Some("whatsapp_sent"),
+        Some("screenshot") => Some("screenshot"),
+        Some("download") => Some("download"),
+        Some("telegram") => Some("telegram"),
+        Some("other") => Some("other"),
+        _ => None,
+    }
+}
+
+fn normalize_media_filter(value: Option<&str>) -> Option<&'static str> {
+    match value.map(str::trim) {
+        Some("photo") => Some("photo"),
+        Some("video") => Some("video"),
+        _ => None,
+    }
 }
 
 
@@ -190,9 +215,10 @@ pub async fn list_photos(
     Query(params): Query<PhotoListParams>,
 ) -> Json<Vec<PhotoItem>> {
     let user_id = get_user_id(&headers);
-
     let limit = params.limit.unwrap_or(100000).clamp(1, 100000);
     let offset = params.offset.unwrap_or(0).max(0);
+    let source_filter = normalize_source_filter(params.source_type.as_deref());
+    let media_filter = normalize_media_filter(params.media_type.as_deref());
 
     let role: String = sqlx::query_scalar("SELECT role FROM users WHERE id = ?")
         .bind(user_id)
@@ -200,65 +226,56 @@ pub async fn list_photos(
         .await
         .unwrap_or_else(|_| "user".to_string());
 
-    let photos = if role == "admin" {
-        sqlx::query_as::<_, PhotoItem>(
-            r#"
-            SELECT
-                photos.id,
-                photos.filename,
-                photos.original_name,
-                photos.url,
-                photos.size_bytes,
-                photos.mime_type,
-                photos.uploaded_at,
-                photos.taken_at,
-                photos.user_id,
-                COALESCE(users.username, 'Bilinmeyen') AS owner_username,
-                photos.source_type,
-                photos.source_path,
-                photos.device_name
-            FROM photos
-            LEFT JOIN users ON users.id = photos.user_id
-            ORDER BY COALESCE(photos.taken_at, photos.uploaded_at) DESC
-            LIMIT ? OFFSET ?
-            "#,
-        )
-        .bind(limit)
-        .bind(offset)
+    let mut query = QueryBuilder::<Sqlite>::new(
+        "SELECT photos.id, photos.filename, photos.original_name, photos.url, "
+    );
+    query.push(
+        "photos.size_bytes, photos.mime_type, photos.uploaded_at, photos.taken_at, "
+    );
+    query.push(
+        "photos.user_id, COALESCE(users.username, 'Bilinmeyen') AS owner_username, "
+    );
+    query.push(
+        "photos.source_type, photos.source_path, photos.device_name "
+    );
+    query.push("FROM photos LEFT JOIN users ON users.id = photos.user_id");
+
+    let mut has_where = false;
+    if role != "admin" {
+        query.push(" WHERE photos.user_id = ");
+        query.push_bind(user_id);
+        has_where = true;
+    }
+
+    if let Some(source) = source_filter {
+        query.push(if has_where { " AND " } else { " WHERE " });
+        if source == "whatsapp" {
+            query.push("photos.source_type IN ('whatsapp_received', 'whatsapp_sent')");
+        } else {
+            query.push("photos.source_type = ");
+            query.push_bind(source);
+        }
+        has_where = true;
+    }
+    if let Some(media) = media_filter {
+        query.push(if has_where { " AND " } else { " WHERE " });
+        match media {
+            "video" => query.push("photos.mime_type LIKE 'video/%'"),
+            "photo" => query.push("photos.mime_type NOT LIKE 'video/%'"),
+            _ => &mut query,
+        };
+    }
+
+    query.push(" ORDER BY COALESCE(photos.taken_at, photos.uploaded_at) DESC LIMIT ");
+    query.push_bind(limit);
+    query.push(" OFFSET ");
+    query.push_bind(offset);
+
+    let photos = query
+        .build_query_as::<PhotoItem>()
         .fetch_all(&state.db)
         .await
-        .unwrap_or_default()
-    } else {
-        sqlx::query_as::<_, PhotoItem>(
-            r#"
-            SELECT
-                photos.id,
-                photos.filename,
-                photos.original_name,
-                photos.url,
-                photos.size_bytes,
-                photos.mime_type,
-                photos.uploaded_at,
-                photos.taken_at,
-                photos.user_id,
-                COALESCE(users.username, 'Bilinmeyen') AS owner_username,
-                photos.source_type,
-                photos.source_path,
-                photos.device_name
-            FROM photos
-            LEFT JOIN users ON users.id = photos.user_id
-            WHERE photos.user_id = ?
-            ORDER BY COALESCE(photos.taken_at, photos.uploaded_at) DESC
-            LIMIT ? OFFSET ?
-            "#,
-        )
-        .bind(user_id)
-        .bind(limit)
-        .bind(offset)
-        .fetch_all(&state.db)
-        .await
-        .unwrap_or_default()
-    };
+        .unwrap_or_default();
 
     Json(photos)
 }
@@ -384,8 +401,11 @@ pub async fn delete_photo(
 pub async fn photo_count(
     State(state): State<AppState>,
     headers: HeaderMap,
+    Query(params): Query<PhotoListParams>,
 ) -> Json<serde_json::Value> {
     let user_id = get_user_id(&headers);
+    let source_filter = normalize_source_filter(params.source_type.as_deref());
+    let media_filter = normalize_media_filter(params.media_type.as_deref());
 
     let role: String = sqlx::query_scalar("SELECT role FROM users WHERE id = ?")
         .bind(user_id)
@@ -393,22 +413,41 @@ pub async fn photo_count(
         .await
         .unwrap_or_else(|_| "user".to_string());
 
-    let count: i64 = if role == "admin" {
-        sqlx::query_scalar("SELECT COUNT(*) FROM photos")
-            .fetch_one(&state.db)
-            .await
-            .unwrap_or(0)
-    } else {
-        sqlx::query_scalar("SELECT COUNT(*) FROM photos WHERE user_id = ?")
-            .bind(user_id)
-            .fetch_one(&state.db)
-            .await
-            .unwrap_or(0)
-    };
+    let mut query = QueryBuilder::<Sqlite>::new("SELECT COUNT(*) FROM photos");
+    let mut has_where = false;
 
-    Json(serde_json::json!({
-        "count": count
-    }))
+    if role != "admin" {
+        query.push(" WHERE photos.user_id = ");
+        query.push_bind(user_id);
+        has_where = true;
+    }
+
+    if let Some(source) = source_filter {
+        query.push(if has_where { " AND " } else { " WHERE " });
+        if source == "whatsapp" {
+            query.push("photos.source_type IN ('whatsapp_received', 'whatsapp_sent')");
+        } else {
+            query.push("photos.source_type = ");
+            query.push_bind(source);
+        }
+        has_where = true;
+    }
+    if let Some(media) = media_filter {
+        query.push(if has_where { " AND " } else { " WHERE " });
+        match media {
+            "video" => query.push("photos.mime_type LIKE 'video/%'"),
+            "photo" => query.push("photos.mime_type NOT LIKE 'video/%'"),
+            _ => &mut query,
+        };
+    }
+
+    let count = query
+        .build_query_scalar::<i64>()
+        .fetch_one(&state.db)
+        .await
+        .unwrap_or(0);
+
+    Json(serde_json::json!({ "count": count }))
 }
 
 pub async fn download_photos_zip(
@@ -524,5 +563,23 @@ mod photo_source_contract_tests {
         assert_eq!(json["source_type"], "camera");
         assert_eq!(json["source_path"], "DCIM/Camera");
         assert_eq!(json["device_name"], "Telefon");
+    }
+}
+
+
+#[cfg(test)]
+mod photo_source_filter_tests {
+    use super::{normalize_media_filter, normalize_source_filter};
+
+    #[test]
+    fn whatsapp_query_is_a_virtual_source_group() {
+        assert_eq!(normalize_source_filter(Some("whatsapp")), Some("whatsapp"));
+    }
+
+    #[test]
+    fn supported_media_filters_are_normalized() {
+        assert_eq!(normalize_media_filter(Some("photo")), Some("photo"));
+        assert_eq!(normalize_media_filter(Some("video")), Some("video"));
+        assert_eq!(normalize_media_filter(Some("other")), None);
     }
 }
