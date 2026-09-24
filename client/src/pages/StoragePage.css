@@ -559,3 +559,311 @@
     }
 }
 
+
+/* PHOTOOS_STORAGE_MANAGER_REFERENCE_V2 */
+.storage-manager {
+    --storage-cyan: #24c8ff;
+    --storage-blue: #1687ff;
+    --storage-blue-strong: #0f5cff;
+    --storage-panel: rgba(4, 22, 42, 0.92);
+    --storage-panel-soft: rgba(8, 31, 56, 0.88);
+    --storage-border: rgba(45, 166, 255, 0.26);
+    --storage-border-soft: rgba(84, 169, 225, 0.16);
+    --storage-muted: #7898b7;
+    position: relative;
+    isolation: isolate;
+    color: #eef8ff;
+}
+
+.storage-manager-shell-glow {
+    position: absolute;
+    z-index: -1;
+    inset: -28px -24px auto;
+    height: 320px;
+    pointer-events: none;
+    background: radial-gradient(circle at 52% 0%, rgba(0, 145, 255, 0.19), transparent 62%);
+    filter: blur(8px);
+}
+
+.storage-manager-hero {
+    align-items: center;
+    padding: 20px 22px;
+    border-color: var(--storage-border);
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(4, 29, 54, 0.98), rgba(3, 19, 37, 0.96));
+    box-shadow: inset 0 1px 0 rgba(128, 213, 255, 0.05), 0 18px 60px rgba(0, 5, 18, 0.18);
+}
+
+.storage-manager-hero-main,
+.storage-manager-hero-side,
+.storage-manager-secure {
+    display: flex;
+    align-items: center;
+}
+
+.storage-manager-hero-main { gap: 16px; }
+.storage-manager-hero-side { gap: 16px; }
+.storage-manager-secure { gap: 10px; }
+
+.storage-manager-hero-icon,
+.storage-manager-secure-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    border: 1px solid rgba(72, 194, 255, 0.38);
+    color: #63d9ff;
+    background: linear-gradient(145deg, rgba(24, 135, 255, 0.36), rgba(0, 185, 255, 0.12));
+    box-shadow: 0 0 28px rgba(0, 157, 255, 0.14), inset 0 0 20px rgba(81, 207, 255, 0.06);
+}
+
+.storage-manager-hero-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    font-size: 24px;
+}
+
+.storage-manager-secure-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    font-size: 20px;
+}
+
+.storage-manager-kicker,
+.storage-panel-heading span {
+    color: var(--storage-cyan);
+}
+
+.storage-manager-hero h1 {
+    margin: 4px 0 3px;
+    font-size: 27px;
+    letter-spacing: -0.025em;
+}
+
+.storage-manager-hero p {
+    max-width: 720px;
+    color: #8eaac4;
+    font-size: 12px;
+}
+
+.storage-manager-secure div {
+    display: grid;
+    gap: 2px;
+}
+
+.storage-manager-secure strong {
+    font-size: 12px;
+    color: #dff6ff;
+}
+
+.storage-manager-secure small {
+    color: #698aa8;
+    font-size: 9px;
+}
+
+.storage-manager-hero-actions button {
+    min-height: 40px;
+    border-color: rgba(52, 175, 255, 0.3);
+    color: #dff5ff;
+    background: linear-gradient(180deg, rgba(22, 108, 180, 0.3), rgba(7, 54, 97, 0.36));
+    box-shadow: inset 0 1px 0 rgba(129, 215, 255, 0.06);
+}
+
+.storage-manager-hero-actions .storage-add-disk {
+    border-color: rgba(0, 159, 255, 0.58);
+    color: white;
+    background: linear-gradient(180deg, #148cff, #075fe5);
+    opacity: 0.62;
+}
+
+.storage-summary-grid { gap: 10px; }
+
+.storage-summary-card {
+    min-height: 76px;
+    padding: 13px 15px;
+    border-color: var(--storage-border-soft);
+    border-radius: 14px;
+    background: linear-gradient(145deg, rgba(5, 27, 50, 0.94), rgba(3, 19, 37, 0.94));
+    box-shadow: inset 0 1px 0 rgba(97, 203, 255, 0.04);
+}
+
+.storage-summary-icon {
+    border: 1px solid rgba(46, 168, 255, 0.18);
+    color: #7cddff;
+    background: rgba(0, 126, 255, 0.15);
+}
+
+.storage-summary-card:nth-child(2) .storage-summary-icon { color: #aa8cff; background: rgba(113, 62, 255, 0.14); }
+.storage-summary-card:nth-child(4) .storage-summary-icon { color: #4cf0bb; background: rgba(0, 195, 135, 0.13); }
+.storage-summary-card:nth-child(5) .storage-summary-icon { color: #ffd059; background: rgba(255, 182, 41, 0.12); }
+
+.storage-summary-card small { color: #86a4bf; }
+.storage-summary-card strong { color: #f4fbff; }
+.storage-summary-card div span { color: #5f809e; }
+
+.storage-manager-panel {
+    border-color: var(--storage-border-soft);
+    border-radius: 16px;
+    background: linear-gradient(145deg, rgba(3, 23, 43, 0.95), rgba(2, 16, 31, 0.96));
+    box-shadow: inset 0 1px 0 rgba(102, 198, 255, 0.035);
+}
+
+.storage-panel-heading { align-items: center; }
+.storage-panel-heading h2 { font-size: 17px; color: #edf9ff; }
+.storage-panel-count,
+.raid-badge,
+.storage-all-healthy-badge {
+    padding: 5px 10px;
+    border: 1px solid rgba(28, 215, 150, 0.24);
+    border-radius: 999px;
+    color: #45e6a4;
+    background: rgba(0, 159, 104, 0.08);
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.storage-disk-grid { gap: 12px; }
+
+.storage-disk-card {
+    padding: 14px;
+    border-color: rgba(44, 160, 233, 0.22);
+    border-radius: 14px;
+    background: linear-gradient(145deg, rgba(7, 31, 55, 0.88), rgba(4, 22, 42, 0.92));
+    box-shadow: inset 0 1px 0 rgba(105, 210, 255, 0.035), 0 14px 38px rgba(0, 4, 14, 0.12);
+}
+
+.storage-disk-icon {
+    border: 1px solid rgba(40, 170, 255, 0.22);
+    color: #5fd6ff;
+    background: rgba(12, 122, 226, 0.16);
+}
+
+.storage-disk-capacity-grid {
+    grid-template-columns: 1.15fr repeat(3, minmax(0, 0.85fr));
+    align-items: end;
+    gap: 0;
+    margin-top: 15px;
+    border-top: 1px solid rgba(74, 164, 221, 0.1);
+    border-bottom: 1px solid rgba(74, 164, 221, 0.1);
+}
+
+.storage-disk-capacity-grid > div {
+    padding: 11px 12px;
+    border-radius: 0;
+    background: transparent;
+}
+
+.storage-disk-capacity-grid > div + div {
+    border-left: 1px solid rgba(74, 164, 221, 0.12);
+}
+
+.storage-disk-capacity-grid .primary strong { font-size: 21px; }
+.storage-disk-capacity-grid strong { color: #f3fbff; font-size: 14px; }
+.storage-disk-capacity-grid small { color: #6f91ad; }
+
+.storage-usage-track-emphasis {
+    height: 8px;
+    margin-top: 11px;
+    border: 1px solid rgba(71, 177, 248, 0.12);
+    background: rgba(60, 101, 139, 0.32);
+}
+
+.storage-usage-track-emphasis span {
+    background: linear-gradient(90deg, #0f82ff, #24c8ff);
+    box-shadow: 0 0 16px rgba(25, 154, 255, 0.28);
+}
+
+.storage-disk-facts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.storage-disk-facts > div {
+    display: grid;
+    grid-template-columns: 30px minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    padding: 9px 10px;
+    border: 1px solid rgba(68, 153, 213, 0.12);
+    border-radius: 10px;
+    background: rgba(8, 35, 59, 0.62);
+}
+
+.storage-disk-facts > div > span {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    border-radius: 8px;
+    color: #78dbff;
+    background: rgba(12, 117, 207, 0.15);
+}
+
+.storage-disk-facts > div > div {
+    display: grid;
+    min-width: 0;
+}
+
+.storage-disk-facts small { color: #6588a5; font-size: 8px; }
+.storage-disk-facts strong {
+    overflow: hidden;
+    color: #eaf7ff;
+    font-size: 9px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.storage-smart-grid > div,
+.storage-disk-footer > div,
+.storage-smart-test-box {
+    border: 1px solid rgba(58, 145, 205, 0.1);
+    background: rgba(5, 28, 49, 0.58);
+}
+
+.storage-health-badge {
+    border: 1px solid transparent;
+    letter-spacing: 0.02em;
+}
+.storage-health-badge.healthy { border-color: rgba(35, 218, 147, 0.18); }
+.storage-health-badge.warning { border-color: rgba(245, 184, 55, 0.2); }
+.storage-health-badge.danger { border-color: rgba(255, 91, 91, 0.2); }
+
+.storage-bottom-grid .storage-manager-panel { margin-bottom: 0; }
+.storage-system-list > div,
+.storage-raid-card,
+.storage-check-list > div {
+    border-color: rgba(53, 145, 205, 0.13);
+    background: rgba(6, 29, 50, 0.66);
+}
+
+.storage-readonly-note {
+    border-color: rgba(53, 145, 205, 0.13);
+    color: #6787a1;
+    background: rgba(3, 21, 39, 0.45);
+}
+
+@media (max-width: 1180px) {
+    .storage-manager-hero { align-items: flex-start; }
+    .storage-manager-hero-side { align-items: flex-end; flex-direction: column; }
+    .storage-disk-capacity-grid,
+    .storage-disk-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .storage-disk-capacity-grid > div:nth-child(3) { border-left: 0; }
+}
+
+@media (max-width: 850px) {
+    .storage-manager-hero-side { width: 100%; align-items: stretch; }
+    .storage-manager-secure { justify-content: flex-start; }
+    .storage-manager-hero-actions { width: 100%; }
+    .storage-manager-hero-actions button { flex: 1; }
+}
+
+@media (max-width: 600px) {
+    .storage-manager-hero-main { align-items: flex-start; }
+    .storage-disk-capacity-grid,
+    .storage-disk-facts { grid-template-columns: 1fr; }
+    .storage-disk-capacity-grid > div + div { border-left: 0; border-top: 1px solid rgba(74, 164, 221, 0.1); }
+}

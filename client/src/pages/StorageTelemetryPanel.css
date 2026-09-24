@@ -187,3 +187,36 @@
     flex-direction: column;
   }
 }
+
+/* PHOTOOS_STORAGE_TELEMETRY_REFERENCE_V2 */
+.storage-telemetry-card {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(44, 160, 233, 0.18);
+  background: linear-gradient(145deg, rgba(6, 30, 52, 0.88), rgba(3, 21, 39, 0.92));
+}
+
+.storage-telemetry-card::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2px;
+  content: "";
+  background: linear-gradient(180deg, #22d3ee, #1478ff, transparent 78%);
+  box-shadow: 0 0 16px rgba(34, 211, 238, 0.34);
+}
+
+.storage-telemetry-head span { color: #24c8ff; }
+.storage-telemetry-head small { color: #698aa7; }
+.storage-telemetry-head > strong { color: #4fe8aa; }
+.storage-io-grid > div {
+  border: 1px solid rgba(52, 145, 205, 0.1);
+  background: rgba(6, 29, 50, 0.64);
+}
+.storage-temperature-chart {
+  border-color: rgba(43, 160, 231, 0.16);
+  background: rgba(5, 30, 52, 0.66);
+}
+.storage-temperature-chart polyline {
+  stroke: #24c8ff;
+  filter: drop-shadow(0 0 6px rgba(36, 200, 255, 0.42));
+}

@@ -670,37 +670,30 @@ export default function StoragePage() {
 
     return (
         <div className="storage-manager">
+            {/* PHOTOOS_STORAGE_MANAGER_REFERENCE_V2 */}
+            <div className="storage-manager-shell-glow" aria-hidden="true" />
             <section className="storage-manager-hero">
-                <div>
-                    <span className="storage-manager-kicker">
-                        PhotoOS Depolama
-                    </span>
-
-                    <h1>Storage Manager</h1>
-
-                    <p>
-                        Disk kapasitesi, SMART sağlığı, sıcaklık
-                        ve RAID durumu.
-                    </p>
-                </div>
-
-                <div className="storage-manager-hero-actions">
-                    <div className="storage-manager-status">
-                        <span className="storage-status-dot" />
-
-                        <div>
-                            <small>Sistem durumu</small>
-                            <strong>Çalışıyor</strong>
-                        </div>
+                <div className="storage-manager-hero-main">
+                    <div className="storage-manager-hero-icon" aria-hidden="true">▣</div>
+                    <div>
+                        <span className="storage-manager-kicker">DEPOLAMA YÖNETİCİSİ</span>
+                        <h1>Storage Manager</h1>
+                        <p>Disk kapasitesi, SMART sağlığı, sıcaklık ve RAID durumu gibi depolama bilgilerinizi yönetin.</p>
                     </div>
-
-                    <button
-                        type="button"
-                        onClick={() => void loadStorage(true)}
-                        disabled={refreshing}
-                    >
-                        {refreshing ? "Yenileniyor..." : "↻ Yenile"}
-                    </button>
+                </div>
+                <div className="storage-manager-hero-side">
+                    <div className="storage-manager-secure">
+                        <span className="storage-manager-secure-icon" aria-hidden="true">▥</span>
+                        <div><strong>Güvenli Depolama</strong><small>Sonsuz Anılar</small></div>
+                    </div>
+                    <div className="storage-manager-hero-actions">
+                        <button type="button" onClick={() => void loadStorage(true)} disabled={refreshing}>
+                            {refreshing ? "Yenileniyor..." : "↻ Yenile"}
+                        </button>
+                        <button type="button" className="storage-add-disk" disabled title="Disk ekleme işlemi güvenlik nedeniyle kapalıdır.">
+                            ＋ Yeni Disk Ekle
+                        </button>
+                    </div>
                 </div>
             </section>
 
@@ -713,7 +706,7 @@ export default function StoragePage() {
             <section className="storage-summary-grid">
                 <SummaryCard
                     icon="💽"
-                    title="Toplam veri alanı"
+                    title="Toplam Kapasite"
                     value={formatBytes(
                         storageData?.data_total_bytes
                     )}
@@ -724,7 +717,7 @@ export default function StoragePage() {
 
                 <SummaryCard
                     icon="📊"
-                    title="Kullanılan alan"
+                    title="Kullanılan Alan"
                     value={formatBytes(
                         storageData?.data_used_bytes
                     )}
@@ -735,7 +728,7 @@ export default function StoragePage() {
 
                 <SummaryCard
                     icon="🗄️"
-                    title="Veri diskleri"
+                    title="Bağlı Diskler"
                     value={String(
                         storageData?.photoos_data_disk_count ?? 0
                     )}
@@ -744,7 +737,7 @@ export default function StoragePage() {
 
                 <SummaryCard
                     icon="🛡️"
-                    title="SMART sağlıklı"
+                    title="SMART Sağlığı"
                     value={String(smartHealthyCount)}
                     detail={`Son kontrol: ${lastCheck}`}
                 />
@@ -830,39 +823,26 @@ export default function StoragePage() {
                                         </span>
                                     </div>
 
-                                    <div className="storage-disk-capacity">
-                                        <div>
-                                            <small>Toplam kapasite</small>
-                                            <strong>
-                                                {formatBytes(
-                                                    storage.total_bytes
-                                                )}
-                                            </strong>
-                                        </div>
-
-                                        <div>
-                                            <small>Boş alan</small>
-                                            <strong>
-                                                {formatBytes(
-                                                    storage.free_bytes
-                                                )}
-                                            </strong>
-                                        </div>
+                                    <div className="storage-disk-capacity storage-disk-capacity-grid">
+                                        <div className="primary"><small>Toplam Kapasite</small><strong>{formatBytes(storage.total_bytes)}</strong></div>
+                                        <div><small>Kullanılan</small><strong>{formatBytes(storage.used_bytes)}</strong></div>
+                                        <div><small>Boş</small><strong>{formatBytes(storage.free_bytes)}</strong></div>
+                                        <div><small>Kullanım</small><strong>%{usage.toFixed(1)}</strong></div>
                                     </div>
 
-                                    <div className="storage-usage-heading">
-                                        <span>Disk kullanımı</span>
-                                        <strong>
-                                            %{usage.toFixed(1)}
-                                        </strong>
-                                    </div>
-
-                                    <div className="storage-usage-track">
+                                    <div className="storage-usage-track storage-usage-track-emphasis">
                                         <span
                                             style={{
                                                 width: `${usage}%`,
                                             }}
                                         />
+                                    </div>
+
+                                    <div className="storage-disk-facts">
+                                        <div><span aria-hidden="true">▤</span><div><small>Dosya Sistemi</small><strong>{storage.filesystem || "Bilinmiyor"}</strong></div></div>
+                                        <div><span aria-hidden="true">◈</span><div><small>Bağlantı Noktası</small><strong>{storage.mountpoint || "—"}</strong></div></div>
+                                        <div><span aria-hidden="true">▱</span><div><small>Bağlama Yolu</small><strong>{storage.parent_device || storage.device}</strong></div></div>
+                                        <div><span aria-hidden="true">▦</span><div><small>Disk Türü</small><strong>{storage.device_type || "Disk"}</strong></div></div>
                                     </div>
 
                                     <div className="storage-smart-grid">
@@ -1220,6 +1200,11 @@ export default function StoragePage() {
                             <span>SMART özeti</span>
                             <h2>Disk Kontrolleri</h2>
                         </div>
+                        <span className="storage-all-healthy-badge">
+                            {dataDisks.length > 0 && smartHealthyCount === dataDisks.length
+                                ? "✓ Tüm Diskler Sağlıklı"
+                                : "SMART Kontrolü"}
+                        </span>
                     </div>
 
                     <div className="storage-check-list">
